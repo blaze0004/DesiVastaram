@@ -14,3 +14,23 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group([], function() {
+	Route::resource('/admin', 'AdminController');
+});
+
+Route::group([], function() {
+	Route::resource('/seller', "SellerController");
+});
+
+Route::group([], function() {
+	Route::resource('/buyer', "BuyerController");
+});
+
+Route::group([], function() {
+	Route::resource('/trainer', "TrainerController");
+});

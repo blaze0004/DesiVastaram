@@ -17,8 +17,9 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('description');
-            $table->unsignedInteger('seller_id');
+            $table->unsignedInteger('user_id');
             $table->unsignedInteger('product_image_id');
+            $table->double('price');
             $table->float('discount', 3, 2);
             $table->timestamps();
         });

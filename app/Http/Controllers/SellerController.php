@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Seller;
 use Illuminate\Http\Request;
 
 class SellerController extends Controller
@@ -41,10 +40,10 @@ class SellerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Seller  $seller
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Seller $seller)
+    public function show($id)
     {
         //
     }
@@ -52,10 +51,10 @@ class SellerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Seller  $seller
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Seller $seller)
+    public function edit($id)
     {
         //
     }
@@ -64,10 +63,10 @@ class SellerController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Seller  $seller
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Seller $seller)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -75,10 +74,10 @@ class SellerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Seller  $seller
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Seller $seller)
+    public function destroy($id)
     {
         //
     }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Buyer;
 use Illuminate\Http\Request;
 
 class BuyerController extends Controller
@@ -41,10 +40,10 @@ class BuyerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Buyer  $buyer
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Buyer $buyer)
+    public function show($id)
     {
         //
     }
@@ -52,10 +51,10 @@ class BuyerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Buyer  $buyer
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Buyer $buyer)
+    public function edit($id)
     {
         //
     }
@@ -64,10 +63,10 @@ class BuyerController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Buyer  $buyer
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Buyer $buyer)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -75,10 +74,10 @@ class BuyerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Buyer  $buyer
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Buyer $buyer)
+    public function destroy($id)
     {
         //
     }
