@@ -31,3 +31,9 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const app = new Vue({
     el: '#app'
 });
+//import select 2
+window.select2 = require('select2');
+
+// import ckeditor classic
+
+window.ClassicEditor = require('@ckeditor/ckeditor5-build-classic');

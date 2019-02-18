@@ -48,15 +48,15 @@ class LoginController extends Controller
                 return 'admin';
                 break;
             case 'Seller':
-                return 'seller\dashboard';
+                return 'seller';
                 break;
 
             case 'Buyer':
-                return 'buyer\dashboard';
+                return 'buyer';
                 break;
 
             case 'Trainer':
-                return 'trainer\dashboard';
+                return 'trainer';
                 break;
             default:
                 return '\home';

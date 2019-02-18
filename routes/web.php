@@ -19,13 +19,25 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group([], function() {
-	Route::resource('/admin', 'AdminController');
-});
+Route::resource('/admin/trainers', 'Admin\AdminTrainerController');
 
+Route::group(['as' => 'admin.', 'prefix' => 'admin'], function() {
+	Route::resource('/', 'Admin\AdminController');
+	Route::get('/sellers', 'Seller\SellerController@index')->name('sellers');
+	Route::get('/buyers', 'Buyer\BuyerController@index')->name('buyers');
+	Route::get('/trainers', 'Trainer\TrainerController@index')->name('trainers');
+	Route::get('/products', 'Product\ProductController@index')->name('products');
+	Route::get('/categories', 'Category\CategoryController@index')->name('categories');
+});	
+
+Route::resource('/seller/products', 'Seller\SellerProductController');
+Route::resource('/seller/orders', 'Seller\SellerOrderController');
+Route::resource('/seller/payments', 'Seller\SellerPaymentController');
+
+/*
 Route::group([], function() {
-	Route::resource('/seller', "SellerController");
-});
+	Route::resource('/seller', "Seller\SellerController");
+});*/
 
 Route::group([], function() {
 	Route::resource('/buyer', "BuyerController");
@@ -34,3 +46,5 @@ Route::group([], function() {
 Route::group([], function() {
 	Route::resource('/trainer', "TrainerController");
 });
+
+Route::resource('/product', 'Product\ProductController');
