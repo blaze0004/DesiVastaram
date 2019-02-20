@@ -19,20 +19,19 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('/admin/trainers', 'Admin\AdminTrainerController');
 
-Route::group(['as' => 'admin.', 'prefix' => 'admin'], function() {
+Route::group(['as' => 'admin.' ,'prefix' => 'admin'], function() {
 	Route::resource('/', 'Admin\AdminController');
 	Route::get('/sellers', 'Seller\SellerController@index')->name('sellers');
 	Route::get('/buyers', 'Buyer\BuyerController@index')->name('buyers');
 	Route::get('/trainers', 'Trainer\TrainerController@index')->name('trainers');
-	Route::get('/products', 'Product\ProductController@index')->name('products');
-	Route::get('/categories', 'Category\CategoryController@index')->name('categories');
+	Route::resource('/products', 'Product\ProductController');
+	Route::resource('/category', 'Category\CategoryController');
+	/*
+	Route::post('/categories/create', 'Category\CategoryController@store')->name('categories.create');
+	Route::get('/categories', 'Category\CategoryController@index');
+	Route::get('/categories/create', 'Category\CategoryController@create');*/
 });	
-
-Route::resource('/seller/products', 'Seller\SellerProductController');
-Route::resource('/seller/orders', 'Seller\SellerOrderController');
-Route::resource('/seller/payments', 'Seller\SellerPaymentController');
 
 /*
 Route::group([], function() {
@@ -41,10 +40,6 @@ Route::group([], function() {
 
 Route::group([], function() {
 	Route::resource('/buyer', "BuyerController");
-});
-
-Route::group([], function() {
-	Route::resource('/trainer', "TrainerController");
 });
 
 Route::resource('/product', 'Product\ProductController');

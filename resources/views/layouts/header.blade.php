@@ -4,7 +4,7 @@
       _________________________________________________________
       -->
       <div id="top">
-        <div class="container">
+        <div class="container-fluid">
           <div class="row">
             
             <div class="col-lg-6 offer mb-3 mb-lg-0"><a href="#" class="btn btn-success btn-sm">Offer of the day</a><a href="#" class="ml-1">Get flat 35% off on orders over $50!</a></div>
@@ -114,7 +114,7 @@
       </div>
         <!-- *** TOP BAR END ***-->
            <nav class="navbar navbar-expand-lg">
-        <div class="container"><a href="{{ url('/')}}" class="navbar-brand home">{{ config('app.name')}}</a>
+        <div class="container-fluid"><a href="{{ url('/')}}" class="navbar-brand home">{{ config('app.name')}}</a>
           <div class="navbar-buttons">
             <button type="button" data-toggle="collapse" data-target="#navigation" class="btn btn-outline-secondary navbar-toggler"><span class="sr-only">Toggle navigation</span><i class="fa fa-align-justify"></i></button>
             <button type="button" data-toggle="collapse" data-target="#search" class="btn btn-outline-secondary navbar-toggler"><span class="sr-only">Toggle search</span><i class="fa fa-search"></i></button><a href="basket.html" class="btn btn-outline-secondary navbar-toggler"><i class="fa fa-shopping-cart"></i></a>
@@ -280,7 +280,7 @@
         </div>
       </nav>
        <div id="search" class="collapse">
-        <div class="container">
+        <div class="container-fluid">
           <form role="search" class="ml-auto">
             <div class="input-group">
               <input type="text" placeholder="Search" class="form-control">

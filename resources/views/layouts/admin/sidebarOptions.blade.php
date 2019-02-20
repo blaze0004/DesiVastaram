@@ -37,7 +37,7 @@
                     </a>
                 </li>
                  <li class="nav-link">
-                    <a href="{{ url('admin/categories')}}">
+                    <a href="{{ url('admin/category')}}">
                         Category
                     </a>
                 </li>

@@ -1,3 +1,4 @@
+
 @extends('../layouts/app')
 
 @section('breadcrumb')
@@ -73,7 +74,56 @@
     <div class="row">
         <div class="col-lg">
             <div class="jumbotron">
-            </div>    
+                
+                <a href="{{ route('admin.products.create')}}" class="btn btn-primary mb-2 float-right">
+                    Add Products
+                </a>
+                <table class="table table-stripped">
+                    <thead>
+                        <tr>
+                            <th>
+                                Product ID
+                            </th>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                View
+                            </th>
+                            <th>
+                                Update
+                            </th>
+                            <th>
+                                Update
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($products as $product)
+                        <tr>
+                            <td>
+                                {{$product->id}}
+                            </td>
+                            <td>
+                                {{ $product->email}}
+                            </td>
+                            <td>
+                                <input class="btn btn-primary" type="button" value="View">
+                                </input>
+                            </td>
+                            <td>
+                                <input class="btn btn-primary" type="button" value="Update">
+                                </input>
+                            </td>
+                            <td>
+                                <input class="btn btn-primary" type="button" value="Delete">
+                                </input>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
         
     </div>

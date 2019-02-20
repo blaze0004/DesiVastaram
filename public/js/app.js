@@ -54804,6 +54804,14 @@ window.select2 = __webpack_require__(/*! select2 */ "./node_modules/select2/dist
 
 window.ClassicEditor = __webpack_require__(/*! @ckeditor/ckeditor5-build-classic */ "./node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js");
 
+window.slugify = function (text) {
+  return text.toString().toLowerCase().replace(/\s+/g, '-') // Replace spaces with -
+  .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+  .replace(/\-\-+/g, '-') // Replace multiple - with single -
+  .replace(/^-+/, '') // Trim - from start of text
+  .replace(/-+$/, ''); // Trim - from end of text
+};
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":

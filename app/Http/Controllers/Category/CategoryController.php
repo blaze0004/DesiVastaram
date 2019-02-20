@@ -16,9 +16,9 @@ class CategoryController extends Controller
     public function index()
     {
         //
-        $categories = \App\Category::all();
+        $categories = \App\Category::paginate(2);
 
-        return $this->view('admin.category.index', compact('categories'));
+        return view('admin.categories.index', compact('categories'));
     }
 
     /**
@@ -29,6 +29,9 @@ class CategoryController extends Controller
     public function create()
     {
         //
+        $categories = \App\Category::all();
+
+        return view('admin.categories.create', compact('categories'));
     }
 
     /**
@@ -40,6 +43,13 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'title' => 'required|min:5',
+            'slug' => 'required|min:5|unique:categories'
+        ]);
+        $categories = Category::create($request->only('title', 'slug', 'description'));
+        $categories->childrens()->attach($request->parent_id);
+        return redirect('admin/category')->with('message', 'Category added successfully');       
     }
 
     /**
@@ -59,9 +69,12 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
         //
+        $categories = Category::all();
+
+        return view('admin.categories.create', ['categories' => $categories, 'category' => $category]);
     }
 
     /**
@@ -71,9 +84,20 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
         //
+
+        $category->title = $request->title;
+        $category->description = $request->description;
+        $category->slug = $request->slug;
+
+        $category->childrens()->detach();
+        $category->childrens()->attach($request->parent_id);
+        $saved = $category->save();
+
+        return redirect('admin/category')->with('message', 'Category updated successfully!');
+
     }
 
     /**
@@ -82,8 +106,13 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
         //
+        if ($category->delete()) {
+            return back()->with('message', 'Category Deleted successfully!');
+        } else {
+            return back()->with('message', 'Error occured during deletion!');
+        }
     }
 }
