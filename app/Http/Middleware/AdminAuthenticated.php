@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
 class AdminAuthenticated
 {
@@ -15,7 +16,10 @@ class AdminAuthenticated
      */
     public function handle($request, Closure $next)
     {
-        
+            
+         if(Auth::user()->role->name != 'Admin'){
+            return redirect('/home')->with('message', "You are Not Allowed To Access");
+        }
         return $next($request);
     }
 }

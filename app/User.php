@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Order;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -46,6 +47,14 @@ class User extends Authenticatable
     }
 
     public function profile() {
-        return $this->belongsTo('App\Profile');
+        return $this->hasOne('App\Profile');
     }
+
+    public function orders() {
+        return $this->hasMany(Order::class);
+    } 
+
+    public function cartItems() {
+        return $this->hasMany(Cart::class);
+    } 
 }

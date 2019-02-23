@@ -12,6 +12,7 @@
                     @yield('left-sidebar')
       				@yield('content')
                 </div>
+                @yield('homeContent')
             </div>
         </div>
     </div>

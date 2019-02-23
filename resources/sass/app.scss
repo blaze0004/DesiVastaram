@@ -2,6 +2,12 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 
+// Font font-awesome
+@import "node_modules/font-awesome/scss/font-awesome.scss";
+
+// Select2 CSS
+
+@import "node_modules/select2/src/scss/core.scss";
 // Variables
 @import 'variables';
 
@@ -11,9 +17,4 @@
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-}
-
-.ck-ck-content {
-	height: 300px;
-	overflow-y: scroll;
 }

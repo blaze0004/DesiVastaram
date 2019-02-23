@@ -9,7 +9,7 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 Route::get('/', function () {
     return view('home');
@@ -17,29 +17,64 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 
+Route::group(['as' => 'admin.', 'middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function () {
 
-Route::group(['as' => 'admin.' ,'prefix' => 'admin'], function() {
-	Route::resource('/', 'Admin\AdminController');
-	Route::get('/sellers', 'Seller\SellerController@index')->name('sellers');
-	Route::get('/buyers', 'Buyer\BuyerController@index')->name('buyers');
-	Route::get('/trainers', 'Trainer\TrainerController@index')->name('trainers');
-	Route::resource('/products', 'Product\ProductController');
-	Route::resource('/category', 'Category\CategoryController');
-	/*
-	Route::post('/categories/create', 'Category\CategoryController@store')->name('categories.create');
-	Route::get('/categories', 'Category\CategoryController@index');
-	Route::get('/categories/create', 'Category\CategoryController@create');*/
-});	
+    Route::post('/resetPassword', 'Profile\ProfileController@resetPassword')->name('profile.resetPassword');
+
+    // admin buyers additional routes
+
+    Route::get('/buyers/orders/{buyerId}', 'Order\OrderController@showAllOrders')->name('buyers.showAllOrders');
+    Route::post('/buyers/deactivate/{buyersId}', 'Buyer\BuyerController@deactivateAccount')->name('buyers.deactivate');
+
+    // admin seller additional routes
+
+    Route::get('/sellers/products/{sellerId}', 'Product\ProductController@showAllProductsOfSeller')->name('sellers.showAllProducts');
+    Route::post('/sellers/deactivate/{sellerId}', 'Seller\SellerController@activateDeactivateAccount')->name('sellers.activateDeactivate');
+
+    // Admin Trainer Additional Route
+
+    Route::get('/trainers/sellers/{trainerId}', 'Trainer\TrainerController@showAllSellersOfTrainer')->name('trainers.showAllSellers');
+    Route::post('/trainers/deactivate/{trainersId}', 'Trainer\TrainerController@deactivateAccount')->name('trainers.deactivate');
+
+    Route::resource('/trainers', 'Trainer\TrainerController');
+    Route::resource('/buyers', 'Buyer\BuyerController');
+    Route::resource('/sellers', 'Seller\SellerController');
+    Route::resource('/profile', 'Profile\ProfileController');
+    Route::resource('/products', 'Product\ProductController');
+    Route::resource('/category', 'Category\CategoryController');
+    Route::resource('/', 'Admin\AdminController');
+
+});
 
 /*
 Route::group([], function() {
-	Route::resource('/seller', "Seller\SellerController");
+Route::resource('/seller', "Seller\SellerController");
 });*/
 
-Route::group([], function() {
-	Route::resource('/buyer', "BuyerController");
+Route::group(['as' => 'product.', 'prefix' => 'product'], function () {
+
+    Route::put('/thumbnailRemove/{product_id}', 'Product\ProductController@removeThumbnail')->name('thumbnailRemove');
+    Route::get('/{product_slug}', 'Product\ProductController@single')->name('single');
 });
 
-Route::resource('/product', 'Product\ProductController');
+Route::group(['as' => 'category.', 'prefix' => 'category'], function () {
+    Route::get('/{category_slug}', 'Product\ProductController@allProductsWithCategory')->name('allProductsWithCategory');
+});
+
+Route::resource('/checkout', 'Order\OrderController');
+
+Route::get('/order/history', 'Order\OrderController@history')->name('order_history');
+Route::get('/order/details/', 'Order\OrderController@showOrderDetails')->name('order_details');
+Route::get('/wishlists', 'Wishlist\WishlistController@userWishlist')->name('userWishlist');
+Route::post('/wishlists/save', 'Wishlist\WishlistController@store')->name('wishlist.store');
+
+Route::get('/basket', 'Cart\CartController@index')->name('showUserCart');
+
+Route::post('/cart/save', 'Cart\CartController@store')->name('cart.store');
+Route::post('/cart/destroy', 'Cart\CartController@destroy')->name('cart.destroy');
+Route::post('/cart/changeQuantity', 'Cart\CartController@changeQuantity')->name('cart.changeQuantity');
+
+
+Route::get('/checkout', 'Order\OrderController@checkoutForm')->name('order.checkout');

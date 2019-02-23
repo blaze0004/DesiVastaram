@@ -16,11 +16,10 @@ class CreateAddressesTable extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
-            $table->string('address');
-            $table->unsignedInteger('region_id');
-            $table->unsignedInteger('district_id');
-            $table->unsignedInteger('state_id');
-            $table->unsignedInteger('pincode_id');    
+            $table->string('address')->nullable();
+            $table->unsignedInteger('region_id')->nullable();
+            $table->unsignedInteger('district_id')->nullable();
+            $table->unsignedInteger('state_id')->nullable();    
             $table->timestamps();
         });
     }

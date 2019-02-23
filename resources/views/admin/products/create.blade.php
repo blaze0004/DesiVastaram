@@ -1,71 +1,28 @@
-
 @extends('../layouts/app')
 
 @section('breadcrumb')
-        <div class="col-lg-12">
-              <!-- breadcrumb-->
-              <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="#">{{ Auth::user()->role->name}}</a></li>
-                  <li aria-current="page" class="breadcrumb-item active">{{__('Dashboard')}}</li>
-
-                </ol>
-              </nav>
-            </div>
-
-@endsection
-@section('left-sidebar')
-<div class="col-lg-3">
-    <!--
-              *** MENUS AND FILTERS ***
-              _________________________________________________________
-              -->
-    <div class="card sidebar-menu mb-4">
-        <div class="card-header">
-            <h3 class="h4 card-title">
-                Admin Option
-            </h3>
-        </div>
-        <div class="card-body">
-            <ul class="list-unstyled">
-                <li class="nav-link">
-                    <a href="{{ route('admin.index') }}">
-                        Home
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="{{ url('admin/sellers')}}">
-                        Sellers
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="{{ url('admin/buyers')}}">
-                        Buyers
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="{{ url('admin/trainers')}}">
-                        Trainers
-                    </a>
-                </li>
-                 <li class="nav-link">
-                    <a href="{{ url('admin/products')}}">
-                        products
-                    </a>
-                </li>
-                 <li class="nav-link">
-                    <a href="{{ url('admin/category')}}">
-                        Category
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
+<div class="col-lg-12">
+    <!-- breadcrumb-->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">
+                    {{ Auth::user()->role->name}}
+                </a>
+            </li>
+            <li aria-current="page" class="breadcrumb-item active">
+                {{__('Dashboard')}}
+            </li>
+        </ol>
+    </nav>
 </div>
 @endsection
-@section('content')
+@section('left-sidebar')
 
- <div class="col-lg-9">
+@include('../../admin/partials/sidebarMenu')
+@endsection
+@section('content')
+<div class="col-lg-9">
     <div class="row">
         <div class="col-lg">
             @include('../layouts.error-success-msg')
@@ -74,198 +31,260 @@
     <div class="row">
         <div class="col-lg">
             <div class="jumbotron">
-                <h1>Add products</h1>
+                <h1>
+                    Add products
+                </h1>
                 <hr>
+                    <!--                 Add/edit form start  -->
+                   <form action="@if(isset($product_categories)) {{ route('admin.products.update', $product->id) }} @else {{ route('admin.products.store') }} @endif" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @if(isset($product_categories))
+                        @method('PUT')
+                    @endif
 
-                <!-- products Add, Edit, Update Form START -->
-                
-                <form  action="@if(isset($products)) {{route('admin.products.update', $products)}} @else {{route('admin.products.store')}} @endif" method="post" accept-charset="utf-8" enctype="multipart/form-data">
-    <div class="row">
-        @csrf
-        @if(isset($products))
-        @method('PUT')
-        @endif
-        <div class="col-lg-9">
-            <div class="form-group row">
-                <div class="col-lg-12">
-                    <label class="form-control-label">Title: </label>
-                    <input type="text" id="txturl" name="title" class="form-control " value="{{@$products->title}}" />
-                    <p class="small">{{config('app.url')}}<span id="url">{{@$products->slug}}</span>
-                    <input type="hidden" name="slug" id="slug" value="{{@$products->slug}}">
-                </p>
-            </div>
-        </div>
-        <div class="form-group row">
-            
-            <div class="col-lg-12">
-                <label class="form-control-label">Description: </label>
-                <textarea name="description" id="editor" class="form-control ">{!! @$products->description !!}</textarea>
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-6">
-                <label class="form-control-label">Price: </label>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">$</span>
-                    </div>
-                    <input type="text" class="form-control" placeholder="0.00" aria-label="Username" aria-describedby="basic-addon1" name="price" value="{{@$products->price}}" />
-                </div>
-            </div>
-            <div class="col-6">
-                <label class="form-control-label">Discount: </label>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">$</span>
-                    </div>
-                    <input type="text" class="form-control" name="discount_price" placeholder="0.00" aria-label="discount_price" aria-describedby="discount" value="{{@$products->discount_price}}" />
-                </div>
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="card col-sm-12 p-0 mb-2">
-                <div class="card-header align-items-center">
-                    <h5 class="card-title float-left">Extra Options</h5>
-                    <div class="float-right" >
-                        <button type="button" id="btn-add" class="btn btn-primary btn-sm">+</button>
-                        <button type="button" id="btn-remove" class="btn btn-danger btn-sm">-</button>
-                    </div>
-                    
-                </div>
-                <div class="card-body" id="extras">
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3">
-        <ul class="list-group row">
-            <li class="list-group-item active"><h5>Status</h5></li>
-            <li class="list-group-item">
-                <div class="form-group row">
-                    <select class="form-control" id="status" name="status">
-                        <option value="0" @if(isset($products) && $products->status == 0) {{'selected'}} @endif >Pending</option>
-                        <option value="1" @if(isset($products) && $products->status == 1) {{'selected'}} @endif>Publish</option>
-                    </select>
-                </div>
-                <div class="form-group row">
-                    <div class="col-lg-12">
-                        @if(isset($products))
-                        <input type="submit" name="submit" class="btn btn-primary btn-block " value="Update products" />
-                        @else
-                        <input type="submit" name="submit" class="btn btn-primary btn-block " value="Add products" />
-                        @endif
-                    </div>
-                    
-                </div>
-            </li>
-            <li class="list-group-item active"><h5>Feaured Image</h5></li>
-            <li class="list-group-item">
-                <div class="input-group mb-3">
-                    <div class="custom-file ">
-                        <input type="file"  class="custom-file-input" name="thumbnail" id="thumbnail">
-                        <label class="custom-file-label" for="thumbnail">Choose file</label>
-                    </div>
-                </div>
-                <div class="img-thumbnail  text-center">
-                    <img src="@if(isset($products)) {{asset('storage/'.$products->thumbnail)}} @else {{asset('images/no-thumbnail.jpeg')}} @endif" id="imgthumbnail" class="img-fluid" alt="">
-                </div>
-            </li>
-            <li class="list-group-item">
-                <div class="col-12">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" ><input id="featured" type="checkbox" name="featured" value="@if(isset($products)){{@$products->featured}}@else{{0}}@endif" @if(isset($products) && $products->featured == 1) {{'checked'}} @endif /></span>
+                        <div class="form-group">
+                            <label for="title">
+                                Title:
+                            </label>
+                            <input class="form-control" id="title" name="title" type="text" value="{{ @$product->title}}">
+                            </input>
+                            <br>
+                             <p class="small">
+                                {{ config('app.url').'/'}}<span id="url">
+                                </span>
+                            </p>
+                            <input type="text" hidden="true" value="" name="slug" value="@$product->slug" id="slug">
                         </div>
-                        <p type="text" class="form-control" name="featured" placeholder="0.00" aria-label="featured" aria-describedby="featured" >Featured products</p>
-                    </div>
-                </div>
-            </li>
-            
-            <li class="list-group-item active"><h5>Select Categories</h5></li>
-            <li class="list-group-item ">
-                <select name="category_id[]" id="select2" class="form-control" multiple>
-                 
-                    <option value=""></option>
-                    
-                </select>
-            </li>
-        </ul>
-    </div>
-</div>
-</form>
+                        <div class="form-group">
+                            <label for="description">
+                                Description
+                            </label>
+                            <textarea class="form-control" cols="30" id="editor" name="description" rows="10">{!! @$product->description !!}
+                            </textarea>
+                        </div>
+                         <div class="form-group">
+                                  <label for="thumbnail">Product Thumbnail</label>
 
+                                  @if(isset($product) && $product->thumbnail != '')
+                                   
+                                 <img class="img-thumbnails" src="{{ asset($product->thumbnailPath()) }}" alt="Product Thumbnail" width="200px">
+                                  <a href="javascript:;" onclick="deleteThumbnail()" class="btn btn-danger btn-md">Remove</a>
+                                
+                                  @endif
+                                  <input id="thumbnail" name="thumbnail" type="file" class="file" multiple  data-show-upload="false" data-show-caption="true" data-msg-placeholder="Select {thumbnail} for upload...">
+                           
+                        </div>
+                        <div class="form-group">
+                                <label for="images">Other Product Images</label>
 
-               <!--  products Add, Edit, Update Form END -->
+                                  @if(isset($product_categories) && isset($product->images))
+                                    @foreach($product->images as $image) 
+                        
+                                                 <img class="img-thumbnails" src="{{ asset($image->image) }}" alt="Product Image {{ $image->id}}" width="200px">
 
+                                         @endforeach
 
+                                  @endif
+                                        <input id="images" name="images[]" type="file" class="file" multiple  data-show-upload="false" data-show-caption="true" data-msg-placeholder="Select {files} for upload...">
+                           
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="status" name="status">
+                                <option selected="" value="0" @if (@$product->status == '0') {{ "selected" }} @endif>
+                                    Draft
+                                </option>
+                                <option value="1"  @if (@$product->status == '1') {{ "selected" }} @endif>
+                                    Publish
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            @php 
+                                $ids = (isset($product->categories) && $product->categories->count() > 0) ? array_pluck($product->categories, 'id') : null
+
+                            @endphp
+    
+                            <label for="parent_id">
+                                Parent Category
+                            </label>
+                            <select class="form-control" id="parent_id" multiple name="parent_id[]">
+                                @if(isset($categories))
+                                <option value="0">
+                                    Top Level
+                                </option>
+
+                                @foreach ($categories as $category)
+                                <option value="{{ $category->id}}" @if (!is_null($ids) && in_array($category->id, $ids)) {{ 'selected' }} @endif>
+                                    {{ $category->title }}
+                                </option>
+                                @endforeach
+                                @else
+                                 <option value="0">
+                                    Top Level
+                                </option>
+
+                                @foreach ($product_categories as $category)
+                                <option value="{{ $category->id}}" @if (!is_null($ids) && in_array($category->id, $ids)) {{ 'selected' }} @endif>
+                                    {{ $category->title }}
+                                </option>
+                                @endforeach
+                                @endif
+
+                            </select>
+                        </div>
+                        <div class="form-group row">
+                            <label for="discount">Price</label>
+                            <input type="text" class="form-control" name="price" value="{{@$product->price}}">
+                            <label for="discount_price">Discount Price</label>
+                            <input type="text" class="form-control" name="discount_price" value="{{ @$product->discount_price}}">
+
+                            <label for="qty">Product Quantity</label>
+                            <input type="text" class="form-control" name="qty" value="{{ @$product->qty}}">
+                        </div>
+                    <!--     <div class="form-group row">
+                                                <div class="card col-sm-12 p-0 mb-2">
+                                                    <div class="card-header align-items-center">
+                                                        <h5 class="card-title float-left">
+                                                            Extra Options
+                                                        </h5>
+                                                        <div class="float-right">
+                                                            <button class="btn btn-primary btn-sm" id="btn-add" type="button">
+                                                                +
+                                                            </button>
+                                                            <button class="btn btn-danger btn-sm" id="btn-remove" type="button">
+                                                                -
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body" id="extras">
+                                                        <div class="row align-items-center options">
+                                                            <div class="col-sm-4">
+                                                                <label class="form-control-label">
+                                                                    Option
+                                                                    <span class="count">
+                                                                        1
+                                                                    </span>
+                                                                </label>
+                                                                <input class="form-control" name="extras[option][]" placeholder="size" type="text" value="">
+                                                                </input>
+                                                            </div>
+                                                            <div class="col-sm-8">
+                                                                <label class="form-control-label">
+                                                                    Values
+                                                                </label>
+                                                                <input class="form-control" name="extras[values][]" placeholder="options1 | option2 | option3" type="text"/>
+                                                                <label class="form-control-label">
+                                                                    Additional Prices
+                                                                </label>
+                                                                <input class="form-control" name="extras[prices][]" placeholder="price1 | price2 | price3" type="text"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                             -->                        <div class="form-group">
+                            <label for="submit">
+                                Publish Product
+                            </label>
+                            <input class="btn btn-block btn-primary" type="submit">
+                            </input>
+                        </div>
+                    </form>
+                    @if(isset($product->thumbnail))
+                    <form action="{{ route('product.thumbnailRemove', $product->id) }}" method="POST" id="remove-thumbnail" style="display: none"> 
+                              @method('put')
+                              @csrf
+                                </form>
+
+                    @endif
+                    <!--    Add/edit form end -->
+                </hr>
             </div>
         </div>
-        
     </div>
-            
 </div>
-       
-    
-       
 @endsection
 
-@section('scripts')
+@section('scripts') 
+
+<!-- piexif.min.js is needed for auto orienting image files OR when restoring exif data in resized images and when you 
+    wish to resize images before upload. This must be loaded before fileinput.min.js -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.9/js/plugins/piexif.min.js" type="text/javascript"></script> -->
+<!-- sortable.min.js is only needed if you wish to sort / rearrange files in initial preview. 
+    This must be loaded before fileinput.min.js -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.9/js/plugins/sortable.min.js" type="text/javascript"></script> -->
+<!-- purify.min.js is only needed if you wish to purify HTML content in your preview for 
+    HTML files. This must be loaded before fileinput.min.js -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.9/js/plugins/purify.min.js" type="text/javascript"></script> -->
+<!-- popper.min.js below is needed if you use bootstrap 4.x. You can also use the bootstrap js 
+   3.3.x versions without popper.min.js. -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script> -->
+<!-- bootstrap.min.js below is needed if you wish to zoom and preview file content in a detail modal
+    dialog. bootstrap 4.x is supported. You can also use the bootstrap js 3.3.x versions. -->
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" type="text/javascript"></script> -->
+<!-- the main fileinput plugin file -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.9/js/fileinput.min.js"></script>
+<!-- optionally if you need a theme like font awesome theme you can include it as mentioned below -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.9/themes/fa/theme.js"></script>
+<!-- optionally if you need translation for your language then include  locale file as mentioned below -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.9/js/locales/(lang).js"></script> -->
+
+
 <script type="text/javascript">
-    $(function(){
-            ClassicEditor.create( document.querySelector( '#editor' ), {
-        toolbar: [ 'Heading', 'Link', 'bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote','undo', 'redo' ],
-    })
-.then( editor => {
-console.log( editor );
-} )
-.catch( error => {
-console.error( error );
-} );
-     
-        $('#txturl').on('keyup', function(){
-            const pretty_url = slugify($(this).val());
-            $('#url').html(slugify(pretty_url));
-            $('#slug').val(pretty_url);
-        })
-        
-        $('#select2').select2({
-            placeholder: "Select multiple Categories",
-        allowClear: true
-        });
-
-        $('#status').select2({
-            placeholder: "Select a status",
-        allowClear: true,
-        minimumResultsForSearch: Infinity
-        });
-$('#thumbnail').on('change', function() {
-var file = $(this).get(0).files;
-var reader = new FileReader();
-reader.readAsDataURL(file[0]);
-reader.addEventListener("load", function(e) {
-var image = e.target.result;
-$("#imgthumbnail").attr('src', image);
-});
-});
-$('#btn-add').on('click', function(e){
     
-        var count = $('.options').length+1;
-        $.get("").done(function(data){
-            
-            $('#extras').append(data);
-        })
-})
-$('#btn-remove').on('click', function(e){   
-    $('.options:last').remove();
-})
-$('#featured').on('change', function(){
-    if($(this).is(":checked"))
-        $(this).val(1)
-    else
-        $(this).val(0)
-})
-})
-</script>
+    $(document).ready(function() {
 
+       ClassicEditor
+        .create( document.querySelector( '#editor' ), {
+            toolbar: ['Heading', 'Link', 'bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote', 'undo', 'redo']
+        })
+        .then( editor => {
+            window.editor = editor;
+        } )
+        .catch( err => {
+            console.error( err.stack );
+        } );
+
+               $('#parent_id').select2({
+            placeholder: "Select a Parent Category",
+            allowClear: true,
+            minimumResultForSearch: Infinity
+        });
+        
+
+      $(".btn-success").click(function(){ 
+          var html = $(".clone").html();
+          $(".increment").after(html);
+      });
+
+      $("body").on("click",".btn-danger",function(){ 
+          $(this).parents(".control-group").remove();
+      });
+
+        $('#title').on('keyup', function() {
+            var url = slugify($(this).val());
+            $('#url').html(url);
+            $('#slug').val(url);
+        });
+
+    });
+    $("#images").fileinput({
+        'theme': "fa",
+        'maxFileCount': 4       
+    });
+    $('#thumbnail').fileinput({
+        'theme': 'fa'
+    });
+
+    function deleteThumbnail() {
+        let choice = confirm('remove thumbnail!');
+        if (choice) {
+            console.log('running');
+            $('#remove-thumbnail').submit();
+        }
+    }
+
+
+</script>
 @endsection
+

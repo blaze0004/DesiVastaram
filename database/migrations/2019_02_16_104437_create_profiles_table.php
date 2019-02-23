@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Schema\softDeletes;
+use Illuminate\Support\Facades\Schema;
 
 class CreateProfilesTable extends Migration
 {
@@ -17,11 +18,13 @@ class CreateProfilesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->string('name')->nullable();
-            $table->unsignedInteger('phone')->nullable();
-            $table->unsignedInteger('address')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
             $table->string('gender')->nullable();
-            $table->string('slug')->nullable();
+            $table->string('user_name')->nullable();
+            $table->string('status')->default(1);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

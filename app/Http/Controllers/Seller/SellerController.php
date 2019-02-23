@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -15,11 +16,9 @@ class SellerController extends Controller
      */
     public function index()
     {
-        $sellers = DB::table('users')
-            ->where('role_id', '2')
-            ->get();
+        $sellers = User::where('role_id', 2)->paginate(3);
 
-        return view('admin.sellers', compact('sellers'));
+        return view('admin.sellers.index', compact('sellers'));
     }
 
     /**
@@ -52,6 +51,8 @@ class SellerController extends Controller
     public function show($id)
     {
         //
+         $user = User::findOrFail($id);
+        return view('admin.sellers.profile', compact('user'));
     }
 
     /**
@@ -86,5 +87,29 @@ class SellerController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function activateDeactivateAccount($id) {
+
+        $user = User::findOrFail($id);
+        $profile = $user->profile;
+        
+        if ($profile->status == 0) {
+            # if deactivated 
+            $profile->status = 1;
+            if ($profile->save()) {
+                # code...
+                   return back()->with('message', 'Account Activated');
+            }
+         
+
+        } else {
+            $profile->status = 0;
+            
+            if ($profile->save()) {
+                # code...
+                   return back()->with('message', 'Account Deactivated');
+            }
+        }
     }
 }

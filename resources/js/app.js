@@ -23,6 +23,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const app = new Vue({
     el: '#app'
 });
+
 //import select 2
 window.select2 = require('select2');
 // import ckeditor classic
@@ -35,3 +36,4 @@ window.slugify = function(text) {
         .replace(/^-+/, '') // Trim - from start of text
         .replace(/-+$/, ''); // Trim - from end of text
 }
+

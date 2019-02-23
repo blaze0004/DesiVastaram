@@ -18,11 +18,14 @@ class CreateProductsTable extends Migration
             $table->string('title');
             $table->string('description');
             $table->unsignedInteger('user_id');
-            $table->unsignedInteger('product_image_id');
             $table->double('price');
-            $table->boolean('discount');
+            $table->unsignedInteger('qty');
+            $table->string('thumbnail');
+            $table->boolean('discount')->default(0);
             $table->float('discount_price', 3, 2);
             $table->text('options')->nullable();
+            $table->boolean('status')->default(0);
+            $table->string('slug');
             $table->timestamps();
             $table->softDeletes();
 

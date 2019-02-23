@@ -1,71 +1,28 @@
-
 @extends('../layouts/app')
 
 @section('breadcrumb')
-        <div class="col-lg-12">
-              <!-- breadcrumb-->
-              <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="#">{{ Auth::user()->role->name}}</a></li>
-                  <li aria-current="page" class="breadcrumb-item active">{{__('Dashboard')}}</li>
-
-                </ol>
-              </nav>
-            </div>
-
-@endsection
-@section('left-sidebar')
-<div class="col-lg-3">
-    <!--
-              *** MENUS AND FILTERS ***
-              _________________________________________________________
-              -->
-    <div class="card sidebar-menu mb-4">
-        <div class="card-header">
-            <h3 class="h4 card-title">
-                Admin Option
-            </h3>
-        </div>
-        <div class="card-body">
-            <ul class="list-unstyled">
-                <li class="nav-link">
-                    <a href="{{ route('admin.index') }}">
-                        Home
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="{{ url('admin/sellers')}}">
-                        Sellers
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="{{ url('admin/buyers')}}">
-                        Buyers
-                    </a>
-                </li>
-                <li class="nav-link">
-                    <a href="{{ url('admin/trainers')}}">
-                        Trainers
-                    </a>
-                </li>
-                 <li class="nav-link">
-                    <a href="{{ url('admin/products')}}">
-                        Products
-                    </a>
-                </li>
-                 <li class="nav-link">
-                    <a href="{{ url('admin/category')}}">
-                        Category
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
+<div class="col-lg-12">
+    <!-- breadcrumb-->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">
+                    {{ Auth::user()->role->name}}
+                </a>
+            </li>
+            <li aria-current="page" class="breadcrumb-item active">
+                {{__('Dashboard')}}
+            </li>
+        </ol>
+    </nav>
 </div>
 @endsection
-@section('content')
+@section('left-sidebar')
 
- <div class="col-lg-9">
+@include('../../admin/partials/sidebarMenu')
+@endsection
+@section('content')
+<div class="col-lg-9">
     <div class="row">
         <div class="col-lg">
             @include('../layouts.error-success-msg')
@@ -74,27 +31,39 @@
     <div class="row">
         <div class="col-lg">
             <div class="jumbotron">
+                <h1>All Products</h1><hr>
                 
-                <a href="{{ route('admin.products.create')}}" class="btn btn-primary mb-2 float-right">
+                <a class="btn btn-primary mb-2 float-right" href="{{ route('admin.products.create')}}">
                     Add Products
                 </a>
                 <table class="table table-stripped">
                     <thead>
                         <tr>
                             <th>
-                                Product ID
+                                #
                             </th>
                             <th>
-                                Name
+                                Title
                             </th>
                             <th>
-                                View
+                                Description
+                            </th>
+                           
+                            <th>
+                                Categories
                             </th>
                             <th>
-                                Update
+                                Price
+                            </th>
+                            
+                            <th>
+                                Seller Id
                             </th>
                             <th>
-                                Update
+                                Date Created
+                            </th>
+                            <th>
+                                Actions
                             </th>
                         </tr>
                     </thead>
@@ -105,19 +74,39 @@
                                 {{$product->id}}
                             </td>
                             <td>
-                                {{ $product->email}}
+                                {{ $product->title}}
                             </td>
                             <td>
-                                <input class="btn btn-primary" type="button" value="View">
-                                </input>
+                                {!! $product->description !!}
                             </td>
                             <td>
-                                <input class="btn btn-primary" type="button" value="Update">
-                                </input>
-                            </td>
+                                @if(isset($categories))
+                                    @foreach($categories as $category)
+                          
+                    
+                                    @endforeach
+                                @endif
+                               </td>
+                                
                             <td>
-                                <input class="btn btn-primary" type="button" value="Delete">
-                                </input>
+                                {{ $product->price }}
+                            </td>
+                               <td>
+                                   {{$product->user_id}}
+                               </td> 
+                            <td>    
+                                {{$product->created_at}}
+                            </td>
+
+                            <td>
+                                 <div aria-label="Basic example" class="btn-group" role="group">
+                                   <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-primary btn-md">Edit</a>  <a href="javascript:;" class="btn btn-sm btn-danger" onclick="confirmDelete();">Delete</a>
+                                <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST" id="delete-products" style="display: none">
+                                    @method('DELETE')
+                                    @csrf
+                                </form>
+                                </div>
+                               
                             </td>
                         </tr>
                         @endforeach
@@ -125,11 +114,25 @@
                 </table>
             </div>
         </div>
-        
     </div>
-            
+     <div class="row">
+        {{ $products->links() }}
+    </div>
 </div>
-       
-    
-       
+@endsection
+
+
+@section('scripts')
+    <script type="text/javascript">
+        
+        function confirmDelete() {
+            let choice = confirm("are you sure");
+            if (choice){
+                document.getElementById('delete-products').submit();    
+            }
+            
+        }
+
+
+    </script>
 @endsection

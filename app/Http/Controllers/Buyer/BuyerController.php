@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Buyer;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -16,11 +17,8 @@ class BuyerController extends Controller
     public function index()
     {
         //
-        $buyers = DB::table('users')
-            ->where('role_id', '3')
-            ->get();
-
-        return view('admin.buyers', compact('buyers'));
+        $buyers = User::where('role_id', 3)->paginate(3);
+        return view('admin.buyers.index', compact('buyers'));
     }
 
     /**
@@ -53,6 +51,8 @@ class BuyerController extends Controller
     public function show($id)
     {
         //
+        $user = User::findOrFail($id);
+        return view('admin.buyers.profile', compact('user'));
     }
 
     /**

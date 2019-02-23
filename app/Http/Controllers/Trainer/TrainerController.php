@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Trainer;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class TrainerController extends Controller
 {
@@ -16,11 +16,8 @@ class TrainerController extends Controller
     public function index()
     {
         //
-        $trainers = DB::table('users')
-            ->where('role_id', '4')
-            ->get();
-
-        return view('admin.trainers', compact('trainers'));
+        $trainers = User::where('role_id', 4)->paginate(3);
+        return view('admin.trainers.index', compact('trainers'));
     }
 
     /**
@@ -53,6 +50,8 @@ class TrainerController extends Controller
     public function show($id)
     {
         //
+        $user = User::findOrFail($id);
+        return view('admin.sellers.profile', compact('user'));
     }
 
     /**
