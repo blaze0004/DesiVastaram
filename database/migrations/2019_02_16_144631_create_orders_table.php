@@ -17,9 +17,12 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->date('order_date');
-            $table->date('required_date');
-            $table->date('shipped_date');
-            $table->unsignedInteger('shipper_id');
+            $table->string('buyer_name');
+            $table->unsignedInteger('billing_address_id')->default(1);
+            $table->unsignedInteger('shipping_address_id')->default(1);
+            $table->date('required_date')->nullable();
+            $table->date('shipped_date')->nullable();
+            $table->unsignedInteger('shipper_id')->nullable();
             $table->timestamps();
         });
     }

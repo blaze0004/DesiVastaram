@@ -1,5 +1,7 @@
 <?php
 
+use App\State;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,6 +40,18 @@ Route::group(['as' => 'admin.', 'middleware' => ['auth', 'admin'], 'prefix' => '
     Route::get('/trainers/sellers/{trainerId}', 'Trainer\TrainerController@showAllSellersOfTrainer')->name('trainers.showAllSellers');
     Route::post('/trainers/deactivate/{trainersId}', 'Trainer\TrainerController@deactivateAccount')->name('trainers.deactivate');
 
+    // City, State, Country Add/Remove CRUD
+
+    Route::get('/address', 'AddressController@index')->name('address.index');
+    Route::get('/address/create', 'AddressController@create')->name('address.create');
+    Route::post('/address/add/country', 'AddressController@addCountry')->name('address.addCountry');
+    Route::post('/address/add/state', 'AddressController@addState')->name('address.addState');
+    Route::post('/address/add/city', 'AddressController@addCity')->name('address.addCity');
+
+    Route::post('/address/update/country', 'AddressController@updateCountry')->name('address.updateCountry');
+    Route::post('/address/update/state', 'AddressController@updateState')->name('address.updateState');
+    Route::post('/address/update/city', 'AddressController@updateCity')->name('address.updateCity');
+
     Route::resource('/trainers', 'Trainer\TrainerController');
     Route::resource('/buyers', 'Buyer\BuyerController');
     Route::resource('/sellers', 'Seller\SellerController');
@@ -47,6 +61,14 @@ Route::group(['as' => 'admin.', 'middleware' => ['auth', 'admin'], 'prefix' => '
     Route::resource('/', 'Admin\AdminController');
 
 });
+
+// City, States, Countries Route For Address
+
+Route::get('/address/getCountryDetails', 'AddressController@getCountryDetails')->name('address.getCountryDetails');
+Route::get('/address/getStateList', 'AddressController@getStateList')->name('address.getStateList');
+Route::get('/address/getStateDetails', 'AddressController@getStateDetails')->name('address.getStateDetails');
+Route::get('/address/getCityList', 'AddressController@getCityList')->name('address.getCityList');
+Route::get('/address/getCityDetails', 'AddressController@getCityDetails')->name('address.getCityDetails');
 
 /*
 Route::group([], function() {
@@ -78,3 +100,5 @@ Route::post('/cart/changeQuantity', 'Cart\CartController@changeQuantity')->name(
 
 
 Route::get('/checkout', 'Order\OrderController@checkoutForm')->name('order.checkout');
+
+Route::post('/checkout/pay', 'Order\OrderController@makeCheckout')->name('checkout.pay');

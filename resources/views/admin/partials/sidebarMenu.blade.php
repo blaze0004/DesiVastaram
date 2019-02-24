@@ -43,6 +43,11 @@
                     </i>
                     Category
                 </a>
+                 </a><a class="nav-link" href="{{ route('admin.address.index') }}">
+                    <i class="fa fa-user">
+                    </i>
+                    City, State, Country Add/Remove
+                </a>
              
             </ul>
         </div>

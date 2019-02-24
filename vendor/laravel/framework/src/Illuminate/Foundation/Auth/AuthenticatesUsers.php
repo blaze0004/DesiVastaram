@@ -2,7 +2,6 @@
 
 namespace Illuminate\Foundation\Auth;
 
-use DesiVasataram\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -119,7 +118,7 @@ trait AuthenticatesUsers
      */
     protected function authenticated(Request $request, $user)
     {
-       
+        //
     }
 
     /**
@@ -146,8 +145,6 @@ trait AuthenticatesUsers
     {
         return 'email';
     }
-
-  
 
     /**
      * Log the user out of the application.

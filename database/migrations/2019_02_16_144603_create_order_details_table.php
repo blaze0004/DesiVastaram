@@ -18,8 +18,8 @@ class CreateOrderDetailsTable extends Migration
             $table->unsignedInteger('product_id');
             $table->unsignedInteger('order_id');
             $table->unsignedInteger('qty');
-            $table->float('discount', 3, 2);
-            $table->double('unit_price', 8, 3);
+            $table->float('discount');
+            $table->double('unit_price');
             $table->timestamps();
         });
     }

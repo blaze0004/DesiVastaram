@@ -226,4 +226,9 @@ return [
 
     ],
 
+    // Stripe Keys - Payment Method
+
+    'Stripe' => 'sk_test_tRkW8hFpTlbnYOvw1EycvdPr',
+
+
 ];
