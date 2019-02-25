@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Buyer;
 
 use App\Http\Controllers\Controller;
+use App\Profile;
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class BuyerController extends Controller
 {
@@ -51,8 +51,10 @@ class BuyerController extends Controller
     public function show($id)
     {
         //
-        $user = User::findOrFail($id);
-        return view('admin.buyers.profile', compact('user'));
+        $userEmail   = User::findOrFail($id)->only('email');
+        $userProfile = User::findOrFail($id)->profile;
+        $profile     = Profile::where('user_id', $id)->first();
+        return view('admin.buyers.profile', compact('userEmail', 'userProfile', 'profile'));
     }
 
     /**

@@ -19,7 +19,7 @@
 @endsection
 @section('left-sidebar')
 
-@include('../../admin/partials/sidebarMenu')
+@include('../layouts.dashboardSidebar')
 @endsection
 @section('content')
 <div class="col-lg-9">

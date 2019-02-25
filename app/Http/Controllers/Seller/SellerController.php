@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
+use App\Profile;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -51,8 +52,10 @@ class SellerController extends Controller
     public function show($id)
     {
         //
-         $user = User::findOrFail($id);
-        return view('admin.sellers.profile', compact('user'));
+        $userEmail   = User::findOrFail($id)->only('email');
+        $userProfile = User::findOrFail($id)->profile;
+        $profile = Profile::where('user_id', $id)->first();
+        return view('admin.sellers.profile', compact('userEmail', 'userProfile', 'profile'));
     }
 
     /**

@@ -68,7 +68,7 @@ _________________________________________________________
 
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
-                <a style="color: black" class="dropdown-item" href="{{ route('home') }}">
+                <a style="color: black" class="dropdown-item" href="{{ route('dashboard') }}">
 
                   {{ __('My Account') }}
 

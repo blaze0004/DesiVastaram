@@ -54853,7 +54853,6 @@ card.addEventListener('change', function (event) {
 var form = document.getElementById('payment-form');
 form.addEventListener('submit', function (event) {
   event.preventDefault();
-  console.log('hello');
   stripe.createToken(card).then(function (result) {
     if (result.error) {
       // Inform the user if there was an error.

@@ -8,13 +8,7 @@
                 <img alt="" class="img-fluid" src="{{ asset('img/main-slider1.jpg')}}"/>
             </div>
             <div class="item">
-                <img alt="" class="img-fluid" src="img/main-slider2.jpg"/>
-            </div>
-            <div class="item">
-                <img alt="" class="img-fluid" src="img/main-slider3.jpg"/>
-            </div>
-            <div class="item">
-                <img alt="" class="img-fluid" src="img/main-slider4.jpg"/>
+                <img alt="" class="img-fluid" src="{{ asset('img/main-slider2.jpg')}}"/>
             </div>
         </div>
         <!-- /#main-slider-->
@@ -178,16 +172,7 @@
                         <img alt="Get inspired" class="img-fluid" src="img/getinspired1.jpg"/>
                     </a>
                 </div>
-                <div class="item">
-                    <a href="#">
-                        <img alt="Get inspired" class="img-fluid" src="img/getinspired2.jpg"/>
-                    </a>
-                </div>
-                <div class="item">
-                    <a href="#">
-                        <img alt="Get inspired" class="img-fluid" src="img/getinspired3.jpg"/>
-                    </a>
-                </div>
+               
             </div>
         </div>
     </div>

@@ -1,4 +1,4 @@
-@extends('../layouts/app')
+@extends('layouts.app')
 
 @section('breadcrumb')
         <div class="col-lg-12">
@@ -14,82 +14,75 @@
 
 @endsection
 @section('left-sidebar')
-
-@include('../layouts.dashboardSidebar')
+@include('layouts.dashboardSidebar')
 @endsection
 @section('content')
 
  <div class="col-lg-9">
     <div class="row">
         <div class="col-lg">
-            @include('../layouts.error-success-msg')
+            @include('layouts.error-success-msg')
         </div>
     </div>
     <div class="row">
         <div class="col-lg">
             <div class="jumbotron">
-                <h1>All Categories</h1>
-                <a href="{{ Request::url().'/create' }}">
+                <h1>My Addresses</h1>
+                <a href="{{ route('addNewAddress') }}">
                     <button class="btn btn-primary mb-2 float-right">
-                        Add Category
+                        Add Address
                     </button>
                 </a>
                 <table class="table table-stripped">
                     <thead>
                         <tr>
                             <th>
-                                Title
+                                #
                             </th>
                             <th>
-                                Description
+                                First Name
                             </th>
                             <th>
-                                Slug
+                                Phone Number
                             </th>
                             <th>
-                                Categories
+                                Address
                             </th>
-                            <th>
-                                Date Created
-                            </th>
+                        
                             <th>
                                 Action
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($categories as $category)
+                        @foreach ($addresses as $address)
                         <tr>
                             <td>
-                                {{$category->title}}
+                                {{ $address->id}}
                             </td>
                             <td>
-                                {!! $category->description !!}
+                                {!! $address->firstName !!}
                             </td>
                             <td>
-                                {{ $category->slug}}
+                                {{ $address->phone }}
                             </td>
                             <td>
-                                @if($category->childrens)
-                                
-                                @foreach($category->childrens as $children) 
-                                {{$children->title}},
-                                @endforeach
-                                @else
-                                <b colspan="5">
-                                    {{"No Categories Found.."}}
-                                </b>
-                                @endif
+                               {{ $address->address_1 }}
                             </td>
                             <td>
-                                {{ $category->created_at}}
-                            </td>
-                            <td>
-                                <a href="{{ route('admin.category.edit', $category->id) }}" class="btn btn-sm btn-info">Edit</a> | <a href="javascript:;" class="btn btn-sm btn-danger" onclick="confirmDelete();">Delete</a>
-                                <form action="{{ route('admin.category.destroy', $category->id) }}" method="POST" id="delete-category" style="display: none">
+                                <div aria-label="Basic example" class="btn-group" role="group">
+                                   <a href="{{ route('updateAddress', $address->id) }}" class="btn btn-primary btn-md">Edit</a> 
+                                    <a href="javascript:;" class="btn btn-secondary btn-md"  @if(Auth::user()->profile->default_address_id == $address->id) {{''}} @else {{"onclick=confirmDefault();"}} @endif > @if(Auth::user()->profile->default_address_id == $address->id) {{'Default Address'}} @else {{'Make Default'}} @endif</a>
+                                    <form action="{{ route('makeDefaultAddress', $address->id) }}" method="POST" id="default-address" style="display: none">
+                                    
+                                    @csrf
+                                </form>
+                                    <a href="javascript:;" class="btn btn-sm btn-danger" onclick="confirmDelete();">Delete</a>
+                                <form action="{{ route('deleteAddress', $address->id) }}" method="POST" id="delete-address" style="display: none">
                                     @method('DELETE')
                                     @csrf
                                 </form>
+                                </div>
                             </td>
                         </tr>
                         @endforeach
@@ -100,7 +93,7 @@
         
     </div>
     <div class="row">
-        {{ $categories->links() }}
+        {{ $addresses->links() }}
     </div>
             
 </div>
@@ -111,12 +104,20 @@
 
 @section('scripts')
     <script type="text/javascript">
-        let choice = "are you sure";
+        
         function confirmDelete() {
+            let choice = confirm("are you sure");
             if (choice){
-                document.getElementById('delete-category').submit();    
+                document.getElementById('delete-address').submit();    
             }
             
+        }
+
+        function confirmDefault() {
+            let choice = confirm("are you sure");
+            if (choice){
+                $('#default-address').submit();
+            }
         }
     </script>
 @endsection

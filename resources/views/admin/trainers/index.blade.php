@@ -19,7 +19,7 @@
 @endsection
 @section('left-sidebar')
 
-@include('../../admin/partials/sidebarMenu')
+@include('../layouts.dashboardSidebar')
 @endsection
 @section('content')
 <div class="col-lg-9">
@@ -98,9 +98,13 @@
                                     <a class="btn btn-info btn-md" href="{{ route('admin.trainers.showAllSellers', $trainer->id) }}">
                                         All Products
                                     </a>
-                                    <a class="btn btn-danger btn-md" href="{{ route('admin.trainers.deactivate', $trainer->id) }}">
-                                        Delete
+                                     <a class="btn btn-danger btn-md" href="javascript:;" onclick="confirmActivateDeactivate()">
+                                        Activate/Deactivate
                                     </a>
+                                     <form method="POST" action="{{ route('admin.trainers.deactivate', $trainer->id) }}" style="display: none" id="activateDeactivate-trainer">
+                       
+                                       @csrf
+                        </form>
                                 </div>
                             </td>
                         </tr>
@@ -125,10 +129,10 @@
 
 @section('scripts')
 <script type="text/javascript">
-    function confirmDelete() {
+    function confirmActivateDeactivate() {
             let choice = confirm("are you sure");
             if (choice){
-                document.getElementById('delete-products').submit();    
+                document.getElementById('activateDeactivate-trainer').submit();    
             }
             
         }

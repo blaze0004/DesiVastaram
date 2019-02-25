@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
 use App\Profile;
+use App\User;
+use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -15,13 +17,15 @@ class ProfileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+    use RegistersUsers;
+
+    public function index($id)
     {
         //
-
-        $userEmail   = Auth::user()->only('email');
-        $userProfile = Auth::user()->profile;
-        return view('admin.myaccount', compact('userEmail', 'userProfile'));
+        $userEmail   = User::findOrFail($id)->only('email');
+        $userProfile = User::findOrFail($id)->profile;
+        return view('profile.myaccount', compact('userEmail', 'userProfile'));
     }
 
     /**
@@ -87,10 +91,16 @@ class ProfileController extends Controller
 
         // update Profile
 
-        if ($request->has('name')) {
-            $profile->name = $request->name;
+        
+        if ($request->has('firstName')) {
+            $profile->firstName = $request->firstName;
         }
 
+        if ($request->has('lastName')) {
+            $profile->lastName = $request->lastName;
+        }
+
+        
         if ($request->has('phone')) {
             $profile->phone = $request->phone;
         }
@@ -102,12 +112,6 @@ class ProfileController extends Controller
         if ($request->has('user_name')) {
             # code...
             $profile->user_name = $request->user_name;
-        }
-
-        if ($request->has('street')) {
-            # code...
-            $profile->address = $request->street;
-
         }
 
         if ($request->has('email')) {
@@ -135,10 +139,10 @@ class ProfileController extends Controller
     }
 
     // Reset User Password From Old Password
-    public function resetPassword(Request $request)
+    public function resetPassword(Request $request, $id)
     {
 
-        $user = Auth::user();
+        $user = User::findOrFail($id)->first();
 
         $this->validate($request, [
             'password'         => 'required',
@@ -151,12 +155,50 @@ class ProfileController extends Controller
             ])->save();
 
             $request->session()->flash('message', 'Password changed');
-            return redirect()->route('admin.profile.index');
+            return redirect()->route('myaccount');
 
         } else {
             $request->session()->flash('error', 'Password does not match');
-            return redirect()->route('admin.profile.index');
+            return redirect()->route('myaccount');
         }
 
+    }
+
+
+    public function addNewUser() {
+        return view('admin.addUser');
+    }
+
+    public function storeNewUser(Request $request) {
+
+        $this->validate($request, [
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'user_role' => ['required', 'integer', 'min:1', 'max:4']
+
+        ]);
+
+        $user = User::create([
+            'email' => $request['email'],
+            'role_id' => $request['user_role'],
+            'password' => bcrypt($request['password'])
+        ]);
+
+        Profile::create([
+            'user_id' => $user->id,
+            'firstName' => $request->firstName,
+            'lastName' => $request->lastName,
+            'gender' => $request->gender,
+            'phone' => $request->phone,
+            'user_name' => $request->user_name
+        ]);
+
+        return back()->with('message', "User Successfully Created!");
+    }
+
+
+    public function dashboard() {
+
+        return view('profile.dashboard');
     }
 }

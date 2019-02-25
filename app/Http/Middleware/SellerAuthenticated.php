@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class AdminAuthenticated
+class SellerAuthenticated
 {
     /**
      * Handle an incoming request.
@@ -16,8 +16,7 @@ class AdminAuthenticated
      */
     public function handle($request, Closure $next)
     {
-            
-         if(Auth::user()->role->name != 'Admin'){
+         if(Auth::user()->role->name != 'Seller'){
             return redirect('/dashboard')->with('error', "You are Not Allowed To Access");
         }
         return $next($request);

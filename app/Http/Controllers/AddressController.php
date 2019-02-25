@@ -6,7 +6,9 @@ use App\Address;
 use App\City;
 use App\Country;
 use App\State;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AddressController extends Controller
 {
@@ -38,6 +40,14 @@ class AddressController extends Controller
         return view('address.addNewLocation', compact('countries', 'states'));
     }
 
+
+    public function addNewAddressForm() {
+
+        $countries = Country::all('name', 'id');
+       
+        return view('address.addNewAddressForm', compact('countries'));
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -46,7 +56,27 @@ class AddressController extends Controller
      */
     public function store(Request $request)
     {
-        //addState
+        // validation Code Here
+        
+        $address = Address::create([
+            'user_id' => Auth::user()->id,
+            'firstName' => $request->firstName,
+            'lastName' => $request->lastName,
+            'address_1' => $request->address1,
+            'address_2' => $request->address2,
+            'city_id'  => $request->city,
+            'state_id' => $request->state,
+            'country_id' => $request->country,
+            'phone' => $request->phone,
+            'zipcode' => $request->zipcode
+        ]);
+
+        if ($request->makedefaultaddress == 'on') {
+            $user = User::findOrFail(Auth::id())->profile->update(
+                ['default_address_id' => $address->id]);
+            
+        }
+        return redirect('my_addresses')->with('message', 'Address Added Successfully!');
     }
     /**
      * Display the specified resource.
@@ -57,6 +87,18 @@ class AddressController extends Controller
     public function show(Address $address)
     {
         //
+        $addresses = Address::paginate();
+
+        return view('address.my_addresses', compact('addresses'));
+    }
+
+    public function my_addresses() {
+
+        if(Address::where('user_id', Auth::id())) {
+            $addresses = Address::where('user_id', Auth::id())->paginate(3);
+            return view('address.my_addresses', compact('addresses'));
+        }
+        return view('address.my_addresses');
     }
 
     /**
@@ -65,9 +107,16 @@ class AddressController extends Controller
      * @param  \App\Address  $address
      * @return \Illuminate\Http\Response
      */
-    public function edit(Address $address)
+    public function edit(Address $address, $id)
     {
         //
+
+        $address = Address::findOrFail($id)->first();
+        $countries = Country::all();
+        $states = State::where('country_id', $address->country_id)->get();
+        $cities  = City::where('state_id', $address->state_id)->get();
+
+        return view('address.editAddressForm', compact('address', 'countries', 'states', 'cities'));
     }
 
     /**
@@ -77,9 +126,30 @@ class AddressController extends Controller
      * @param  \App\Address  $address
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Address $address)
+    public function update(Request $request, $id)
     {
         //
+        $address = Address::findOrFail($id)->first();
+        $address->firstName = $request->firstName;
+        $address->lastName = $request->lastName;
+        $address->address_1 = $request->address1;
+        $address->address_2 = $request->address2;
+        $address->phone     = $request->phone;
+        $address->zipcode = $request->zipcode;
+        $address->country_id = $request->country;
+        $address->state_id = $request->state;
+        $address->city_id = $request->city;
+
+        $address->save();
+
+        
+        if ($request->makedefaultaddress == 'on') {
+            $user = User::findOrFail(Auth::id())->profile->update(
+                ['default_address_id' => $address->id]);
+            
+        }
+
+        return redirect('address.my_addresses')->with('message', 'Address Updated Successfully!');
     }
 
     /**
@@ -193,4 +263,11 @@ class AddressController extends Controller
 
         }
     }
+
+    public function makeDefaultAddress($id) {
+        
+        $user = User::find(Auth::user()->id)->profile->update(['default_address_id' => $id]);
+        return back()->with('message', 'Default Address Changed');
+    }
+
 }

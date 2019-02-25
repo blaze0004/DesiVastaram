@@ -19,7 +19,7 @@
 @endsection
 @section('left-sidebar')
 
-@include('../../admin/partials/sidebarMenu')
+@include('layouts.dashboardSidebar')
 @endsection
 @section('content')
 <div class="col-lg-9">
@@ -31,7 +31,7 @@
     <div class="row">
         <div class="col-lg">
               <div class="box">
-                <h1>My account</h1>
+                <h1>Seller Account</h1>
 
                 <p class="lead">Change your personal details or your password here.</p>
                 
@@ -67,40 +67,38 @@
                </form> -->
                 <h3 class="mt-5">Personal details</h3>
                 
-                <form action="{{ route('admin.profile.update', $user->id) }}" method="POST">
+                <form action="{{ route('admin.profile.update', $profile->id) }}" method="POST">
                   @csrf
                   @method('PUT')
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label for="name">Name</label>
-                        <input id="name" type="text" class="form-control" name="name" value="{{ $user->profile->name}}">
+                        <label for="firstName">First Name</label>
+                        <input id="firstName" type="text" class="form-control" name="firstName" value="{{ @$userProfile->firstName}}">
+                      </div>
+
+                      <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" name="lastName" class="form-control" value="{{ @$userProfile->lastName}}">
                       </div>
                       <div class="form-group">
                         <label for="name">User Name</label>
-                        <input id="user_name" type="text" class="form-control" name="user_name" value="{{ $user->profile->user_name}}">
+                        <input id="user_name" type="text" class="form-control" name="user_name" value="{{ @$userProfile->user_name}}">
                       </div>
                       <div class="form-group">
                         <label for="name">Gender</label>
                         <select name="gender" id="gender" class="form-control">
+                          <option default>Select Gender</option>
 
-                          <option value="male" @if($user->profile->gender == "male") {{'selected'}} @endif>Male</option>
-                          <option value="female" @if($user->profile->gender == "female") {{'selected'}} @endif>Female</option>
+                          <option value="male" @if(@$userProfile->gender == "male") {{'selected'}} @endif>Male</option>
+                          <option value="female" @if(@$userProfile->gender == "female") {{'selected'}} @endif>Female</option>
                         </select>
                       </div>
                     </div>
                    
                   </div>
                   <!-- /.row-->
-                  <div class="row">
                   
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="street">Street</label>
-                        <input id="street" type="text" class="form-control" name="street" value="{{ $user->profile->address}}">
-                      </div>
-                    </div>
-                  </div>
                   <!-- /.row-->
                   <div class="row">
                    
@@ -108,13 +106,13 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="phone">Telephone</label>
-                        <input id="phone" type="text" class="form-control" name="phone" value="{{ $user->profile->phone}}">
+                        <input id="phone" type="text" class="form-control" name="phone" value="{{ @$userProfile->phone}}">
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="email">Email</label>
-                        <input id="email" type="text" class="form-control" name="email" value="{{$user->email}}">
+                        <input id="email" type="text" class="form-control" name="email" value="{{@$userEmail['email']}}">
                       </div>
                     </div>
                     <div class="col-md-12 text-center">

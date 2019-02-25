@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Trainer;
 
 use App\Http\Controllers\Controller;
+use App\Profile;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -50,8 +51,10 @@ class TrainerController extends Controller
     public function show($id)
     {
         //
-        $user = User::findOrFail($id);
-        return view('admin.sellers.profile', compact('user'));
+        $userEmail   = User::findOrFail($id)->only('email');
+        $userProfile = User::findOrFail($id)->profile;
+        $profile = Profile::where('user_id', $id)->first();
+        return view('admin.trainers.profile', compact('userEmail', 'userProfile', 'profile'));
     }
 
     /**
@@ -86,5 +89,29 @@ class TrainerController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function activateDeactivateAccount($id) {
+
+        $user = User::findOrFail($id);
+        $profile = $user->profile;
+        
+        if ($profile->status == 0) {
+            # if deactivated 
+            $profile->status = 1;
+            if ($profile->save()) {
+                # code...
+                   return back()->with('message', 'Account Activated');
+            }
+         
+
+        } else {
+            $profile->status = 0;
+            
+            if ($profile->save()) {
+                # code...
+                   return back()->with('message', 'Account Deactivated');
+            }
+        }
     }
 }

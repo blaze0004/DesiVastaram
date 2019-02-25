@@ -41,27 +41,7 @@ class LoginController extends Controller
 
     protected function redirectTo() {
 
-            switch (Auth::user()->role->name) {
-                 case 'Admin':
-                # code...
-
-                return 'admin';
-                break;
-            case 'Seller':
-                return 'seller';
-                break;
-
-            case 'Buyer':
-                return 'buyer';
-                break;
-
-            case 'Trainer':
-                return 'trainer';
-                break;
-            default:
-                return '\home';
-                break;
-        }
+            return 'dashboard';
 
     }
 }

@@ -25,6 +25,9 @@ Route::group(['as' => 'admin.', 'middleware' => ['auth', 'admin'], 'prefix' => '
 
     Route::post('/resetPassword', 'Profile\ProfileController@resetPassword')->name('profile.resetPassword');
 
+    Route::get('/addUser', 'Profile\ProfileController@addNewUser')->name('addUser');
+    Route::post('/addUser', 'Profile\ProfileController@storeNewUser')->name('storeNewUser');
+
     // admin buyers additional routes
 
     Route::get('/buyers/orders/{buyerId}', 'Order\OrderController@showAllOrders')->name('buyers.showAllOrders');
@@ -38,12 +41,12 @@ Route::group(['as' => 'admin.', 'middleware' => ['auth', 'admin'], 'prefix' => '
     // Admin Trainer Additional Route
 
     Route::get('/trainers/sellers/{trainerId}', 'Trainer\TrainerController@showAllSellersOfTrainer')->name('trainers.showAllSellers');
-    Route::post('/trainers/deactivate/{trainersId}', 'Trainer\TrainerController@deactivateAccount')->name('trainers.deactivate');
+    Route::post('/trainers/deactivate/{trainersId}', 'Trainer\TrainerController@activateDeactivateAccount')->name('trainers.deactivate');
 
     // City, State, Country Add/Remove CRUD
 
-    Route::get('/address', 'AddressController@index')->name('address.index');
-    Route::get('/address/create', 'AddressController@create')->name('address.create');
+   
+    Route::get('/address', 'AddressController@create')->name('address.create');
     Route::post('/address/add/country', 'AddressController@addCountry')->name('address.addCountry');
     Route::post('/address/add/state', 'AddressController@addState')->name('address.addState');
     Route::post('/address/add/city', 'AddressController@addCity')->name('address.addCity');
@@ -56,12 +59,15 @@ Route::group(['as' => 'admin.', 'middleware' => ['auth', 'admin'], 'prefix' => '
     Route::resource('/buyers', 'Buyer\BuyerController');
     Route::resource('/sellers', 'Seller\SellerController');
     Route::resource('/profile', 'Profile\ProfileController');
-    Route::resource('/products', 'Product\ProductController');
+ 
     Route::resource('/category', 'Category\CategoryController');
     Route::resource('/', 'Admin\AdminController');
 
 });
 
+Route::group(['as' => 'admin.', 'middleware' => ['auth', 'product'], 'prefix' => 'admin'], function () {
+       Route::resource('/products', 'Product\ProductController');
+});
 // City, States, Countries Route For Address
 
 Route::get('/address/getCountryDetails', 'AddressController@getCountryDetails')->name('address.getCountryDetails');
@@ -70,14 +76,36 @@ Route::get('/address/getStateDetails', 'AddressController@getStateDetails')->nam
 Route::get('/address/getCityList', 'AddressController@getCityList')->name('address.getCityList');
 Route::get('/address/getCityDetails', 'AddressController@getCityDetails')->name('address.getCityDetails');
 
+// User Address CRUD START
+
+
+Route::get('/my_addresses', 'AddressController@my_addresses')->name('my_addresses');
+Route::get('/my_addresses/addNewAddress', 'AddressController@addNewAddressForm')->name('addNewAddressForm');
+Route::post('/my_addresses/addNewAddress', 'AddressController@store')->name('addNewAddress');
+Route::get('/my_addresses/{addressId}/edit', 'AddressController@edit')->name('address.edit');
+Route::post('/my_addresses/{addressId}update', 'AddressController@update')->name('updateAddress');
+Route::post('/my_addresses/{addressId}/delete', 'AddressController@destroy')->name('deleteAddress');
+Route::post('/my_addresses/{addressId}/makeDefault', 'AddressController@makeDefaultAddress')->name('makeDefaultAddress');
+// User Address CRUD END
+
+// User Profile Routes CRUD START
+
+Route::get('/dashboard', 'Profile\ProfileController@dashboard')->name('dashboard');
+Route::get('/myaccount/{userId}','Profile\ProfileController@index')->name('myaccount');
+Route::post('/resetPassword/{userId}', 'Profile\ProfileController@resetPassword')->name('resetPassword');
+Route::post('/myaccount/{userId}/save', 'Profile\ProfileController@update')->name('save_profile');
+
+
+
+// User Profile Routes CRUD END
+
 /*
 Route::group([], function() {
 Route::resource('/seller', "Seller\SellerController");
 });*/
 
 Route::group(['as' => 'product.', 'prefix' => 'product'], function () {
-
-    Route::put('/thumbnailRemove/{product_id}', 'Product\ProductController@removeThumbnail')->name('thumbnailRemove');
+    Route::post('/productImageDelete', 'Product\ProductController@productImageDelete')->name('productImageDelete');
     Route::get('/{product_slug}', 'Product\ProductController@single')->name('single');
 });
 
@@ -102,3 +130,4 @@ Route::post('/cart/changeQuantity', 'Cart\CartController@changeQuantity')->name(
 Route::get('/checkout', 'Order\OrderController@checkoutForm')->name('order.checkout');
 
 Route::post('/checkout/pay', 'Order\OrderController@makeCheckout')->name('checkout.pay');
+

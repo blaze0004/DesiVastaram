@@ -306,8 +306,7 @@
       $.each(response.statesDetails, function(key, value) {
         var statesOption = '<option value='+key+'>'+value+'</option>';
         $('#selectStateUpdate').append(statesOption);
-      }
-            );
+      });
     }
     ,
       error: function(jqXHR, textStatus, errorThrown) {
@@ -315,8 +314,7 @@
         console.log(JSON.stringify(jqXHR));
         console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
       }
-  }
-                                   );
+  });
   }
   );
   $('#selectStateUpdate').on('change', function(e) {
@@ -372,10 +370,9 @@
         console.log(JSON.stringify(jqXHR));
         console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
       }
-  }
-                                );
-  }
-  );
+  });
+  });
+  
   $('#cityStateNameUpdate').on('change', function(e) {
     var stateId = $(this).val();
     // console.log('change');

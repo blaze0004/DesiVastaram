@@ -1,6 +1,7 @@
-@extends('../layouts/app')
+@extends('layouts/app')
 
 @section('breadcrumb')
+
 <div class="col-lg-12">
     <!-- breadcrumb-->
     <nav aria-label="breadcrumb">
@@ -18,13 +19,14 @@
 </div>
 @endsection
 @section('left-sidebar')
-@include('../layouts.dashboardSidebar')
+
+@include('layouts.dashboardSidebar')
 @endsection
 @section('content')
 <div class="col-lg-9">
     <div class="row">
         <div class="col-lg">
-            @include('../layouts.error-success-msg')
+            @include('layouts.error-success-msg')
         </div>
     </div>
     <div class="row">
@@ -34,42 +36,44 @@
 
                 <p class="lead">Change your personal details or your password here.</p>
                 
-               <!--  <h3>Change password</h3>
-               <form action="{{ route('admin.profile.resetPassword') }}" method="POST">
-                 @csrf
-                 <div class="row">
-                   <div class="col-md-6">
-                     <div class="form-group">
-                       <label for="old_password">Old password</label>
-                       <input id="old_password" type="password" class="form-control" name="old_password">
-                     </div>
-                   </div>
-                 </div>
-                 <div class="row">
-                   <div class="col-md-6">
-                     <div class="form-group">
-                       <label for="password">New password</label>
-                       <input id="password" type="password" class="form-control" name="password">
-                     </div>
-                   </div>
-                   <div class="col-md-6">
-                     <div class="form-group">
-                       <label for="password_confirm">Retype new password</label>
-                       <input id="password_confirm" type="password" class="form-control" name="password_confirm">
-                     </div>
-                   </div>
-                 </div>
-                 /.row
-                 <div class="col-md-12 text-center">
-                   <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save new password</button>
-                 </div>
-               </form> -->
-                <h3 class="mt-5">Personal details</h3>
-                
-                <form action="{{ route('admin.profile.update', $profile->id) }}" method="POST">
+                <h3>Change password</h3>
+                @if(Auth::user()->role_id == '2')
+                <form action="{{ route('resetPassword', $profile->id) }}" method="POST">
+                @else
+                  <form action="{{ route('resetPassword', Auth::user()->id) }}" method="POST">
+                @endif
                   @csrf
-                  @method('PUT')
-                  @method('PUT')
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="old_password">Old password</label>
+                        <input id="old_password" type="password" class="form-control" name="old_password">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="password">New password</label>
+                        <input id="password" type="password" class="form-control" name="password">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="password_confirm">Retype new password</label>
+                        <input id="password_confirm" type="password" class="form-control" name="password_confirm">
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.row-->
+                  <div class="col-md-12 text-center">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save new password</button>
+                  </div>
+                </form>
+                <h3 class="mt-5">Personal details</h3>
+                <form action="{{ route('save_profile', Auth::id()) }}" method="POST">
+                  @csrf
+              
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
