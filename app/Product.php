@@ -8,12 +8,15 @@ use App\ProductImage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\File;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Product extends Model
 {
 
     //
     use SoftDeletes;
+    use SearchableTrait;
+
 
     protected $guarded = [];
 
@@ -21,7 +24,7 @@ class Product extends Model
 
     public function categories()
     {
-        return $this->belongsToMany("App\Category", 'category_product');
+        return $this->belongsToMany("App\Category", 'category_product')->select(array('title', 'description'));
     }
 
     public function categoriesTitle () {
@@ -40,6 +43,8 @@ class Product extends Model
         return $this->categories()->orderBy('created_at', 'asc')->get();
     }
 
+    
+  
     public static function boot() {
         parent::boot();
 

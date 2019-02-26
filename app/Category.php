@@ -15,7 +15,7 @@ class Category extends Model
 
     protected $dates = ['deleted_at'];
 
-    public function categories()
+    public function products()
     {
         return $this->belongsToMany("App\Product");
     }
@@ -24,4 +24,6 @@ class Category extends Model
     {
         return $this->belongsToMany(Category::class, 'category_parent', 'category_id', 'parent_id');
     }
+
+
 }

@@ -132,6 +132,6 @@ Route::get('/checkout', 'Order\OrderController@checkoutForm')->name('order.check
 Route::post('/checkout/pay', 'Order\OrderController@makeCheckout')->name('checkout.pay');
 
 //Route
-Route::get('search/autocomplete', 'SearchController@autocomplete');
 
+Route::get('/search/{query}', "SearchController@productSearch")->name('productSearch');
 Route::get('/search/keywordSuggestions', 'SearchController@productSearchSuggestions')->name('productSearchSuggestions');

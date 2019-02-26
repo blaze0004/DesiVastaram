@@ -15,7 +15,14 @@
                     <label for="categories">
                         Select Categories
                     </label>
+                  
                     <select id="categories" multiple="true" class="form-control" name="categories[]">
+                    
+                    @foreach($products->categories as $category)
+
+                      <option value="{{$category->id}}" selected>{{$category->title}}</option>
+                      
+                    @endforeach
                     </select>
                 </li>
             </ul>

@@ -308,7 +308,7 @@ _________________________________________________________
 
         </button>
 
-        <a href="basket.html" class="btn btn-outline-secondary navbar-toggler">
+        <a href="{{ route('showUserCart') }}" class="btn btn-outline-secondary navbar-toggler">
 
           <i class="fa fa-shopping-cart">
 
@@ -324,9 +324,137 @@ _________________________________________________________
 
           <li class="nav-item">
 
-            <a href="#" class="nav-link active">Home
+            <a href="{{ route('home') }}" class="nav-link active">Home
 
             </a>
+
+          </li>
+
+          <li class="nav-item dropdown menu-large">
+
+            <a href="#" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">Women
+
+              <b class="caret">
+
+              </b>
+
+            </a>
+
+            <ul class="dropdown-menu megamenu">
+
+              <li>
+
+                <div class="row">
+
+                  <div class="col-md-6 col-lg-3">
+
+                    <h5>SAREES 
+
+
+
+                    </h5>
+
+                    <ul class="list-unstyled mb-3">
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Tussar Sarees
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item"><a href="category.html" class="nav-link">
+                           Mulberry Silk Sarees
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Paithani Sarees
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Organic Dye Sarees
+
+                        </a>
+
+                      </li>
+
+                       <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Raw Silk Sarees
+
+                        </a>
+
+                      </li>
+
+                            <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Designer Sarees
+
+
+                        </a>
+
+                      </li>
+
+                    </ul>
+
+                  </div>
+
+                  <div class="col-md-6 col-lg-3">
+
+                    <h5>Kurti
+
+                    </h5>
+
+                    <ul class="list-unstyled mb-3">
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link"> Kurti Category 1
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link"> Kurti Category 2  
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link"> Kurti Category 3
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link"> Kurti Category 4
+                        </a>
+
+                      </li>
+
+                    </ul>
+
+                  </div>
+
+                </div>
+
+              </li>
+
+            </ul>
 
           </li>
 
@@ -572,235 +700,7 @@ _________________________________________________________
 
           <li class="nav-item dropdown menu-large">
 
-            <a href="#" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">Ladies
-
-              <b class="caret">
-
-              </b>
-
-            </a>
-
-            <ul class="dropdown-menu megamenu">
-
-              <li>
-
-                <div class="row">
-
-                  <div class="col-md-6 col-lg-3">
-
-                    <h5>Clothing
-
-                    </h5>
-
-                    <ul class="list-unstyled mb-3">
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">T-shirts
-
-                        </a>
-
-                      </li>
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Shirts
-
-                        </a>
-
-                      </li>
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Pants
-
-                        </a>
-
-                      </li>
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Accessories
-
-                        </a>
-
-                      </li>
-
-                    </ul>
-
-                  </div>
-
-                  <div class="col-md-6 col-lg-3">
-
-                    <h5>Shoes
-
-                    </h5>
-
-                    <ul class="list-unstyled mb-3">
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Trainers
-
-                        </a>
-
-                      </li>
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Sandals
-
-                        </a>
-
-                      </li>
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Hiking shoes
-
-                        </a>
-
-                      </li>
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Casual
-
-                        </a>
-
-                      </li>
-
-                    </ul>
-
-                  </div>
-
-                  <div class="col-md-6 col-lg-3">
-
-                    <h5>Accessories
-
-                    </h5>
-
-                    <ul class="list-unstyled mb-3">
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Trainers
-
-                        </a>
-
-                      </li>
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Sandals
-
-                        </a>
-
-                      </li>
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Hiking shoes
-
-                        </a>
-
-                      </li>
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Casual
-
-                        </a>
-
-                      </li>
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Hiking shoes
-
-                        </a>
-
-                      </li>
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Casual
-
-                        </a>
-
-                      </li>
-
-                    </ul>
-
-                    <h5>Looks and trends
-
-                    </h5>
-
-                    <ul class="list-unstyled mb-3">
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Trainers
-
-                        </a>
-
-                      </li>
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Sandals
-
-                        </a>
-
-                      </li>
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Hiking shoes
-
-                        </a>
-
-                      </li>
-
-                    </ul>
-
-                  </div>
-
-                  <div class="col-md-6 col-lg-3">
-
-                    <div class="banner">
-
-                      <a href="#">
-
-                        <img src="{{ asset('img/banner.jpg')}}" alt="" class="img img-fluid">
-
-                      </a>
-
-                    </div>
-
-                    <div class="banner">
-
-                      <a href="#">
-
-                        <img src="{{ asset('img/banner2.jpg')}}" alt="" class="img img-fluid">
-
-                      </a>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-              </li>
-
-            </ul>
-
-          </li>
-
-          <li class="nav-item dropdown menu-large">
-
-            <a href="#" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">Template
+            <a href="#" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">Accessories
 
               <b class="caret">
 
@@ -1046,6 +946,726 @@ _________________________________________________________
 
           </li>
 
+          <li class="nav-item dropdown menu-large">
+
+            <a href="#" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">Home Textiles
+
+              <b class="caret">
+
+              </b>
+
+            </a>
+
+            <ul class="dropdown-menu megamenu">
+
+              <li>
+
+                <div class="row">
+
+                  <div class="col-md-6 col-lg-3">
+
+                    <h5>Clothing
+
+                    </h5>
+
+                    <ul class="list-unstyled mb-3">
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">T-shirts
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Shirts
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Pants
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Accessories
+
+                        </a>
+
+                      </li>
+
+                    </ul>
+
+                  </div>
+
+                  <div class="col-md-6 col-lg-3">
+
+                    <h5>Shoes
+
+                    </h5>
+
+                    <ul class="list-unstyled mb-3">
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Trainers
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Sandals
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Hiking shoes
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Casual
+
+                        </a>
+
+                      </li>
+
+                    </ul>
+
+                  </div>
+
+                  <div class="col-md-6 col-lg-3">
+
+                    <h5>Accessories
+
+                    </h5>
+
+                    <ul class="list-unstyled mb-3">
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Trainers
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Sandals
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Hiking shoes
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Casual
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Hiking shoes
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Casual
+
+                        </a>
+
+                      </li>
+
+                    </ul>
+
+                  </div>
+
+                  <div class="col-md-6 col-lg-3">
+
+                    <h5>Featured
+
+                    </h5>
+
+                    <ul class="list-unstyled mb-3">
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Trainers
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Sandals
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Hiking shoes
+
+                        </a>
+
+                      </li>
+
+                    </ul>
+
+                    <h5>Looks and trends
+
+                    </h5>
+
+                    <ul class="list-unstyled mb-3">
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Trainers
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Sandals
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Hiking shoes
+
+                        </a>
+
+                      </li>
+
+                    </ul>
+
+                  </div>
+
+                </div>
+
+              </li>
+
+            </ul>
+
+          </li>
+          <li class="nav-item dropdown menu-large">
+
+            <a href="#" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">Fabric
+
+              <b class="caret">
+
+              </b>
+
+            </a>
+
+            <ul class="dropdown-menu megamenu">
+
+              <li>
+
+                <div class="row">
+
+                  <div class="col-md-6 col-lg-3">
+
+                    <h5>Clothing
+
+                    </h5>
+
+                    <ul class="list-unstyled mb-3">
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">T-shirts
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Shirts
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Pants
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Accessories
+
+                        </a>
+
+                      </li>
+
+                    </ul>
+
+                  </div>
+
+                  <div class="col-md-6 col-lg-3">
+
+                    <h5>Shoes
+
+                    </h5>
+
+                    <ul class="list-unstyled mb-3">
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Trainers
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Sandals
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Hiking shoes
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Casual
+
+                        </a>
+
+                      </li>
+
+                    </ul>
+
+                  </div>
+
+                  <div class="col-md-6 col-lg-3">
+
+                    <h5>Accessories
+
+                    </h5>
+
+                    <ul class="list-unstyled mb-3">
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Trainers
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Sandals
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Hiking shoes
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Casual
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Hiking shoes
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Casual
+
+                        </a>
+
+                      </li>
+
+                    </ul>
+
+                  </div>
+
+                  <div class="col-md-6 col-lg-3">
+
+                    <h5>Featured
+
+                    </h5>
+
+                    <ul class="list-unstyled mb-3">
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Trainers
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Sandals
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Hiking shoes
+
+                        </a>
+
+                      </li>
+
+                    </ul>
+
+                    <h5>Looks and trends
+
+                    </h5>
+
+                    <ul class="list-unstyled mb-3">
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Trainers
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Sandals
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Hiking shoes
+
+                        </a>
+
+                      </li>
+
+                    </ul>
+
+                  </div>
+
+                </div>
+
+              </li>
+
+            </ul>
+
+          </li>
+                    <li class="nav-item dropdown menu-large">
+
+            <a href="#" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">Events & Exhibitions
+
+              <b class="caret">
+
+              </b>
+
+            </a>
+
+            <ul class="dropdown-menu megamenu">
+
+              <li>
+
+                <div class="row">
+
+                  <div class="col-md-6 col-lg-3">
+
+                    <h5>Clothing
+
+                    </h5>
+
+                    <ul class="list-unstyled mb-3">
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">T-shirts
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Shirts
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Pants
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Accessories
+
+                        </a>
+
+                      </li>
+
+                    </ul>
+
+                  </div>
+
+                  <div class="col-md-6 col-lg-3">
+
+                    <h5>Shoes
+
+                    </h5>
+
+                    <ul class="list-unstyled mb-3">
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Trainers
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Sandals
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Hiking shoes
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Casual
+
+                        </a>
+
+                      </li>
+
+                    </ul>
+
+                  </div>
+
+                  <div class="col-md-6 col-lg-3">
+
+                    <h5>Accessories
+
+                    </h5>
+
+                    <ul class="list-unstyled mb-3">
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Trainers
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Sandals
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Hiking shoes
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Casual
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Hiking shoes
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Casual
+
+                        </a>
+
+                      </li>
+
+                    </ul>
+
+                  </div>
+
+                  <div class="col-md-6 col-lg-3">
+
+                    <h5>Featured
+
+                    </h5>
+
+                    <ul class="list-unstyled mb-3">
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Trainers
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Sandals
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Hiking shoes
+
+                        </a>
+
+                      </li>
+
+                    </ul>
+
+                    <h5>Looks and trends
+
+                    </h5>
+
+                    <ul class="list-unstyled mb-3">
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Trainers
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Sandals
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="category.html" class="nav-link">Hiking shoes
+
+                        </a>
+
+                      </li>
+
+                    </ul>
+
+                  </div>
+
+                </div>
+
+              </li>
+
+            </ul>
+
+          </li>
+
+
+
         </ul>
 
         <div class="navbar-buttons d-flex justify-content-end">
@@ -1093,25 +1713,26 @@ _________________________________________________________
 
   </nav>
 
+  
   <div id="search" class="collapse">
 
     <div class="container-fluid">
 
-      <form role="search" class="ml-auto">
+     <form class="ml-auto" id="searchForm">
 
         <div class="input-group">
-          
-          <input type="text" placeholder="Search" id="search" class="form-control">
+
+          <input type="text" placeholder="Search" id="searchQuery" class="form-control" name="query">
 
           <div class="input-group-append">
 
-            <button type="button" class="btn btn-primary">
+            <input type="submit" id="searchQueryBtn" class="btn btn-primary">
 
               <i class="fa fa-search">
 
               </i>
 
-            </button>
+            </input>
 
           </div>
 
@@ -1122,5 +1743,4 @@ _________________________________________________________
     </div>
 
   </div>
-
 </header>

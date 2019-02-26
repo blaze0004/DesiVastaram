@@ -6,6 +6,7 @@ use App\Category;
 use App\Http\Controllers\Controller;
 use App\Product;
 use App\ProductImage;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -287,13 +288,19 @@ class ProductController extends Controller
     {
 
         $product = Product::where('slug', $slug)->first();
-        return view('details', compact('product'));
+        $productOfSameCategory = Product::where('slug', $slug)->first()->categories()->first()->title;
+        $productOfSameCategory = Category::where('title', $productOfSameCategory)->first()->products;
+       
+        return view('details', compact('product', 'productOfSameCategory'));
     }
 
     public function allProductsWithCategory($category)
     {
+        $category = Category::where('title', $category)->first();
 
-        return view('category');
+        $products = $category->products()->paginate(1);
+        
+        return view('category', compact('products', 'category'));
     }
 
     public function productImageDelete(Request $request)

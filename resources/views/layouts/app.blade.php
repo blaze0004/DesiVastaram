@@ -4,7 +4,7 @@
     @include('../layouts.header')
     <div id="all">
         <div id="content">
-            <div class="container-fluid">
+            <div class="container">
                 <div class="row">
                     @yield('breadcrumb')
                 </div>

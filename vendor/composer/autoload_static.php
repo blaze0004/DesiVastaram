@@ -95,6 +95,7 @@ class ComposerStaticInit7a50a48749145b37e2882a258422f7df
         'N' => 
         array (
             'NunoMaduro\\Collision\\' => 21,
+            'Nicolaslopezj\\Searchable\\' => 25,
             'Nexmo\\' => 6,
         ),
         'M' => 
@@ -291,6 +292,10 @@ class ComposerStaticInit7a50a48749145b37e2882a258422f7df
         array (
             0 => __DIR__ . '/..' . '/nunomaduro/collision/src',
         ),
+        'Nicolaslopezj\\Searchable\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/nicolaslopezj/searchable/src',
+        ),
         'Nexmo\\' => 
         array (
             0 => __DIR__ . '/..' . '/nexmo/client/src',
@@ -460,6 +465,7 @@ class ComposerStaticInit7a50a48749145b37e2882a258422f7df
         'App\\Http\\Controllers\\Product\\ProductController' => __DIR__ . '/../..' . '/app/Http/Controllers/Product/ProductController.php',
         'App\\Http\\Controllers\\Profile\\ProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/Profile/ProfileController.php',
         'App\\Http\\Controllers\\RoleController' => __DIR__ . '/../..' . '/app/Http/Controllers/RoleController.php',
+        'App\\Http\\Controllers\\SearchController' => __DIR__ . '/../..' . '/app/Http/Controllers/SearchController.php',
         'App\\Http\\Controllers\\Seller\\SellerController' => __DIR__ . '/../..' . '/app/Http/Controllers/Seller/SellerController.php',
         'App\\Http\\Controllers\\ShipperController' => __DIR__ . '/../..' . '/app/Http/Controllers/ShipperController.php',
         'App\\Http\\Controllers\\Trainer\\TrainerController' => __DIR__ . '/../..' . '/app/Http/Controllers/Trainer/TrainerController.php',
@@ -469,7 +475,10 @@ class ComposerStaticInit7a50a48749145b37e2882a258422f7df
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\CheckForMaintenanceMode' => __DIR__ . '/../..' . '/app/Http/Middleware/CheckForMaintenanceMode.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
+        'App\\Http\\Middleware\\ProductAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/ProductAuthenticated.php',
         'App\\Http\\Middleware\\RedirectIfAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectIfAuthenticated.php',
+        'App\\Http\\Middleware\\SellerAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/SellerAuthenticated.php',
+        'App\\Http\\Middleware\\TrainerAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/TrainerAuthenticated.php',
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
@@ -484,7 +493,6 @@ class ComposerStaticInit7a50a48749145b37e2882a258422f7df
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
-        'App\\Region' => __DIR__ . '/../..' . '/app/Region.php',
         'App\\Role' => __DIR__ . '/../..' . '/app/Role.php',
         'App\\Shipper' => __DIR__ . '/../..' . '/app/Shipper.php',
         'App\\State' => __DIR__ . '/../..' . '/app/State.php',
@@ -2414,6 +2422,7 @@ class ComposerStaticInit7a50a48749145b37e2882a258422f7df
         'Nexmo\\Voice\\Call\\Inbound' => __DIR__ . '/..' . '/nexmo/client/src/Voice/Call/Inbound.php',
         'Nexmo\\Voice\\Message\\Callback' => __DIR__ . '/..' . '/nexmo/client/src/Voice/Message/Callback.php',
         'Nexmo\\Voice\\Message\\Message' => __DIR__ . '/..' . '/nexmo/client/src/Voice/Message/Message.php',
+        'Nicolaslopezj\\Searchable\\SearchableTrait' => __DIR__ . '/..' . '/nicolaslopezj/searchable/src/SearchableTrait.php',
         'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider' => __DIR__ . '/..' . '/nunomaduro/collision/src/Adapters/Laravel/CollisionServiceProvider.php',
         'NunoMaduro\\Collision\\Adapters\\Laravel\\ExceptionHandler' => __DIR__ . '/..' . '/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php',
         'NunoMaduro\\Collision\\Adapters\\Laravel\\Inspector' => __DIR__ . '/..' . '/nunomaduro/collision/src/Adapters/Laravel/Inspector.php',

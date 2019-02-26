@@ -227,42 +227,32 @@
 </script>
 <script src="{{ asset('js/front.js')}}">
 </script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>  
 <script type="text/javascript">
-    
-    data = [
-        'afsfafa',
-        'sfasfadfag',
-        'afasfgasdf',
-        'afasfgdfhaf',
-        'adfafajdsh'
-    ];
 
-    $('#search').autocomplete({
-        source: data,
-        minLength: 2,
-        select: function(key, value) {
-            alert('ahs');
+    
+    $('#searchForm').on('submit' , function (e) {
+        e.preventDefault();
+        var query = $('#searchQuery').val();
+
+        if (query == '') {
+            alert('Please Enter Some Keyword!');
+        } else {
+            document.location.replace('/search/'+query);
         }
     });
-    /*$('#search').on('keyup', function (e) {
-       var q = $(e.target).val();
-       $.ajax({
-          method: 'get', // Type of response and matches what we said in the route
-      url: '{{ route('productSearchSuggestions') }}', // This is the url we gave in the route
-          data: {'_token' : '{{ csrf_token() }}',
-            'q' : q
-          }, // a JSON object to send back
-          success: function(response){ // What to do if we succeed
-          //console.log(response);
-            
-    },
-    error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
-        console.log(JSON.stringify(jqXHR));
-        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
-    }
-});
-    });*/
+        
+ var path = "{{ route('productSearchSuggestions') }}";
+    $('#search').typeahead({
+         minLength: 2,
+        source:  function (query, process) {
+        return $.get(path, { query: query }, function (data) {
+                return process(data);
+            });
+        }
+    });
+
+
 </script>
 
 @yield('scripts')

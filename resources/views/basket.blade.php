@@ -50,10 +50,13 @@
                     </thead>
                     <tbody>
                         @if(isset(Auth::user()->cartItems))
-                        {{ $subtotal = 0 }}
+                        @php
+                            
+                            $subtotal = 0    
+
+                        @endphp
                             @foreach(Auth::user()->cartItems as $cartItem)
-                        }
-                        }
+                        
                         <tr>
                             <td>
                                 <a href="{{ route('product.single', $cartItem->product->slug) }}">
