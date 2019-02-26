@@ -50,7 +50,10 @@
                     </thead>
                     <tbody>
                         @if(isset(Auth::user()->cartItems))
+                        {{ $subtotal = 0 }}
                             @foreach(Auth::user()->cartItems as $cartItem)
+                        }
+                        }
                         <tr>
                             <td>
                                 <a href="{{ route('product.single', $cartItem->product->slug) }}">
@@ -73,7 +76,7 @@
                                 {{$cartItem->product->discount_price }}
                             </td>
                             <td>
-                                {{ ($cartItem->product->price - $cartItem->product->discount_price)*($cartItem->qty)}}
+                                {{ $subtotal += ($cartItem->product->price - $cartItem->product->discount_price)*($cartItem->qty)}}
                             </td>
                             <td>
                                 <a cartid="{{ $cartItem->id }}" href="#" id="removeFromCart">
@@ -91,7 +94,7 @@
                                 Total
                             </th>
                             <th colspan="2">
-                                ₹6998
+                                {{ $subtotal }}
                             </th>
                         </tr>
                     </tfoot>
@@ -241,7 +244,7 @@
                             Order subtotal
                         </td>
                         <th>
-                            ₹6998
+                            {{ $subtotal }}
                         </th>
                     </tr>
                     <tr>
@@ -265,7 +268,7 @@
                             Total
                         </td>
                         <th>
-                            ₹6998
+                           {{ $subtotal }}
                         </th>
                     </tr>
                 </tbody>

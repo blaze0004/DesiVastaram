@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers\Order;
 
+use App\Address;
+use App\BillingInfo;
 use App\Cart;
 use App\Http\Controllers\Controller;
 use App\Order;
+use App\OrderDetail;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Stripe\Charge;
 use Stripe\Stripe;
 
@@ -101,10 +106,11 @@ class OrderController extends Controller
         return view('admin.buyers.allOrders', compact('orders'));
     }
 
-    public function history()
+    public function history($id)
     {
-
-        return view('customer-orders');
+        $orders = Order::where('user_id', $id)->paginate(4);
+     //   dd($orders);
+        return view('customer-orders', compact('orders'));
     }
 
     public function showOrderDetails()
@@ -116,51 +122,83 @@ class OrderController extends Controller
     public function checkoutForm()
     {
 
-        $profile = User::findOrFail(Auth::user()->id);
+        $profile   = User::findOrFail(Auth::user()->id);
+        $addresses = Address::where(['user_id' => Auth::user()->id])->get();
+        if (Auth::user()->cartItems->count() > 0) {
+            return view('checkout', compact('profile', 'addresses'));
 
-        return view('checkout', compact('profile'));
+        } else {
+            return redirect('/')->with('error', 'Please Add/Buy Something first!');
+        }
     }
 
     // Confirm CheckOut To Place the Order
 
+    public function totalOrderAmount() {
+        $cart = Cart::where('user_id', Auth::user()->id)->get();
+        $subTotal = 0;
+        foreach($cart as $cartItem) {
+            $subtotal += ($cartItem->product->price - $cartItem->product->discount_price)*($cartItem->qty);
+        }
+        return $subtotal;
+    }
+
     public function makeCheckout(Request $request)
     {
 
-/*        Stripe::setApiKey('sk_test_tRkW8hFpTlbnYOvw1EycvdPr');
-
-        $charge = Charge::create([
-            'amount'        => 10000,
-            'currency'      => 'usd',
-            'source'        => $request->stripeToken,
-            'receipt_email' => 'admin@admin.com',
-        ]);
-
-        if ($charge->status == "failed") {
-
-        } else {
-*/          
-            $cart = Cart::where(['user_id' => Auth::user()->id])->get();
-            $order = Order::create([
-                'user_id' => Auth::id(),
-                'order_date' => now()
+        Stripe::setApiKey('sk_test_tRkW8hFpTlbnYOvw1EycvdPr');
+        DB::transaction(function () use ($request) {
+             $charge = Charge::create([
+                'amount'        => Order::totalCartAmount(),
+                'currency'      => 'usd',
+                'source'        => $request->stripeToken,
+                'receipt_email' => 'admin@admin.com',
             ]);
 
-            foreach($cart as $cartItem) {
-                $order->orderDetails->create([
-                    'order_id' => $order->id,
-                    'product_id' => $cartItem->product->id,
-                    'qty' => $cartItem->qty,
-                    'discount' => $cartItem->product->discount_price,
-                    'unit_price' => $cartItem->product->price
+            if ($charge->status == "failed") {
+
+            } else {
+
+                $address = Address::findOrFail($request->address_id)->first();
+                $billingAddress = new BillingInfo();
+                $billingAddress->user_id = Auth::user()->id;
+                $billingAddress->firstName = $address->firstName;
+                $billingAddress->lastName = $address->lastName;
+                $billingAddress->address_1 = $address->address_1;
+                $billingAddress->address_2 = $address->address_2;
+                $billingAddress->phone = $address->phone;
+                $billingAddress->city_id = $address->city_id;
+                $billingAddress->state_id = $address->state_id;
+                $billingAddress->country_id = $address->country_id;
+                $billingAddress->zipcode = $address->zipcode;
+
+                $billingAddress->save();
+
+                $cart  = Cart::where(['user_id' => Auth::user()->id])->get();
+                $order = Order::create([
+                    'user_id'         => Auth::id(),
+                    'billing_info_id' => $billingAddress->id,
+                    'payment_id'      => $charge->id,
+                    'order_date'      => Carbon::now()->toDateTimeString(),
                 ]);
+
+                foreach ($cart as $cartItem) {
+                        OrderDetail::create([
+                        'order_id'   => $order->id,
+                        'product_id' => $cartItem->product->id,
+                        'qty'        => $cartItem->qty,
+                        'discount'   => $cartItem->product->discount_price,
+                        'unit_price' => $cartItem->product->price,
+                    ]);
+                        $cartItem->delete();
+                }
+
+
+
             }
+        });
+           
 
-            
-
-
-
-
- /*       }*/
 
         return redirect('/')->with('message', 'Order Successfully Placed');
     }

@@ -1100,8 +1100,8 @@ _________________________________________________________
       <form role="search" class="ml-auto">
 
         <div class="input-group">
-
-          <input type="text" placeholder="Search" class="form-control">
+          
+          <input type="text" placeholder="Search" id="search" class="form-control">
 
           <div class="input-group-append">
 

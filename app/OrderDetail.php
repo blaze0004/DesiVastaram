@@ -14,4 +14,8 @@ class OrderDetail extends Model
         'qty',
         'discount', 'unit_price'
     ];
+
+    public function product() {
+    	return $this->belongsTo(Product::class);
+    }
 }

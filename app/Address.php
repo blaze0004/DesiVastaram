@@ -25,7 +25,7 @@ class Address extends Model
     	$cityName = '';
     	$stateName = '';
     	$countryName = '';
-
+    
     	return 'hello';	
     }
 }

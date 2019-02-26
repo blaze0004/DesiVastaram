@@ -109,3 +109,8 @@ function stripeTokenHandler(token) {
   // Submit the form
   form.submit();
 }
+
+
+// Jquery ui Autocomplete 
+
+import  'jquery-ui/ui/widgets/autocomplete';

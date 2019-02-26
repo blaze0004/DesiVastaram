@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Category;
 use App\Image;
 use App\ProductImage;
 use Illuminate\Database\Eloquent\Model;
@@ -21,6 +22,10 @@ class Product extends Model
     public function categories()
     {
         return $this->belongsToMany("App\Category", 'category_product');
+    }
+
+    public function categoriesTitle () {
+        return $this->belongsToMany(Category::class)->select(array('title'));
     }
 
     public function images() {

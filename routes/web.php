@@ -115,7 +115,7 @@ Route::group(['as' => 'category.', 'prefix' => 'category'], function () {
 
 Route::resource('/checkout', 'Order\OrderController');
 
-Route::get('/order/history', 'Order\OrderController@history')->name('order_history');
+Route::get('/order/history/{userId}', 'Order\OrderController@history')->name('order_history');
 Route::get('/order/details/', 'Order\OrderController@showOrderDetails')->name('order_details');
 Route::get('/wishlists', 'Wishlist\WishlistController@userWishlist')->name('userWishlist');
 Route::post('/wishlists/save', 'Wishlist\WishlistController@store')->name('wishlist.store');
@@ -131,3 +131,7 @@ Route::get('/checkout', 'Order\OrderController@checkoutForm')->name('order.check
 
 Route::post('/checkout/pay', 'Order\OrderController@makeCheckout')->name('checkout.pay');
 
+//Route
+Route::get('search/autocomplete', 'SearchController@autocomplete');
+
+Route::get('/search/keywordSuggestions', 'SearchController@productSearchSuggestions')->name('productSearchSuggestions');

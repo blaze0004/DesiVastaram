@@ -228,4 +228,41 @@
 <script src="{{ asset('js/front.js')}}">
 </script>
 
+<script type="text/javascript">
+    
+    data = [
+        'afsfafa',
+        'sfasfadfag',
+        'afasfgasdf',
+        'afasfgdfhaf',
+        'adfafajdsh'
+    ];
+
+    $('#search').autocomplete({
+        source: data,
+        minLength: 2,
+        select: function(key, value) {
+            alert('ahs');
+        }
+    });
+    /*$('#search').on('keyup', function (e) {
+       var q = $(e.target).val();
+       $.ajax({
+          method: 'get', // Type of response and matches what we said in the route
+      url: '{{ route('productSearchSuggestions') }}', // This is the url we gave in the route
+          data: {'_token' : '{{ csrf_token() }}',
+            'q' : q
+          }, // a JSON object to send back
+          success: function(response){ // What to do if we succeed
+          //console.log(response);
+            
+    },
+    error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+        console.log(JSON.stringify(jqXHR));
+        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+    }
+});
+    });*/
+</script>
+
 @yield('scripts')

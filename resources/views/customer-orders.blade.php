@@ -12,7 +12,7 @@
             </div>
 @endsection
 @section('left-sidebar')
-@include('layouts.customerSectionSidebar')
+@include('layouts.dashboardSidebar')
 @endsection
 @section("content")
   <div id="customer-orders" class="col-lg-9">
@@ -33,41 +33,15 @@
                       </tr>
                     </thead>
                     <tbody>
+                      @foreach($orders as $order)
                       <tr>
-                        <th># 1735</th>
-                        <td>15/03/2019</td>
-                        <td>₹6998</td>
-                        <td><span class="badge badge-info">Being prepared</span></td>
+                        <th># {{ $order->id}}</th>
+                        <td> {{ $order->order_date}}</td>
+                        <td>₹{{ $order->totalOrderAmount() }}</td>
+                        <td><span class="badge badge-info">{{ $order->status }}</span></td>
                         <td><a href="customer-order.html" class="btn btn-primary btn-sm">View</a></td>
                       </tr>
-                      <tr>
-                        <th># 1735</th>
-                        <td>15/03/2019</td>
-                        <td>₹6998</td>
-                        <td><span class="badge badge-info">Being prepared</span></td>
-                        <td><a href="customer-order.html" class="btn btn-primary btn-sm">View</a></td>
-                      </tr>
-                      <tr>
-                        <th># 1735</th>
-                        <td>15/03/2019</td>
-                        <td>₹6998</td>
-                        <td><span class="badge badge-success">Received</span></td>
-                        <td><a href="customer-order.html" class="btn btn-primary btn-sm">View</a></td>
-                      </tr>
-                      <tr>
-                        <th># 1735</th>
-                        <td>15/03/2019</td>
-                        <td>₹6998</td>
-                        <td><span class="badge badge-danger">Cancelled</span></td>
-                        <td><a href="customer-order.html" class="btn btn-primary btn-sm">View</a></td>
-                      </tr>
-                      <tr>
-                        <th># 1735</th>
-                        <td>15/03/2019</td>
-                        <td>₹6998</td>
-                        <td><span class="badge badge-warning">On hold</span></td>
-                        <td><a href="customer-order.html" class="btn btn-primary btn-sm">View</a></td>
-                      </tr>
+                      @endforeach
                     </tbody>
                   </table>
                 </div>

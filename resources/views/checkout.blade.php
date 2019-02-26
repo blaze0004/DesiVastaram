@@ -1,7 +1,6 @@
 @extends("layouts.app")
 @section('breadcrumb')
 <div class="col-lg-12">
-  
   <!-- breadcrumb-->
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -58,58 +57,24 @@
           <h3>
             Address
           </h3>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="name">Name
-                </label>
-                <input id="name" type="text" class="form-control" name="name" value="{{ @$profile->name}}">
-              </div>
-              <div class="form-group">
-                <label for="name">User Name
-                </label>
-                <input id="user_name" type="text" class="form-control" name="user_name" value="{{ @$profile->user_name}}">
-              </div>
-              <div class="form-group">
-                <label for="name">Gender
-                </label>
-                <select name="gender" id="gender" class="form-control">
-                  <option value="male" @if(@$profile->gender == "male") {{'selected'}} @endif>Male
-                  </option>
-                  <option value="female" @if(@$profile->gender == "female") {{'selected'}} @endif>Female
-                  </option>
-                </select>
+          <hr>
+          @foreach($addresses as $address) 
+          <label for="address_id">
+            <input type="radio" value="{{ $address->id }}" name="address_id" class="mr-2" @if($address->id == Auth::user()->profile->default_address_id) {{'checked'}} @endif> 
+            <div class="card" style="display: -webkit-inline-flex">
+              <div class="card-body">
+                <h4 class="card-title">{{ $address->firstName}} {{ $address->phone}}
+                </h4>
+                <p class="card-text"> {{ $address->address_1 }}
+                </p>
               </div>
             </div>
-          </div>
-          <!-- /.row-->
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="street">Street
-                </label>
-                <input id="street" type="text" class="form-control" name="street" value="{{ @$profile->address}}">
-              </div>
-            </div>
-          </div>
-          <!-- /.row-->
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="phone">Telephone
-                </label>
-                <input id="phone" type="text" class="form-control" name="phone" value="{{ @$profile->phone}}">
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="email">Email
-                </label>
-                <input id="email" type="text" class="form-control" name="email" value="{{@$profile->user->email}}">
-              </div>
-            </div>
-          </div>
+          </label>
+          <br>
+
+          @endforeach
           </br>
+          <a href="{{ route('addNewAddressForm') }}" class="btn btn-md btn-primary">Add New Address</a>
       </div>
       <div class="container tab-pane fade" id="payment-method">
         <br>
@@ -124,7 +89,7 @@
               <p>VISA and Mastercard only.
               </p>
               <div class="box-footer text-center">
-                <input type="radio" name="payment" value="payment2">
+                <input type="radio" name="payment"  id="payment-gateway" value="payment-gateway">
               </div>
             </div>
           </div>
@@ -135,14 +100,13 @@
               <p>You pay when you get it.
               </p>
               <div class="box-footer text-center">
-                <input type="radio" name="payment" value="payment3">
+                <input type="radio" name="payment" value="payment-cod" id="payment-cod">
               </div>
             </div>
           </div>
-          <div class="col-md-6">
-
+          <div class="col-md-6" id="payment-gateway-input" style="display: block">
             <script src="https://js.stripe.com/v3/">
-              </script>
+            </script>
             <div class="form-row"> 
               <label for="card-element">
                 Credit or debit card
@@ -185,6 +149,9 @@
             </tr>
           </thead>
           <tbody>
+            @php
+              $subtotal = 0
+            @endphp
             @if(isset(Auth::user()->cartItems))
             @foreach(Auth::user()->cartItems as $cartItem)
             <tr>
@@ -208,7 +175,7 @@
                 {{$cartItem->product->discount_price }}
               </td>
               <td>
-                {{ ($cartItem->product->price - $cartItem->product->discount_price)*($cartItem->qty)}}
+                {{ $subtotal += ($cartItem->product->price - $cartItem->product->discount_price)*($cartItem->qty) }}
               </td>
             </tr>
             @endforeach
@@ -220,7 +187,7 @@
                 Total
               </th>
               <th colspan="2">
-                ₹6998
+                {{ $subtotal }}
               </th>
             </tr>
           </tfoot>
@@ -265,7 +232,7 @@
                 Order subtotal
               </td>
               <th>
-                $446.00
+                {{$subtotal}}
               </th>
             </tr>
             <tr>
@@ -289,7 +256,7 @@
                 Total
               </td>
               <th>
-                $456.00
+                {{ $subtotal}}
               </th>
             </tr>
           </tbody>
@@ -326,6 +293,17 @@
     }
     else {
     }
+  });
+
+  $('#payment-gateway').on('change', function () {
+    $('#payment-gateway-input').removeAttr('style');
+  });
+   $('#payment-gateway').on('checked', function () {
+    $('#payment-gateway-input').removeAttr('style');
+  });
+
+  $('#payment-cod').on('change', function (){
+      $('#payment-gateway-input').attr('style', 'display:none');
   });
 </script>
 @endsection
