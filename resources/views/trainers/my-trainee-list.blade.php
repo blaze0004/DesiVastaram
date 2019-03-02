@@ -39,7 +39,7 @@
                         <td> {{ $trainee->firstName}}</td>
                         <td>₹{{ $trainee->phone }}</td>
                         <td><span class="badge badge-info">{{ $trainee->verified_by_trainer }}</span></td>
-                        <td><a href="customer-order.html" class="btn btn-primary btn-sm">View</a></td>
+                        <td><a href="{{ route('trainer.showTraineeDashboard', $trainee->id) }}" class="btn btn-primary btn-sm">View</a></td>
                       </tr>
                       @endforeach
                        <tr>

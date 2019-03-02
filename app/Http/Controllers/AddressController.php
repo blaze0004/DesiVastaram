@@ -35,17 +35,17 @@ class AddressController extends Controller
         //
 
         $countries = Country::all('name', 'id');
-        $states  = State::all('name', 'id');
-       
+        $states    = State::all('name', 'id');
+
         return view('address.addNewLocation', compact('countries', 'states'));
     }
 
-
-    public function addNewAddressForm() {
+    public function addNewAddressForm($id)
+    {
 
         $countries = Country::all('name', 'id');
-       
-        return view('address.addNewAddressForm', compact('countries'));
+
+        return view('address.addNewAddressForm', compact('countries', 'id'));
     }
 
     /**
@@ -54,36 +54,36 @@ class AddressController extends Controller
      * @param  \Illuminate\Http\Request  $requestaddState
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
         // validation Code Here
-        
+
         $address = Address::create([
-            'user_id' => Auth::user()->id,
-            'firstName' => $request->firstName,
-            'lastName' => $request->lastName,
-            'address_1' => $request->address1,
-            'address_2' => $request->address2,
-            'city_id'  => $request->city,
-            'state_id' => $request->state,
+            'user_id'    => $id,
+            'firstName'  => $request->firstName,
+            'lastName'   => $request->lastName,
+            'address_1'  => $request->address1,
+            'address_2'  => $request->address2,
+            'city_id'    => $request->city,
+            'state_id'   => $request->state,
             'country_id' => $request->country,
-            'phone' => $request->phone,
-            'zipcode' => $request->zipcode
+            'phone'      => $request->phone,
+            'zipcode'    => $request->zipcode,
 
         ]);
 
         if ($request->makedefaultaddress == 'on') {
-            $user = User::findOrFail(Auth::id())->profile->update(
+            $user = User::where('id', $id)->first()->profile->update(
                 ['default_address_id' => $address->id]);
-            
-        } 
+
+        }
         if ($request->makedefaultaddressfordistrict == 'on') {
-            $user = User::findOrFail(Auth::id())->profile->update([
-            'product_district_id' => $address->id
+            $user = User::where('id', $id)->first()->profile->update([
+                'product_district_id' => $address->id,
             ]);
         }
 
-        return redirect('my_addresses')->with('message', 'Address Added Successfully!');
+        return back()->with('message', 'Address Added Successfully!');
     }
     /**
      * Display the specified resource.
@@ -99,12 +99,19 @@ class AddressController extends Controller
         return view('address.my_addresses', compact('addresses'));
     }
 
-    public function my_addresses() {
+    public function my_addresses($id)
+    {
 
-        if(Address::where('user_id', Auth::id())) {
-            $addresses = Address::where('user_id', Auth::id())->paginate(3);
-            return view('address.my_addresses', compact('addresses'));
+        if (Address::where('user_id', $id)) {
+
+            $addresses = Address::where('user_id', $id)->paginate(3);
+            
+            if (Auth::user()->role_id == '4' && User::where('id', $id)->first()->role->name == "Seller") {
+                $trainee = User::where('id', $id)->first()->profile;
+                return view('address.my_addresses', compact('addresses', 'trainee', 'id'));
+            }
         }
+        
         return view('address.my_addresses');
     }
 
@@ -114,16 +121,16 @@ class AddressController extends Controller
      * @param  \App\Address  $address
      * @return \Illuminate\Http\Response
      */
-    public function edit(Address $address, $id)
+    public function edit(Address $address, $id, $user_id)
     {
         //
 
-        $address = Address::findOrFail($id)->first();
+        $address   = Address::where('id', $id)->first();
         $countries = Country::all();
-        $states = State::where('country_id', $address->country_id)->get();
-        $cities  = City::where('state_id', $address->state_id)->get();
-
-        return view('address.editAddressForm', compact('address', 'countries', 'states', 'cities'));
+        $states    = State::where('country_id', $address->country_id)->get();
+        $cities    = City::where('state_id', $address->state_id)->get();
+        $trainee = User::where('id', $user_id)->first()->profile;
+        return view('address.editAddressForm', compact('address', 'countries', 'states', 'cities', 'trainee'));
     }
 
     /**
@@ -133,32 +140,31 @@ class AddressController extends Controller
      * @param  \App\Address  $address
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, $user_id)
     {
         //
-        $address = Address::findOrFail($id)->first();
-        $address->firstName = $request->firstName;
-        $address->lastName = $request->lastName;
-        $address->address_1 = $request->address1;
-        $address->address_2 = $request->address2;
-        $address->phone     = $request->phone;
-        $address->zipcode = $request->zipcode;
+        $address             = Address::where('id', $id)->first();
+        $address->firstName  = $request->firstName;
+        $address->lastName   = $request->lastName;
+        $address->address_1  = $request->address1;
+        $address->address_2  = $request->address2;
+        $address->phone      = $request->phone;
+        $address->zipcode    = $request->zipcode;
         $address->country_id = $request->country;
-        $address->state_id = $request->state;
-        $address->city_id = $request->city;
+        $address->state_id   = $request->state;
+        $address->city_id    = $request->city;
 
         $address->save();
 
-        
         if ($request->makedefaultaddress == 'on') {
-            $user = User::findOrFail(Auth::id())->profile->update(
+            $user = User::where('id', $user_id)->first()->profile->update(
                 ['default_address_id' => $address->id]);
-            
-        } 
 
-         if ($request->makedefaultaddressfordistrict == 'on') {
-            $user = User::findOrFail(Auth::id())->profile->update([
-            'product_district_id' => $address->id
+        }
+
+        if ($request->makedefaultaddressfordistrict == 'on') {
+            $user = User::where('id', $user_id)->first()->profile->update([
+                'product_district_id' => $address->id,
             ]);
         }
 
@@ -176,45 +182,49 @@ class AddressController extends Controller
         //
     }
 
-    public function addCountry(Request $request) {
+    public function addCountry(Request $request)
+    {
 
         Country::create([
-            'name' => $request->countryName,    
-            'code' => $request->countryCode,
+            'name'          => $request->countryName,
+            'code'          => $request->countryCode,
             'currency_code' => $request->countryCurrency,
         ]);
 
         return back()->with('message', 'Country Added Successfully!');
     }
 
-    public function addState(Request $request) {
+    public function addState(Request $request)
+    {
 
         State::create([
-            'name' => $request->stateName,
-            'code' => $request->stateCode,
-            'country_id' =>$request->countryId
+            'name'       => $request->stateName,
+            'code'       => $request->stateCode,
+            'country_id' => $request->countryId,
         ]);
 
         return back()->with('message', 'State Added Successfully!');
     }
 
-    public function addCity(Request $request) {
+    public function addCity(Request $request)
+    {
 
         City::create([
-            'name' => $request->cityName,
-            'state_id' => $request->stateId
+            'name'     => $request->cityName,
+            'state_id' => $request->stateId,
         ]);
 
         return back()->with('message', 'City Added Successfully!');
     }
 
-    public function getCountryDetails(Request $request) {
+    public function getCountryDetails(Request $request)
+    {
 
         if (!$request->countryId) {
             return response('please select a country', 200);
         }
 
-        if($request->ajax()) {
+        if ($request->ajax()) {
 
             $countryDetails = Country::findOrFail($request->countryId)->first()->only('name', 'code', 'currency_code');
             return response(compact('countryDetails'), 200);
@@ -222,11 +232,12 @@ class AddressController extends Controller
         }
     }
 
-    public function getStateList(Request $request) {
+    public function getStateList(Request $request)
+    {
 
         if (!$request->countryId) {
             return response('Please Select A Country', 200);
-        } 
+        }
 
         if ($request->ajax()) {
 
@@ -237,8 +248,9 @@ class AddressController extends Controller
         }
     }
 
-    public function getStateDetails(Request $request) {
-       // dd($request->all());
+    public function getStateDetails(Request $request)
+    {
+        // dd($request->all());
         if (!$request->stateId) {
             return response('Please Select A State', 200);
         }
@@ -250,7 +262,8 @@ class AddressController extends Controller
         }
     }
 
-    public function getCityList(Request $request) {
+    public function getCityList(Request $request)
+    {
 
         if (!$request->stateId) {
             # code...
@@ -262,7 +275,8 @@ class AddressController extends Controller
         }
     }
 
-    public function getCityDetails (Request $request) {
+    public function getCityDetails(Request $request)
+    {
 
         if (!$request->cityId) {
             # code...
@@ -277,8 +291,9 @@ class AddressController extends Controller
         }
     }
 
-    public function makeDefaultAddress($id) {
-        
+    public function makeDefaultAddress($id)
+    {
+
         $user = User::find(Auth::user()->id)->profile->update(['default_address_id' => $id]);
         return back()->with('message', 'Default Address Changed');
     }

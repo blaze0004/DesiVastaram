@@ -33,7 +33,7 @@
       <div class="box">
           <h3 class="mt-5">Add New User
           </h3>
-          <form action="{{ route('admin.storeNewUser') }}" method="POST">
+          <form action="{{ route('trainer.add-trainee', Auth::id()) }}" method="POST">
             @csrf
             <div class="row">
               <div class="col-md-6">

@@ -153,6 +153,10 @@
                   <p>Request to become trainer</p>
                 <a href="{{ route('trainer-role-request', Auth::id()) }}" class="btn btn-md btn-primary center">Become A Trainer</a>
                 </div>  
+                <div class="col-md">
+                  <p>Request to become designer</p>
+                <a href="{{ route('trainer-role-request', Auth::id()) }}" class="btn btn-md btn-primary center">Become A Designer</a>
+                </div>  
                </div>
               @endif
             </div>

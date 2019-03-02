@@ -68,6 +68,12 @@ Route::group(['as' => 'admin.', 'middleware' => ['auth', 'admin'], 'prefix' => '
 });
 
 Route::group(['as' => 'productCRUD.', 'middleware' => ['auth', 'product'], 'prefix' => 'productCRUD'], function () {
+       Route::get('/products/{userId}', 'Product\ProductController@index')->name('showUserProducts');
+   Route::get('/products/{userId}/create', 'Product\ProductController@create')->name('addProductForm');
+       Route::post('/products/store/{userId}', 'Product\ProductController@store')->name('storeProduct');
+       Route::get('/products/{userId}/edit/{productId}', 'Product\ProductController@edit')->name('editProduct');
+       Route::post('/products/{userId}/update/{productId}', 'Product\ProductController@update')->name('updateProduct');
+
        Route::resource('/products', 'Product\ProductController');
 });
 // City, States, Countries Route For Address
@@ -81,11 +87,11 @@ Route::get('/address/getCityDetails', 'AddressController@getCityDetails')->name(
 // User Address CRUD START
 
 
-Route::get('/my_addresses', 'AddressController@my_addresses')->name('my_addresses');
-Route::get('/my_addresses/addNewAddress', 'AddressController@addNewAddressForm')->name('addNewAddressForm');
-Route::post('/my_addresses/addNewAddress', 'AddressController@store')->name('addNewAddress');
-Route::get('/my_addresses/{addressId}/edit', 'AddressController@edit')->name('address.edit');
-Route::post('/my_addresses/{addressId}/update', 'AddressController@update')->name('updateAddress');/*
+Route::get('/my_addresses/{userId}', 'AddressController@my_addresses')->name('my_addresses');
+Route::get('/my_addresses/addNewAddress/{userId}', 'AddressController@addNewAddressForm')->name('addNewAddressForm');
+Route::post('/my_addresses/addNewAddress/{userId}', 'AddressController@store')->name('addNewAddress');
+Route::get('/my_addresses/{addressId}/edit/{userId}', 'AddressController@edit')->name('address.edit');
+Route::post('/my_addresses/{addressId}/update/{userId}', 'AddressController@update')->name('updateAddress');/*
 Route::get('/my_addresses/{addressId}/update', 'AddressController@updateForm')->name('updateAddressForm');*/
 Route::post('/my_addresses/{addressId}/delete', 'AddressController@destroy')->name('deleteAddress');
 Route::post('/my_addresses/{addressId}/makeDefault', 'AddressController@makeDefaultAddress')->name('makeDefaultAddress');
@@ -148,8 +154,11 @@ Route::get('/search/keywordSuggestions', 'SearchController@productSearchSuggesti
 
 
 Route::get('/my-trainee/{trainerId}', 'Trainer\TrainerController@mytrainee')->name('trainer.my-trainee');
-Route::get('/my-trainee/{trainer-id}/add-trainee', 'Trainer\TrainerController@storeNewTraineeUser')->name('trainer.add-trainee');
-Route::get('/add-trainee/{trainerid}', 'Trainer\TrainerController@addtraineeform')->name('trainer.add-trainee-form'); 
+Route::post('/my-trainee/add-trainee', 'Trainer\TrainerController@storeNewTraineeUser')->name('trainer.add-trainee');
+Route::get('/add-trainee/{trainerid}', 'Trainer\TrainerController@addtraineeform')->name('trainer.add-trainee-form');
+Route::get('/my-trainee/trainee-dashboard/{traineeId}', 'Trainer\TrainerController@showTraineeDashboard')->name('trainer.showTraineeDashboard');
+Route::get('/my-trainee/trainee-myaccount/{traineeId}', 'Trainer\TrainerController@showTraineeMyAccount')->name('trainer.showTraineeMyAccount');
+Route::get('/my-trainee/trainee-myaccount/{traineeId}', 'Trainer\TrainerController@showTraineeMyAccount')->name('trainer.showTraineeMyAccount');
 
 
 

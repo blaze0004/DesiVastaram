@@ -29,7 +29,7 @@
             <div class="jumbotron">
                 <h1>Add New Address</h1>
                 <hr>
-                <form action="{{ route('addNewAddress') }}" method="POST">
+                <form action="{{ route('addNewAddress', $id) }}" method="POST">
                     @csrf
                 <div class="form-group">
                     <label for="firstName">First name</label>

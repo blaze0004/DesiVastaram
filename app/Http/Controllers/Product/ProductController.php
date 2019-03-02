@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Product;
 use App\ProductImage;
 use App\State;
+use App\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,18 +24,29 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
         //
+      //  dd(User::find($id)->first()->role->name);
         if (Auth::user()->role->name == "Admin") {
-             $products = Product::with('categories')->paginate(3); 
-        } else if(Auth::user()->role->name == "Seller") {
-             $products = Product::with('categories')->where(['user_id' => 2])->paginate(3);
-       
-        } else if(Auth::user()->role->name == "Trainer") {
-             $products = Product::with('categories')->where(['user_id' => 4])->paginate(3);
+             $products = Product::with('categories')->paginate(3);
+
+        } else if(Auth::user()->role->name == "Trainer" && User::where('id', $id)->first()->role->name == 'Seller') {
+            
+            
+            $products = Product::with('categories')->where('user_id', $id)->paginate(3);
+            
+            $trainee = User::where('id', $id)->first()->profile;
+
+            return view('admin.products.index', compact('products', 'trainee'));
+        
+        } else {
+        
+            $products = Product::with('categories')->where(['user_id' => $id])->paginate(3);
         }
-        return view('admin.products.index', compact('products'));
+
+
+        return view('admin.products.index', compact('products', 'id'));
     }
 
     /**
@@ -42,13 +54,15 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
         //
+        
         $categories = Category::all();
 
         return view('admin.products.create', [
             'categories' => $categories,
+            'user_id' => $id
         ]);
     }
 
@@ -58,9 +72,10 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+public function store(Request $request, $id)
     {
         //
+
 
         $extension = $request->file('thumbnail');
         $extension = strtolower($extension->getClientOriginalExtension());
@@ -87,14 +102,14 @@ class ProductController extends Controller
             $product   = Product::create([
                 'title'              => $request['title'],
                 'description'        => $request['description'],
-                'user_id'            => Auth::user()->id,
+                'user_id'            => $id,
                 'price'              => $request['price'],
                 'discount_price'     => $request['discount_price'],
                 'status'             => $request['status'],
                 'slug'               => $request->slug,
                 'thumbnail'          => $thumbnail,
                 'qty'                => $request->qty,
-                'state_id'          => Auth::user()->profile->product_district_id,
+                'state_id'          =>  User::where('id', $id)->first()->profile->product_district_id,
                 'totalImageUploaded' => count($request->images),
             ]);
 
@@ -120,7 +135,11 @@ class ProductController extends Controller
                 'image'      => $img,
             ]);
         }
-
+        if (Auth::user()->role_id == '4' && User::where('id', $id)->first()->role->name == 'Seller')
+        {
+            $trainee = User::where('id', $id)->first()->profile;
+            return view(route('showUserProducts', $id), compact('trainee'))->with('message', 'product added successfully');
+        }
         return back()->with('message', 'Product Added Successfully');
     }
 
@@ -158,7 +177,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, $user_id)
     {
         //
         // dd($request->all());
@@ -186,12 +205,12 @@ class ProductController extends Controller
         // dd($product);
         $product->title          = $request['title'];
         $product->description    = $request['description'];
-        $product->user_id        = Auth::user()->id;
+        $product->user_id        = $user_id;
         $product->price          = $request['price'];
         $product->discount_price = $request['discount_price'];
         $product->status         = $request['status'];
         $product->slug           = $request->slug;
-        $product->state_id       = Auth::user()->profile->product_district_id;
+        $product->state_id       = User::find($user_id)->profile->product_district_id;
         if ($request->hasFile('thumbnail')) {
             $extension = $request->file('thumbnail');
             //      dd($request->all());

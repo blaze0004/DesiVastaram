@@ -110,6 +110,11 @@ class OrderController extends Controller
     {
         $orders = Order::where('user_id', $id)->paginate(4);
         //   dd($orders);
+        if (Auth::user()->role_id == '4' && User::where('id', $id)->first()->role->name == 'Seller');
+        {
+            $trainee = User::where('id', $id)->first()->profile;
+            return view('customer-orders', compact('trainee', 'orders'));
+        }
         return view('customer-orders', compact('orders'));
     }
 

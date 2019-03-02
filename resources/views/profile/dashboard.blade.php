@@ -1,3 +1,125 @@
+@if (isset($trainee))
+@extends('layouts/app')
+
+@section('breadcrumb')
+
+<div class="col-lg-12">
+    <!-- breadcrumb-->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">
+                    {{ $trainee->firstName }}
+                </a>
+            </li>
+            <li aria-current="page" class="breadcrumb-item active">
+                {{__('Dashboard')}}
+            </li>
+        </ol>
+    </nav>
+</div>
+@endsection
+@section('left-sidebar')
+
+@include('layouts.dashboardSidebar')
+@endsection
+@section('content')
+<div class="col-lg-9">
+    <div class="row">
+        <div class="col-lg">
+            @include('layouts.error-success-msg')
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg mb-5" >
+        
+            <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+            <div id="chartContainer1" style="height: 300px; width: 100%;"></div>
+            <div id="chartContainer2" style="height: 300px; width: 100%;"></div>
+
+
+
+        </div>
+         </div>
+
+    </div>
+    
+</div>
+@endsection
+
+
+@section('scripts')
+
+
+<script type="text/javascript">
+    window.onload = function () {
+        var chart = new CanvasJS.Chart("chartContainer",
+        {
+            title:{
+                text: "Product Status Details"
+            },
+            legend: {
+                maxWidth: 80,
+                itemWidth: 50
+            },
+            data: [
+            {
+                type: "pie",
+                showInLegend: true,
+                legendText: "{indexLabel}",
+                dataPoints: [
+                    { x: 1, y: Math.floor(Math.random()*100), label: "Product Sold" },
+                    { x: 2, y: Math.floor(Math.random()*100), label: "Exchanged" },
+                    { x: 3, y: Math.floor(Math.random()*100), label: "Returned" }
+                ]
+            }
+            ]
+        });
+        chart.render();
+
+        var chart1 = new CanvasJS.Chart("chartContainer1",
+        {
+            title:{
+                text: "Monthly Details of Product Sold"
+            },
+            legend: {
+                maxWidth: 800,
+                itemWidth: 120
+            },
+            data: [
+            {
+                type: "pie",
+                showInLegend: true,
+                legendText: "{indexLabel}",
+                dataPoints: [
+                    { y: Math.floor(Math.random()*100), indexLabel: "January" },
+                    { y: Math.floor(Math.random()*100), indexLabel: "February" },
+                    { y: Math.floor(Math.random()*100), indexLabel: "March" },
+                    { y: Math.floor(Math.random()*100), indexLabel: "April"},
+                    { y: Math.floor(Math.random()*100), indexLabel: "May" },
+                    { y: Math.floor(Math.random()*100), indexLabel: "June"},
+                    { y: Math.floor(Math.random()*100), indexLabel: "July"},
+                    { y: Math.floor(Math.random()*100), indexLabel: "August"},
+                    { y: Math.floor(Math.random()*100), indexLabel: "September"},
+                    { y: Math.floor(Math.random()*100), indexLabel: "October"},
+                    { y: Math.floor(Math.random()*100), indexLabel: "November"},
+                    { y: Math.floor(Math.random()*100), indexLabel: "December"}
+                ]
+            }
+            ]
+        });
+        chart1.render();
+    }
+</script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+
+
+    
+
+@endsection
+
+@else 
 @extends('layouts/app')
 
 @section('breadcrumb')
@@ -246,3 +368,6 @@
 
 @endsection
 
+
+
+@endif

@@ -1,3 +1,7 @@
+@php
+  
+use App\User;
+@endphp
 @extends('../layouts/app')
 @section('breadcrumb')
 <div class="col-lg-12">
@@ -6,7 +10,8 @@
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
         <a href="#">
-          {{ Auth::user()->role->name}}
+
+          {{ User::find($user_id)->role->name}}
         </a>
       </li>
       <li aria-current="page" class="breadcrumb-item active">
@@ -35,10 +40,9 @@
         </h1>
         <hr>
         <p>
-        
         </p>
         <!--  Add/edit form start  -->
-        <form action="@if(isset($product_categories)) {{ route('productCRUD.products.update', $product->id) }} @else {{ route('productCRUD.products.store') }} @endif" method="POST" enctype="multipart/form-data">
+        <form action="@if(isset($product_categories)) {{ route('productCRUD.products.update', $product->id) }} @else {{ route('productCRUD.storeProduct', $user_id) }} @endif" method="POST" enctype="multipart/form-data">
           @csrf
           @if(isset($product_categories))
           @method('PUT')

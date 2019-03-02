@@ -1,3 +1,70 @@
+@if (isset($trainee))
+
+<div class="col-lg-3">
+    <!--
+              *** MENUS AND FILTERS ***
+              _________________________________________________________
+              -->
+    <div class="card sidebar-menu">
+        <div class="card-header">
+            <h3 class="h4 card-title">
+               
+                    User Panel
+               
+            </h3>
+        </div>
+        <div class="card-body">
+            <ul class="nav nav-pills flex-column">
+                <a class="nav-link active" href="{{ route('trainer.showTraineeDashboard', $trainee->id) }}">
+                    <i class="fa fa-list">
+                    </i>
+                    Dashboard
+                </a>
+                <a class="nav-link" href="{{ route('myaccount', $trainee->user->id) }}">
+                    <i class="fa fa-user">
+                    </i>
+                    My Account
+                </a>
+      
+
+                <!-- For Video and Chat -->
+                <a class="nav-link" href="{{ route('chats') }}">
+                    <i class="fa fa-user"></i>
+                    Messages And Alert
+                </a>    
+
+                <a class="nav-link" href="{{ route('my_addresses', $trainee->user->id) }}">
+                     <i class="fa fa-user">
+                    </i>
+                    My Addresses
+                </a>
+                 <a class="nav-link" href="{{ route('order_history', $trainee->user->id) }}">
+                     <i class="fa fa-user">
+                    </i>
+                    My Orders
+                </a>
+                @if(Auth::user()->role_id == '1' || Auth::user()->role_id == '2' || Auth::user()->role_id == '4')
+                <a class="nav-link" href="{{ route('productCRUD.showUserProducts', $trainee->user->id) }}">
+                    <i class="fa fa-user">
+                    </i>
+                    Products
+                </a>
+                 <a class="nav-link" href="{{ route('product-order.list', $trainee->user->id) }}">
+                    <i class="fa fa-user">
+                    </i>
+                    My Product Sell
+                 </a>
+                @endif
+
+                
+             
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+@else
 <div class="col-lg-3">
     <!--
               *** MENUS AND FILTERS ***
@@ -97,7 +164,7 @@
                     My Orders
                 </a>
                 @if(Auth::user()->role_id == '1' || Auth::user()->role_id == '2')
-                <a class="nav-link" href="{{ route('productCRUD.products.index') }}">
+                <a class="nav-link" href="{{ route('productCRUD.showUserProducts', Auth::id()) }}">
                     <i class="fa fa-user">
                     </i>
                     Products
@@ -121,3 +188,5 @@
         </div>
     </div>
 </div>
+
+@endif

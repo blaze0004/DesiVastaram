@@ -17,7 +17,6 @@
 @include('layouts.dashboardSidebar')
 @endsection
 @section('content')
-
  <div class="col-lg-9">
     <div class="row">
         <div class="col-lg">
@@ -28,7 +27,8 @@
         <div class="col-lg">
             <div class="jumbotron">
                 <h1>My Addresses</h1>
-                <a href="{{ route('addNewAddress') }}">
+
+                <a href="{{ route('addNewAddress', $id) }}">
                     <button class="btn btn-primary mb-2 float-right">
                         Add Address
                     </button>
@@ -70,8 +70,9 @@
                                {{ $address->address_1 }}
                             </td>
                             <td>
+
                                 <div aria-label="Basic example" class="btn-group" role="group">
-                                   <a href="{{ route('address.edit', $address->id) }}" class="btn btn-primary btn-md">Edit</a> 
+                                   <a href="{{ route('address.edit', ['id' => $address->id, 'user_id' => $id]) }}" class="btn btn-primary btn-md">Edit</a> 
                                     <a href="javascript:;" class="btn btn-secondary btn-md"  @if(Auth::user()->profile->default_address_id == $address->id) {{''}} @else {{"onclick=confirmDefault();"}} @endif > @if(Auth::user()->profile->default_address_id == $address->id) {{'Default Address'}} @else {{'Make Default'}} @endif</a>
                                     <form action="{{ route('makeDefaultAddress', $address->id) }}" method="POST" id="default-address" style="display: none">
                                     

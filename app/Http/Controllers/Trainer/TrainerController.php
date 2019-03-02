@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Profile;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TrainerController extends Controller
 {
@@ -119,6 +120,7 @@ class TrainerController extends Controller
     {
         $trainees = Profile::where('trainer_id', $id)->paginate(4);
 
+
         return view('trainers.my-trainee-list', compact('trainees'));
     }
 
@@ -130,7 +132,7 @@ class TrainerController extends Controller
     }
 
 
-    public function storeNewTraineeUser(Request $request) {
+    public function storeNewTraineeUser(Request $request ) {
 
         $this->validate($request, [
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -151,9 +153,21 @@ class TrainerController extends Controller
             'lastName' => $request->lastName,
             'gender' => $request->gender,
             'phone' => $request->phone,
-            'user_name' => $request->user_name
+            'user_name' => $request->user_name,
+            'trainer_id' => Auth::id()
         ]);
 
         return back()->with('message', "Trainee Successfully Created!");
     }
+
+    public function showTraineeDashboard($id) {
+        $trainee = Profile::where([
+           'id' => $id,
+           'trainer_id' => Auth::id() 
+        ])->first();
+
+        return view('profile.dashboard', compact('trainee'));
+    }
+
+
 }
