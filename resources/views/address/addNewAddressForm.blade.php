@@ -82,7 +82,12 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="makedefaultaddress"><input type="checkbox" name="makedefaultaddress"> Make this address my default address</label>
+                    <label for="makedefaultaddress"><input type="checkbox" name="makedefaultaddress" > Make this address my default address</label>
+                </div>
+
+                  
+                 <div class="form-group">
+                    <label for="makedefaultaddressfordistrict"><input type="checkbox" name="makedefaultaddressfordistrict"> Make this default address for product selling</label>
                 </div>
 
                 <div class="form-group">

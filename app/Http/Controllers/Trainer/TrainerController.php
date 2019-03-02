@@ -122,9 +122,38 @@ class TrainerController extends Controller
         return view('trainers.my-trainee-list', compact('trainees'));
     }
 
-    public function addtrainee()
+    public function addtraineeform()
     {
-        dd('hello');
-        return view('home');
+
+
+        return view('trainers.add-trainee');
+    }
+
+
+    public function storeNewTraineeUser(Request $request) {
+
+        $this->validate($request, [
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'user_role' => ['required', 'integer', 'min:2', 'max:2']
+
+        ]);
+
+        $user = User::create([
+            'email' => $request['email'],
+            'role_id' => $request['user_role'],
+            'password' => bcrypt($request['password'])
+        ]);
+
+        Profile::create([
+            'user_id' => $user->id,
+            'firstName' => $request->firstName,
+            'lastName' => $request->lastName,
+            'gender' => $request->gender,
+            'phone' => $request->phone,
+            'user_name' => $request->user_name
+        ]);
+
+        return back()->with('message', "Trainee Successfully Created!");
     }
 }

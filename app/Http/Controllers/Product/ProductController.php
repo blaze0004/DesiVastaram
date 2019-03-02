@@ -6,6 +6,7 @@ use App\Category;
 use App\Http\Controllers\Controller;
 use App\Product;
 use App\ProductImage;
+use App\State;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -93,6 +94,7 @@ class ProductController extends Controller
                 'slug'               => $request->slug,
                 'thumbnail'          => $thumbnail,
                 'qty'                => $request->qty,
+                'state_id'          => Auth::user()->profile->product_district_id,
                 'totalImageUploaded' => count($request->images),
             ]);
 
@@ -148,6 +150,7 @@ class ProductController extends Controller
         return view('admin.products.create', compact('product', 'product_categories'));
     }
 
+
     /**
      * Update the specified resource in storage.
      *
@@ -162,12 +165,10 @@ class ProductController extends Controller
 
         $request->validate([
             'title'          => 'required|min:10',
-            'slug'           => 'required|min:10|unique:products',
             'description'    => 'required|min:50',
             'status'         => 'required',
             'parent_id'      => 'required',
             'price'          => 'required',
-            'discount_price' => 'lt:price',
             'qty'            => 'required|min:1',
             'thumbnail'      => Rule::requiredIf(Product::findOrFail($id)->thumbnail == ''),
             
@@ -178,17 +179,6 @@ class ProductController extends Controller
         //    dd($request->all());
 
         $count = Product::findOrFail($id)->totalImageUploaded;
-
-        try {
-
-            if ($count + count([$request->images]) > 4) {
-                return back()->with('error', 'Other image are more than 4, please delete some and try again!');
-            }
-        } catch (Exception $e) {
-            if (($count + 1) > 4) {
-                return back()->with('error', 'Other image are more than 4, please delete some and try again!');
-            }
-        }
 
         $names = [];
 
@@ -201,6 +191,7 @@ class ProductController extends Controller
         $product->discount_price = $request['discount_price'];
         $product->status         = $request['status'];
         $product->slug           = $request->slug;
+        $product->state_id       = Auth::user()->profile->product_district_id;
         if ($request->hasFile('thumbnail')) {
             $extension = $request->file('thumbnail');
             //      dd($request->all());
@@ -303,7 +294,7 @@ class ProductController extends Controller
 
     public function allProductsWithCategory($category)
     {
-        $category = Category::where('title', $category)->first();
+        $category = Category::where('slug', $category)->first();
 
         $products = $category->products()->paginate(1);
         
@@ -341,5 +332,13 @@ class ProductController extends Controller
 
             }
         }
+    }
+
+
+    public function showProductByStates($name) {
+        $stateInfo = State::where('name', $name )->first();
+        $products = Product::where('state_id', $stateInfo->id)->paginate(3);
+        
+        return view('states', compact('products', 'stateInfo'));
     }
 }

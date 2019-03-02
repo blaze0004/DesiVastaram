@@ -1,5 +1,6 @@
 @extends('layouts/app')
 @section('breadcrumb')
+
 <div class="col-lg-12">
   <!-- breadcrumb-->
   <nav aria-label="breadcrumb">

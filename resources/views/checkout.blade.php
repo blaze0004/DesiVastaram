@@ -35,7 +35,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link flex-sm-fill text-sm-center disabled" id="payment-method-pill" data-toggle="pill" href="#payment-method">
+            <a class="nav-link flex-sm-fill text-sm-center disabled" id="payment-method-pill" data-toggle="pill" href="#payment_method">
               <i class="fa fa-money">
               </i>
               Payment Method
@@ -76,35 +76,27 @@
           </br>
           <a href="{{ route('addNewAddressForm') }}" class="btn btn-md btn-primary">Add New Address</a>
       </div>
-      <div class="container tab-pane fade" id="payment-method">
+      <div class="container tab-pane fade" id="payment_method">
         <br>
         <h3>
           Payment Method
         </h3>
         <div class="row">
           <div class="col-md-6">
-            <div class="box payment-method">
+         <div class="box payment_method">
               <h4>Payment gateway
               </h4>
               <p>VISA and Mastercard only.
               </p>
-              <div class="box-footer text-center">
-                <input type="radio" name="payment"  id="payment-gateway" value="payment-gateway">
-              </div>
+              <select name="payment_method" id="payment-method-select">
+                <option default>Select Payment Method</option>
+                <option value="1">Stripe (Visa Or Debit Card)</option>
+                <option value="2">Cash On Delivery</option>
+              </select>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="box payment-method">
-              <h4>Cash on delivery
-              </h4>
-              <p>You pay when you get it.
-              </p>
-              <div class="box-footer text-center">
-                <input type="radio" name="payment" value="payment-cod" id="payment-cod">
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6" id="payment-gateway-input" style="display: block">
+         
+          <div class="col-md-6" id="payment-gateway-input" style="display: none">
             <script src="https://js.stripe.com/v3/">
             </script>
             <div class="form-row"> 
@@ -277,14 +269,14 @@
       $('#payment-method-pill').addClass('active').removeClass('disabled');
       $('#address-pill').removeClass('active');
       $('#address').removeClass('active').addClass('fade');
-      $('#payment-method').removeClass('fade').addClass('active');
+      $('#payment_method').removeClass('fade').addClass('active');
       $(this).html('Continue to Order Review <i class="fa fa-chevron-right"></i>');
       $('')
     }
     else if ($('#payment-method-pill').hasClass('active'))  {
       $('#order-review-pill').addClass('active').removeClass('disabled');
       $('#payment-method-pill').removeClass('active');
-      $('#payment-method').removeClass('active').addClass('fade');
+      $('#payment_method').removeClass('active').addClass('fade');
       $('#order-review').removeClass('fade').addClass('active');
       $(this).html('Continue to Checkout <i class="fa fa-chevron-right"></i>');
     }
@@ -295,15 +287,17 @@
     }
   });
 
-  $('#payment-gateway').on('change', function () {
-    $('#payment-gateway-input').removeAttr('style');
-  });
-   $('#payment-gateway').on('checked', function () {
-    $('#payment-gateway-input').removeAttr('style');
+  $('#payment-method-select').on('change', function (e) {
+    if ($(e.target).val() == 1) {
+      $('#payment-gateway-input').css({display: 'block'});
+    } else if ($(e.target).val() == 2) {
+      $('#payment-gateway-input').css({display: 'none'});
+
+    }
   });
 
-  $('#payment-cod').on('change', function (){
-      $('#payment-gateway-input').attr('style', 'display:none');
-  });
+  
+
+
 </script>
 @endsection

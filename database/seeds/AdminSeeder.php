@@ -41,6 +41,11 @@ class AdminSeeder extends Seeder
             'description' => 'Trainer Role'
         ]);
 
+        Role::create([
+            'name' => 'Quality Assurance',
+            'description' => 'Quality Assurance Role'
+        ]);
+
 
         Profile::create([
         	'user_id' => $user->id,

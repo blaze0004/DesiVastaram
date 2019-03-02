@@ -22,10 +22,11 @@ class CreateProductsTable extends Migration
             $table->unsignedInteger('qty');
             $table->string('thumbnail');
             $table->boolean('discount')->default(0);
-            $table->float('discount_price');
+            $table->float('discount_price')->nullable();
             $table->text('options')->nullable();
             $table->boolean('status')->default(0);
             $table->string('slug');
+            $table->unsignedInteger('state_id');
             $table->unsignedInteger('totalImageUploaded')->default(0);
             $table->timestamps();
             $table->softDeletes();

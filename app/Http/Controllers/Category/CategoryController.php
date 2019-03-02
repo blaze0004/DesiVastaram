@@ -117,4 +117,8 @@ class CategoryController extends Controller
             return back()->with('message', 'Error occured during deletion!');
         }
     }
+
+    public function allProductByUser($id) {
+        return;
+    }
 }

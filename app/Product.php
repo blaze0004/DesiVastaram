@@ -27,6 +27,10 @@ class Product extends Model
         return $this->belongsToMany("App\Category", 'category_product')->select(array('title', 'description'));
     }
 
+    public function allProductCategories() {
+        
+    }
+
     public function categoriesTitle () {
         return $this->belongsToMany(Category::class)->select(array('title'));
     }

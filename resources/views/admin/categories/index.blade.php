@@ -1,3 +1,8 @@
+@php
+use Illuminate\Support\Str;    
+
+@endphp
+
 @extends('../layouts/app')
 
 @section('breadcrumb')
@@ -64,7 +69,7 @@
                                 {{$category->title}}
                             </td>
                             <td>
-                                {!! $category->description !!}
+                                {!! Str::limit($category->description) !!}
                             </td>
                             <td>
                                 {{ $category->slug}}

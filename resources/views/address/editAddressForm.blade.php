@@ -14,7 +14,7 @@
 
 @endsection
 @section('left-sidebar')
-@include('admin/partials/sidebarMenu')
+@include('layouts.dashboardSidebar')
 @endsection
 @section('content')
  <div class="col-lg-9">
@@ -93,6 +93,10 @@
                 <div class="form-group">
                     <label for="makedefaultaddress"><input type="checkbox" name="makedefaultaddress"> Make this address my default address</label>
                 </div>
+                    <div class="form-group">
+                    <label for="makedefaultaddressfordistrict"><input type="checkbox" name="makedefaultaddressfordistrict"> Make this default address for product selling</label>
+                </div>
+
 
                 <div class="form-group">
                     <input type="submit" value="Add Address" class="form-control">

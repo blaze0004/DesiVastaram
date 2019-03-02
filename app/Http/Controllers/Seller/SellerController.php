@@ -115,4 +115,20 @@ class SellerController extends Controller
             }
         }
     }
+
+    public function getAllSeller() {
+
+        $sellers = User::where('role_id', 2)->get();
+        return $sellers;
+
+    }
+
+    public function showQualitySampleForm() {
+
+        $sellers = getAllSeller();
+
+        return view('quality.quality-sample-form', compact('sellers'));
+    }
+
+    
 }

@@ -53,6 +53,7 @@
                                     <option value="{{__('2')}}">Seller</option>
                                     <option value="{{__('3')}}">Buyer</option>
                                     <option value="{{__('4')}}">Trainer</option>
+                                    <option value="{{__('5')}}">Quality Assurance</option>
                 </select>
                 </div>
                 <div class="form-group">

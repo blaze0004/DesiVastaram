@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -25,5 +26,14 @@ class Category extends Model
         return $this->belongsToMany(Category::class, 'category_parent', 'category_id', 'parent_id');
     }
 
+    public static function productss($arr) {
+
+        $category = new Collection();
+        
+
+        return $category;
+
+
+    }
 
 }

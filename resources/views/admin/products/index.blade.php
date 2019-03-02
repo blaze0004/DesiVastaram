@@ -1,3 +1,8 @@
+@php
+use Illuminate\Support\Str;    
+
+@endphp
+
 @extends('../layouts/app')
 
 @section('breadcrumb')
@@ -77,7 +82,8 @@
                                 {{ $product->title}}
                             </td>
                             <td>
-                                {!! $product->description !!}
+
+                                {!! Str::limit($product->description) !!}
                             </td>
                             <td>
                                 @if(isset($categories))
@@ -100,8 +106,8 @@
 
                             <td>
                                  <div aria-label="Basic example" class="btn-group" role="group">
-                                   <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-primary btn-md">Edit</a>  <a href="javascript:;" class="btn btn-sm btn-danger" onclick="confirmDelete();">Delete</a>
-                                <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST" id="delete-products" style="display: none">
+                                   <a href="{{ route('productCRUD.products.edit', $product->id) }}" class="btn btn-primary btn-md">Edit</a>  <a href="javascript:;" class="btn btn-sm btn-danger" onclick="confirmDelete();">Delete</a>
+                                <form action="{{ route('productCRUD.products.destroy', $product->id) }}" method="POST" id="delete-products" style="display: none">
                                     @method('DELETE')
                                     @csrf
                                 </form>

@@ -85,7 +85,8 @@ Route::get('/my_addresses', 'AddressController@my_addresses')->name('my_addresse
 Route::get('/my_addresses/addNewAddress', 'AddressController@addNewAddressForm')->name('addNewAddressForm');
 Route::post('/my_addresses/addNewAddress', 'AddressController@store')->name('addNewAddress');
 Route::get('/my_addresses/{addressId}/edit', 'AddressController@edit')->name('address.edit');
-Route::post('/my_addresses/{addressId}update', 'AddressController@update')->name('updateAddress');
+Route::post('/my_addresses/{addressId}/update', 'AddressController@update')->name('updateAddress');/*
+Route::get('/my_addresses/{addressId}/update', 'AddressController@updateForm')->name('updateAddressForm');*/
 Route::post('/my_addresses/{addressId}/delete', 'AddressController@destroy')->name('deleteAddress');
 Route::post('/my_addresses/{addressId}/makeDefault', 'AddressController@makeDefaultAddress')->name('makeDefaultAddress');
 // User Address CRUD END
@@ -147,10 +148,8 @@ Route::get('/search/keywordSuggestions', 'SearchController@productSearchSuggesti
 
 
 Route::get('/my-trainee/{trainerId}', 'Trainer\TrainerController@mytrainee')->name('trainer.my-trainee');
-//Route::get('/my-trainee/{trainer-id}/add-trainee', 'Trainer\TrainerController@addtrainee')->name('trainer.add-trainee');
-Route::get('/add-trainee/{trainerid}',  function () {
-    dd('hello');
-})->name('trainer.add-trainee'); 
+Route::get('/my-trainee/{trainer-id}/add-trainee', 'Trainer\TrainerController@storeNewTraineeUser')->name('trainer.add-trainee');
+Route::get('/add-trainee/{trainerid}', 'Trainer\TrainerController@addtraineeform')->name('trainer.add-trainee-form'); 
 
 
 
@@ -212,3 +211,8 @@ Route::post('/trigger/{id}' , function (\Illuminate\Http\Request $request , $id)
 });
 
 
+
+
+// For State wise Show 
+
+Route::get('/state/{stateName}', 'Product\ProductController@showProductByStates');

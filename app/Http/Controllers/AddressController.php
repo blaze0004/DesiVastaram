@@ -69,13 +69,20 @@ class AddressController extends Controller
             'country_id' => $request->country,
             'phone' => $request->phone,
             'zipcode' => $request->zipcode
+
         ]);
 
         if ($request->makedefaultaddress == 'on') {
             $user = User::findOrFail(Auth::id())->profile->update(
                 ['default_address_id' => $address->id]);
             
+        } 
+        if ($request->makedefaultaddressfordistrict == 'on') {
+            $user = User::findOrFail(Auth::id())->profile->update([
+            'product_district_id' => $address->id
+            ]);
         }
+
         return redirect('my_addresses')->with('message', 'Address Added Successfully!');
     }
     /**
@@ -147,6 +154,12 @@ class AddressController extends Controller
             $user = User::findOrFail(Auth::id())->profile->update(
                 ['default_address_id' => $address->id]);
             
+        } 
+
+         if ($request->makedefaultaddressfordistrict == 'on') {
+            $user = User::findOrFail(Auth::id())->profile->update([
+            'product_district_id' => $address->id
+            ]);
         }
 
         return redirect('address.my_addresses')->with('message', 'Address Updated Successfully!');

@@ -38,7 +38,7 @@
         
         </p>
         <!--  Add/edit form start  -->
-        <form action="@if(isset($product_categories)) {{ route('productCRUD .products.update', $product->id) }} @else {{ route('productCRUD.products.store') }} @endif" method="POST" enctype="multipart/form-data">
+        <form action="@if(isset($product_categories)) {{ route('productCRUD.products.update', $product->id) }} @else {{ route('productCRUD.products.store') }} @endif" method="POST" enctype="multipart/form-data">
           @csrf
           @if(isset($product_categories))
           @method('PUT')
@@ -138,6 +138,12 @@
           </select>
         </div>
         <div class="form-group row">
+          <label for="discount_active"> Is discount apply </label>
+          <select name="discount_active" class="form-control">
+            <option default>select Discount Enable/Disable</option>
+            <option value="1">Enable</option>
+            <option value="0">Disable</option>
+          </select>
           <label for="discount">Price
           </label>
           <input type="text" class="form-control" name="price" value="{{@$product->price}}">

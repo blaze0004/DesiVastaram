@@ -16,12 +16,11 @@ _________________________________________________________
 
         <div class="col-lg-6 offer mb-3 mb-lg-0">
 
-          <a href="#" class="btn btn-success btn-sm">Offer of the day
+          <a href="#" class="btn btn-success btn-sm">Launch Offer
 
           </a>
 
-          <a href="#" class="ml-1">Get flat 35% off on orders over $50!
-
+          <a href="#" class="ml-1">Get 10% discount on orders above ₹1500
           </a>
 
         </div>
@@ -317,14 +316,13 @@ _________________________________________________________
         </a>
 
       </div>
-
-      <div id="navigation" class="collapse navbar-collapse">
+<div id="navigation" class="collapse navbar-collapse">
 
         <ul class="navbar-nav mr-auto">
 
           <li class="nav-item">
 
-            <a href="{{ route('home') }}" class="nav-link active">Home
+            <a href="http://localhost:8000" class="nav-link active">Home
 
             </a>
 
@@ -358,13 +356,13 @@ _________________________________________________________
 
                       <li class="nav-item">
 
-                        <a href="category.html" class="nav-link">Tussar Sarees
+                        <a href="\category\tussar-sarees" class="nav-link">Tussar Sarees
 
                         </a>
 
                       </li>
 
-                      <li class="nav-item"><a href="category.html" class="nav-link">
+                      <li class="nav-item"><a href="\category\mulberry-silk-sarees" class="nav-link">
                            Mulberry Silk Sarees
 
                         </a>
@@ -373,7 +371,7 @@ _________________________________________________________
 
                       <li class="nav-item">
 
-                        <a href="category.html" class="nav-link">Paithani Sarees
+                        <a href="\category\paithani-sarees" class="nav-link">Paithani Sarees
 
                         </a>
 
@@ -381,7 +379,7 @@ _________________________________________________________
 
                       <li class="nav-item">
 
-                        <a href="category.html" class="nav-link">Organic Dye Sarees
+                        <a href="\category\organic-dye-sarees" class="nav-link">Organic Dye Sarees
 
                         </a>
 
@@ -389,7 +387,7 @@ _________________________________________________________
 
                        <li class="nav-item">
 
-                        <a href="category.html" class="nav-link">Raw Silk Sarees
+                        <a href="\category\raw-silk-sarees" class="nav-link">Raw Silk Sarees
 
                         </a>
 
@@ -397,7 +395,7 @@ _________________________________________________________
 
                             <li class="nav-item">
 
-                        <a href="category.html" class="nav-link">Designer Sarees
+                        <a href="\category\designer-sarees" class="nav-link">Designer Sarees
 
 
                         </a>
@@ -418,7 +416,7 @@ _________________________________________________________
 
                       <li class="nav-item">
 
-                        <a href="category.html" class="nav-link"> Kurti Category 1
+                        <a href="\category\A-line-kurti" class="nav-link"> 
 
                         </a>
 
@@ -426,22 +424,21 @@ _________________________________________________________
 
                       <li class="nav-item">
 
-                        <a href="category.html" class="nav-link"> Kurti Category 2  
+                        <a href="\category\straight-kurti" class="nav-link"> Straight Kurti
                         </a>
 
                       </li>
 
                       <li class="nav-item">
 
-                        <a href="category.html" class="nav-link"> Kurti Category 3
-
+                        <a href="\category\flared-kurti" class="nav-link"> Flared Kurti
                         </a>
 
                       </li>
 
                       <li class="nav-item">
 
-                        <a href="category.html" class="nav-link"> Kurti Category 4
+                        <a href="\category\anarkali-kurti" class="nav-link"> Anarkali Kurti
                         </a>
 
                       </li>
@@ -457,247 +454,6 @@ _________________________________________________________
             </ul>
 
           </li>
-
-          <li class="nav-item dropdown menu-large">
-
-            <a href="#" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">Men
-
-              <b class="caret">
-
-              </b>
-
-            </a>
-
-            <ul class="dropdown-menu megamenu">
-
-              <li>
-
-                <div class="row">
-
-                  <div class="col-md-6 col-lg-3">
-
-                    <h5>Clothing
-
-                    </h5>
-
-                    <ul class="list-unstyled mb-3">
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">T-shirts
-
-                        </a>
-
-                      </li>
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Shirts
-
-                        </a>
-
-                      </li>
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Pants
-
-                        </a>
-
-                      </li>
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Accessories
-
-                        </a>
-
-                      </li>
-
-                    </ul>
-
-                  </div>
-
-                  <div class="col-md-6 col-lg-3">
-
-                    <h5>Shoes
-
-                    </h5>
-
-                    <ul class="list-unstyled mb-3">
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Trainers
-
-                        </a>
-
-                      </li>
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Sandals
-
-                        </a>
-
-                      </li>
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Hiking shoes
-
-                        </a>
-
-                      </li>
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Casual
-
-                        </a>
-
-                      </li>
-
-                    </ul>
-
-                  </div>
-
-                  <div class="col-md-6 col-lg-3">
-
-                    <h5>Accessories
-
-                    </h5>
-
-                    <ul class="list-unstyled mb-3">
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Trainers
-
-                        </a>
-
-                      </li>
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Sandals
-
-                        </a>
-
-                      </li>
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Hiking shoes
-
-                        </a>
-
-                      </li>
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Casual
-
-                        </a>
-
-                      </li>
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Hiking shoes
-
-                        </a>
-
-                      </li>
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Casual
-
-                        </a>
-
-                      </li>
-
-                    </ul>
-
-                  </div>
-
-                  <div class="col-md-6 col-lg-3">
-
-                    <h5>Featured
-
-                    </h5>
-
-                    <ul class="list-unstyled mb-3">
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Trainers
-
-                        </a>
-
-                      </li>
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Sandals
-
-                        </a>
-
-                      </li>
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Hiking shoes
-
-                        </a>
-
-                      </li>
-
-                    </ul>
-
-                    <h5>Looks and trends
-
-                    </h5>
-
-                    <ul class="list-unstyled mb-3">
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Trainers
-
-                        </a>
-
-                      </li>
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Sandals
-
-                        </a>
-
-                      </li>
-
-                      <li class="nav-item">
-
-                        <a href="category.html" class="nav-link">Hiking shoes
-
-                        </a>
-
-                      </li>
-
-                    </ul>
-
-                  </div>
-
-                </div>
-
-              </li>
-
-            </ul>
-
-          </li>
-
           <li class="nav-item dropdown menu-large">
 
             <a href="#" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">Accessories
@@ -716,15 +472,15 @@ _________________________________________________________
 
                   <div class="col-md-6 col-lg-3">
 
-                    <h5>Shop
+                    <h5>Categoris
 
                     </h5>
 
-                    <ul class="list-unstyled mb-3">
+                    <ul class="list-unstyled mb-3">-->
 
                       <li class="nav-item">
 
-                        <a href="{{ url('/')}}" class="nav-link">Homepage
+                        <a href="http://localhost:8000" class="nav-link">Scarfs
 
                         </a>
 
@@ -732,7 +488,7 @@ _________________________________________________________
 
                       <li class="nav-item">
 
-                        <a href="category.html" class="nav-link">Category - sidebar left
+                        <a href="category.html" class="nav-link">Potalis
 
                         </a>
 
@@ -740,7 +496,7 @@ _________________________________________________________
 
                       <li class="nav-item">
 
-                        <a href="category-right.html" class="nav-link">Category - sidebar right
+                        <a href="category-right.html" class="nav-link">Dupattas
 
                         </a>
 
@@ -748,15 +504,7 @@ _________________________________________________________
 
                       <li class="nav-item">
 
-                        <a href="category-full.html" class="nav-link">Category - full width
-
-                        </a>
-
-                      </li>
-
-                      <li class="nav-item">
-
-                        <a href="detail.html" class="nav-link">Product detail
+                        <a href="category-full.html" class="nav-link">Pagdi
 
                         </a>
 
@@ -766,7 +514,7 @@ _________________________________________________________
 
                   </div>
 
-                  <div class="col-md-6 col-lg-3">
+                  <!--<div class="col-md-6 col-lg-3">
 
                     <h5>User
 
@@ -816,9 +564,9 @@ _________________________________________________________
 
                     </ul>
 
-                  </div>
+                  </div>-->
 
-                  <div class="col-md-6 col-lg-3">
+                  <!--<div class="col-md-6 col-lg-3">
 
                     <h5>Order process
 
@@ -868,9 +616,9 @@ _________________________________________________________
 
                     </ul>
 
-                  </div>
+                  </div>-->
 
-                  <div class="col-md-6 col-lg-3">
+                  <!--<div class="col-md-6 col-lg-3">
 
                     <h5>Pages and blog
 
@@ -936,7 +684,7 @@ _________________________________________________________
 
                     </ul>
 
-                  </div>
+                  </div>-->
 
                 </div>
 
@@ -945,7 +693,6 @@ _________________________________________________________
             </ul>
 
           </li>
-
           <li class="nav-item dropdown menu-large">
 
             <a href="#" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">Home Textiles
@@ -964,7 +711,7 @@ _________________________________________________________
 
                   <div class="col-md-6 col-lg-3">
 
-                    <h5>Clothing
+                    <h5>Categories
 
                     </h5>
 
@@ -972,7 +719,7 @@ _________________________________________________________
 
                       <li class="nav-item">
 
-                        <a href="category.html" class="nav-link">T-shirts
+                        <a href="category.html" class="nav-link">Bed Covers
 
                         </a>
 
@@ -980,7 +727,7 @@ _________________________________________________________
 
                       <li class="nav-item">
 
-                        <a href="category.html" class="nav-link">Shirts
+                        <a href="category.html" class="nav-link">Handbag
 
                         </a>
 
@@ -988,16 +735,14 @@ _________________________________________________________
 
                       <li class="nav-item">
 
-                        <a href="category.html" class="nav-link">Pants
-
+                        <a href="category.html" class="nav-link">Dhurries
                         </a>
 
                       </li>
 
                       <li class="nav-item">
 
-                        <a href="category.html" class="nav-link">Accessories
-
+                        <a href="category.html" class="nav-link">Towels
                         </a>
 
                       </li>
@@ -1006,7 +751,7 @@ _________________________________________________________
 
                   </div>
 
-                  <div class="col-md-6 col-lg-3">
+                  <!--<div class="col-md-6 col-lg-3">
 
                     <h5>Shoes
 
@@ -1176,7 +921,7 @@ _________________________________________________________
 
                     </ul>
 
-                  </div>
+                  </div>-->
 
                 </div>
 
@@ -1203,7 +948,7 @@ _________________________________________________________
 
                   <div class="col-md-6 col-lg-3">
 
-                    <h5>Clothing
+                    <h5>Categories
 
                     </h5>
 
@@ -1211,7 +956,7 @@ _________________________________________________________
 
                       <li class="nav-item">
 
-                        <a href="category.html" class="nav-link">T-shirts
+                        <a href="category.html" class="nav-link">Georgette
 
                         </a>
 
@@ -1219,7 +964,7 @@ _________________________________________________________
 
                       <li class="nav-item">
 
-                        <a href="category.html" class="nav-link">Shirts
+                        <a href="category.html" class="nav-link">Khadi
 
                         </a>
 
@@ -1227,16 +972,15 @@ _________________________________________________________
 
                       <li class="nav-item">
 
-                        <a href="category.html" class="nav-link">Pants
+                        <a href="category.html" class="nav-link">Silk
 
                         </a>
 
                       </li>
 
-                      <li class="nav-item">
+                      <!--<li class="nav-item">
 
-                        <a href="category.html" class="nav-link">Accessories
-
+                        <a href="category.html" class="nav-link">
                         </a>
 
                       </li>
@@ -1415,7 +1159,7 @@ _________________________________________________________
 
                     </ul>
 
-                  </div>
+                  </div>-->
 
                 </div>
 
@@ -1424,9 +1168,9 @@ _________________________________________________________
             </ul>
 
           </li>
-                    <li class="nav-item dropdown menu-large">
+          <li class="nav-item dropdown menu-large">
 
-            <a href="#" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">Events & Exhibitions
+            <a href="#" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">Events &amp; Exhibitions
 
               <b class="caret">
 
@@ -1434,7 +1178,7 @@ _________________________________________________________
 
             </a>
 
-            <ul class="dropdown-menu megamenu">
+            <!--<ul class="dropdown-menu megamenu">
 
               <li>
 
@@ -1660,54 +1404,73 @@ _________________________________________________________
 
               </li>
 
-            </ul>
+            </ul>-->
 
           </li>
+          <li class="nav-item dropdown menu-large">
 
+            <a href="#" data-toggle="dropdown" data-hover="dropdown" data-delay="200" class="dropdown-toggle nav-link">Men
 
+              <b class="caret">
 
-        </ul>
-
-        <div class="navbar-buttons d-flex justify-content-end">
-
-          <!-- /.nav-collapse-->
-
-          <div id="search-not-mobile" class="navbar-collapse collapse">
-
-          </div>
-
-          <a data-toggle="collapse" href="#search" class="btn navbar-btn btn-primary d-none d-lg-inline-block">
-
-            <span class="sr-only">Toggle search
-
-            </span>
-
-            <i class="fa fa-search">
-
-            </i>
-
-          </a>
-          @if(isset(Auth::user()->id))
-          <div id="basket-overview" class="navbar-collapse collapse d-none d-lg-block">
-
-            <a href="{{ route('showUserCart') }}" class="btn btn-primary navbar-btn">
-
-              <i class="fa fa-shopping-cart">
-
-              </i>
-
-              <span>{{ Auth::user()->cartItems->count() }} items in cart
-
-              </span>
+              </b>
 
             </a>
 
-          </div>
-          @endif
+            <ul class="dropdown-menu megamenu">
 
-        </div>
+              <li>
 
-      </div>
+                <div class="row">
+
+                  <div class="col-md-6 col-lg-3">
+
+                    <h5>Clothing
+
+                    </h5>
+
+                    <ul class="list-unstyled mb-3">
+
+                      <li class="nav-item">
+
+                        <a href="\category\kurta" class="nav-link">Kurta
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="\category\jodhpuri" class="nav-link">Jodhpuri
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="\category\eri-silk" class="nav-link">Eri Silk
+
+                        </a>
+
+                      </li>
+
+                      <li class="nav-item">
+
+                        <a href="\category\dhoti-kurta" class="nav-link">Dhoti Kurta
+
+                        </a>
+
+                      </li>
+
+                    </ul>
+
+                  </div>
+
+                  
+                  </div>
+
+                </li></ul></li></ul></div>
 
     </div>
 

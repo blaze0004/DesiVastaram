@@ -40,7 +40,7 @@
                 </a>    
 
                 @if(Auth::user()->role_id == '4')
-                <a class="nav-link" href="{{ route('trainer.add-trainee', Auth::id()) }}">
+                <a class="nav-link" href="{{ route('trainer.add-trainee-form', Auth::id()) }}">
                     <i class="fa fa-user"></i>
                     Add Users
                 </a>

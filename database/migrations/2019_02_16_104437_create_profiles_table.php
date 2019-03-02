@@ -21,6 +21,7 @@ class CreateProfilesTable extends Migration
             $table->string('lastName')->nullable();
             $table->string('phone')->nullable();
             $table->unsignedInteger('default_address_id')->nullable();
+            $table->unsignedInteger('product_district_id')->nullable();
             $table->string('gender')->nullable();
             $table->string('user_name')->nullable();
             $table->boolean('status')->default(1);
