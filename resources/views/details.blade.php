@@ -30,7 +30,7 @@
 @endsection
 @section("content")
 <div class="col-lg-12">
-  <div class="row" id="productMain">88
+  <div class="row" id="productMain">
     <div class="col-lg-6">
       <div class="owl-carousel shop-detail-carousel" data-slider-id="1">
         @if(isset($product))

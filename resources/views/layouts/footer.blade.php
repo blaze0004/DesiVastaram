@@ -139,7 +139,7 @@
                     Get the news
                 </h4>
                 <p class="text-muted">
-                    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                    
                 </p>
                 <form>
                     <div class="input-group">
