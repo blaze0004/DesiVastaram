@@ -33,7 +33,7 @@
             <div class="jumbotron">
                 <h1>All Products</h1><hr>
                 
-                <a class="btn btn-primary mb-2 float-right" href="{{ route('admin.products.create')}}">
+                <a class="btn btn-primary mb-2 float-right" href="{{ route('productCRUD.products.create')}}">
                     Add Products
                 </a>
                 <table class="table table-stripped">

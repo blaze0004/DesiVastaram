@@ -1,6 +1,8 @@
 <?php
 
 use App\State;
+use Illuminate\Support\Facades\DB;
+use Wqqas1\LaravelVideoChat\Facades\Chat;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,7 +67,7 @@ Route::group(['as' => 'admin.', 'middleware' => ['auth', 'admin'], 'prefix' => '
 
 });
 
-Route::group(['as' => 'admin.', 'middleware' => ['auth', 'product'], 'prefix' => 'admin'], function () {
+Route::group(['as' => 'productCRUD.', 'middleware' => ['auth', 'product'], 'prefix' => 'productCRUD'], function () {
        Route::resource('/products', 'Product\ProductController');
 });
 // City, States, Countries Route For Address
@@ -94,8 +96,12 @@ Route::get('/dashboard', 'Profile\ProfileController@dashboard')->name('dashboard
 Route::get('/myaccount/{userId}','Profile\ProfileController@index')->name('myaccount');
 Route::post('/resetPassword/{userId}', 'Profile\ProfileController@resetPassword')->name('resetPassword');
 Route::post('/myaccount/{userId}/save', 'Profile\ProfileController@update')->name('save_profile');
-
-
+Route::get('/myaccount/{userId}/seller-role-request', 'Profile\ProfileController@sellerRoleRequest')->name('seller-role-request');
+Route::post('/myaccount/{userId}/seller-role-request-send', 'Profile\ProfileController@sellerRoleRequestSend')->name('seller-role-request-send');
+Route::get('/myaccount/{userId}/wholesalebuyer-role-request', 'Profile\ProfileController@wholesalebuyerRoleRequest')->name('wholesalebuyer-role-request');
+Route::post('/myaccount/{userId}/wholesalebuyer-role-request-send', 'Profile\ProfileController@wholesalebuyerRoleRequestSend')->name('wholesalebuyer-role-request-send');
+Route::get('/myaccount/{userId}/trainer-role-request', 'Profile\ProfileController@trainerRoleRequest')->name('trainer-role-request');
+Route::post('/myaccount/{userId}/trainer-role-request-send', 'Profile\ProfileController@trainerRoleRequestSend')->name('trainer-role-request-send');
 
 // User Profile Routes CRUD END
 
@@ -117,6 +123,7 @@ Route::resource('/checkout', 'Order\OrderController');
 
 Route::get('/order/history/{userId}', 'Order\OrderController@history')->name('order_history');
 Route::get('/order/details/', 'Order\OrderController@showOrderDetails')->name('order_details');
+Route::get('/product-order/{sellerId}/list/', 'Order\OrderController@productOrderList')->name('product-order.list');
 Route::get('/wishlists', 'Wishlist\WishlistController@userWishlist')->name('userWishlist');
 Route::post('/wishlists/save', 'Wishlist\WishlistController@store')->name('wishlist.store');
 
@@ -135,3 +142,73 @@ Route::post('/checkout/pay', 'Order\OrderController@makeCheckout')->name('checko
 
 Route::get('/search/{query}', "SearchController@productSearch")->name('productSearch');
 Route::get('/search/keywordSuggestions', 'SearchController@productSearchSuggestions')->name('productSearchSuggestions');
+
+
+
+
+Route::get('/my-trainee/{trainerId}', 'Trainer\TrainerController@mytrainee')->name('trainer.my-trainee');
+//Route::get('/my-trainee/{trainer-id}/add-trainee', 'Trainer\TrainerController@addtrainee')->name('trainer.add-trainee');
+Route::get('/add-trainee/{trainerid}',  function () {
+    dd('hello');
+})->name('trainer.add-trainee'); 
+
+
+
+// Video Chat One To One Contact 
+/*Route::group(['as' => 'chat.', 'prefix' => 'chat'], function () {
+   Route::get('/', 'VideoChatController@index')->name('chat');
+   Route::get('/message/{message}/to/{id}', function($message, $id) {
+      //  dd($message);
+        $conversation = DB::table('conversations')->where(['first_user_id' => Auth::id(), 'second_user_id' => $id])->first();
+        if ($conversation === null) {
+
+            Chat::startConversationWith($id);
+
+        }
+
+        $conversation = DB::table('conversations')->where(['first_user_id' => Auth::id(), 'second_user_id' => $id])->first();
+        Chat::sendConversationMessage($conversation->id, $message);
+
+        $conversation = Chat::getConversationMessageById($conversation->id);
+
+        return view('chat', compact('conversation'));
+   });
+
+   Route::get('/chat/{conversationId}', 'VideoChatController@chat')->name('open-chat-room');
+
+   Route::get('/chat/{id}', 'VideoChatController@chat')->name('chat');
+
+   Route::post('/chat/message/send', 'VideoChatController@send')->name('send');
+   Route::post('/chat/message/send/file', 'VideoChatController@sendFilesInConversation')->name('send.file');
+
+Route::get('/accept/message/request/{id}' , function ($id){
+    Chat::acceptMessageRequest($id);
+    return redirect()->back();
+})->name('accept.message');
+
+Route::post('/trigger/{id}' , function (\Illuminate\Http\Request $request , $id) {
+    Chat::startVideoCall($id , $request->all());
+});
+
+
+
+});
+
+*/
+
+Route::get('/chat', 'VideoChatController@index')->name('chats');
+Route::get('/chat/{id}', 'VideoChatController@chat')->name('chat');
+
+Route::post('/chat/message/send', 'VideoChatController@send')->name('chat.send');
+Route::post('/chat/message/send/file', 'VideoChatController@sendFilesInConversation')->name('chat.send.file');
+
+Route::get('/accept/message/request/{id}' , function ($id){
+    Chat::acceptMessageRequest($id);
+    return redirect()->back();
+})->name('accept.message');
+
+Route::post('/trigger/{id}' , function (\Illuminate\Http\Request $request , $id) {
+    Chat::startVideoCall($id , $request->all());
+});
+
+

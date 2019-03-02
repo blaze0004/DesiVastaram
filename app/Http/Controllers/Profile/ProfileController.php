@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
 use App\Profile;
+use App\RoleRequest;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
@@ -141,7 +143,6 @@ class ProfileController extends Controller
     // Reset User Password From Old Password
     public function resetPassword(Request $request, $id)
     {
-
         $user = User::findOrFail($id)->first();
 
         $this->validate($request, [
@@ -155,11 +156,11 @@ class ProfileController extends Controller
             ])->save();
 
             $request->session()->flash('message', 'Password changed');
-            return redirect()->route('myaccount');
+            return redirect()->route('myaccount', $id);
 
         } else {
             $request->session()->flash('error', 'Password does not match');
-            return redirect()->route('myaccount');
+            return redirect()->route('myaccount', $id);
         }
 
     }
@@ -200,5 +201,137 @@ class ProfileController extends Controller
     public function dashboard() {
 
         return view('profile.dashboard');
+    }
+
+    public function sellerRoleRequest($id) {
+
+        if (Auth::user()->id == $id) {
+
+            return view('profile.seller-role-request');
+        } else {
+            return back()->with('error', 'You are not allowed');
+        }
+    }
+
+    public function sellerRoleRequestSend(Request $request, $id) {
+
+        if (Auth::user()->id == $id) {
+
+            $this->validate($request, [
+
+                'description' => 'required|min:50',
+                'file' => 'required|mimes:pdf|max:10000'
+            ]);
+
+         $extension = $request->file('file');
+           $extension = strtolower($extension->getClientOriginalExtension());
+
+            $filePath = '/role_request/2/'.Auth::id().'/';
+            $fileName = $request->file.'.'.$extension;
+            $request->file->move(public_path($filePath, $fileName), $fileName);
+
+            $roleRequest = RoleRequest::create([
+                'user_id' => Auth::id(),
+                'description' => $request->description,
+                'for' => '2',
+                'file' => $filePath.$fileName,
+            ]);
+
+            if ($roleRequest) {
+                return back()->with('message', 'Request Submitted Successfully! We Will Contact You');
+             } else {
+                return back()->with('error', 'Sorry Some Erro Occured! Please Try Again');
+             }
+            
+        } else {
+            return back()->with('error', 'You are not allowed');
+        }
+    }
+
+    public function wholesalebuyerRoleRequest($id) {
+
+        if (Auth::id() == $id) {
+            # code...
+            return view('profile.wholesalebuyer-request');
+        } else {
+            return back()->with('error', 'You are not allowed');
+        }
+    }
+
+    public function wholesalebuyerRoleRequestSend(Request $request, $id) {
+         if (Auth::user()->id == $id) {
+
+            $this->validate($request, [
+
+                'description' => 'required|min:50',
+                'file' => 'required|mimes:pdf|max:10000'
+            ]);
+
+           $extension = $request->file('file');
+           $extension = strtolower($extension->getClientOriginalExtension());
+
+            $filePath = '/role_request/5/'.Auth::id().'/';
+            $fileName = $request->file.'.'.$extension;
+            $request->file->move(public_path($filePath, $fileName), $fileName);
+
+            $roleRequest = RoleRequest::create([
+                'user_id' => Auth::id(),
+                'description' => $request->description,
+                'for' => '5',
+                'file' => $filePath.$fileName,
+            ]);
+
+            if ($roleRequest) {
+                return back()->with('message', 'Request Submitted Successfully! We Will Contact You');
+             } else {
+                return back()->with('error', 'Sorry Some Erro Occured! Please Try Again');
+             }
+            
+        } else {
+            return back()->with('error', 'You are not allowed');
+        }
+    }
+
+    public function trainerRoleRequest($id) {
+    
+        if (Auth::id() == $id) {
+            return view('profile.trainer-request');
+        } else {
+            return back()->with('error', 'You are not allowed');
+        }
+    }
+
+    public function trainerRoleRequestSend(Request $request, $id) {
+         if (Auth::user()->id == $id) {
+
+            $this->validate($request, [
+
+                'description' => 'required|min:50',
+                'file' => 'required|mimes:pdf|max:10000'
+            ]);
+
+         $extension = $request->file('file');
+           $extension = strtolower($extension->getClientOriginalExtension());
+
+            $filePath = '/role_request/4/'.Auth::id().'/';
+            $fileName = $request->file.'.'.$extension;
+            $request->file->move(public_path($filePath, $fileName), $fileName);
+
+            $roleRequest = RoleRequest::create([
+                'user_id' => Auth::id(),
+                'description' => $request->description,
+                'for' => '4',
+                'file' => $filePath.$fileName,
+            ]);
+
+            if ($roleRequest) {
+                return back()->with('message', 'Request Submitted Successfully! We Will Contact You');
+             } else {
+                return back()->with('error', 'Sorry Some Erro Occured! Please Try Again');
+             }
+            
+        } else {
+            return back()->with('error', 'You are not allowed');
+        }
     }
 }

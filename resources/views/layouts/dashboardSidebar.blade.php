@@ -27,7 +27,20 @@
                     My Account
                 </a>
                 @if(Auth::user()->role_id == '1')
-                <a href="{{ route('admin.addUser') }}">
+                <a class="nav-link" href="{{ route('admin.addUser') }}">
+                    <i class="fa fa-user"></i>
+                    Add Users
+                </a>
+                @endif
+
+                <!-- For Video and Chat -->
+                <a class="nav-link" href="{{ route('chats') }}">
+                    <i class="fa fa-user"></i>
+                    Messages And Alert
+                </a>    
+
+                @if(Auth::user()->role_id == '4')
+                <a class="nav-link" href="{{ route('trainer.add-trainee', Auth::id()) }}">
                     <i class="fa fa-user"></i>
                     Add Users
                 </a>
@@ -78,13 +91,30 @@
                     </i>
                     My Addresses
                 </a>
-                @if(Auth::user()->role_id == '1' || Auth::user()->role_id == '2' || Auth::user()->role_id == '4')
-                <a class="nav-link" href="{{ route('admin.products.index') }}">
+                 <a class="nav-link" href="{{ route('order_history', Auth::id()) }}">
+                     <i class="fa fa-user">
+                    </i>
+                    My Orders
+                </a>
+                @if(Auth::user()->role_id == '1' || Auth::user()->role_id == '2')
+                <a class="nav-link" href="{{ route('productCRUD.products.index') }}">
                     <i class="fa fa-user">
                     </i>
                     Products
                 </a>
-                
+                 <a class="nav-link" href="{{ route('product-order.list', Auth::id()) }}">
+                    <i class="fa fa-user">
+                    </i>
+                    My Product Sell
+                </a>
+                @endif
+
+                @if(Auth::user()->role_id == '4')   
+                 <a class="nav-link" href="{{ route('trainer.my-trainee', Auth::id()) }}">
+                    <i class="fa fa-user">
+                    </i>
+                    My Trainee
+                </a>
                 @endif
              
             </ul>

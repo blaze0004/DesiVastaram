@@ -1,8 +1,9 @@
 @include('../layouts.head')
 <body>
-    <!-- navbar-->
+ 
+         <!-- navbar-->
     @include('../layouts.header')
-    <div id="all">
+    <div id="app">
         <div id="content">
             <div class="container">
                 <div class="row">
@@ -10,11 +11,13 @@
                 </div>
                 <div class="row">
                     @yield('left-sidebar')
-      				@yield('content')
+                    @yield('content')
                 </div>
                 @yield('homeContent')
             </div>
         </div>
     </div>
     @include('../layouts.footer')
+
+   
 </body>

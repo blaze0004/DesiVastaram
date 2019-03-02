@@ -37,8 +37,8 @@
                 <p class="lead">Change your personal details or your password here.</p>
                 
                 <h3>Change password</h3>
-                @if(Auth::user()->role_id == '2')
-                <form action="{{ route('resetPassword', $profile->id) }}" method="POST">
+                @if(Auth::user()->role_id == '1')
+                <form action="{{ route('resetPassword', $userProfile->user_id) }}" method="POST">
                 @else
                   <form action="{{ route('resetPassword', Auth::user()->id) }}" method="POST">
                 @endif
@@ -70,7 +70,10 @@
                     <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save new password</button>
                   </div>
                 </form>
-                <h3 class="mt-5">Personal details</h3>
+               
+              </div>
+              <div class="box">
+                 <h3 class="mt-5">Personal details</h3>
                 <form action="{{ route('save_profile', Auth::id()) }}" method="POST">
                   @csrf
               
@@ -125,6 +128,34 @@
                   </div>
                 </form>
               </div>
+              
+              <div class="box">
+                @php 
+
+                  $userRole = Auth::user()->role_id;
+                  $userRoleName = Auth::user()->role->name;
+
+                @endphp
+                <h3 class="mt5">User Roles</h3> <h3 class="text-md-right">You Are {{ $userRoleName }}</h3>
+                <hr>
+
+              @if($userRoleName == 'Buyer')
+               <div class="row">
+                  <div class="col-md">
+                  <p>Request to become seller</p>
+                  <a href="{{ route('seller-role-request', Auth::user()->id) }}" class="btn btn-md btn-primary center">Become A Seller</a>
+                </div>
+                <div class="col-md">
+                  <p>Request to become wholesale buyer</p>
+                <a href="{{ route('wholesalebuyer-role-request', Auth::id()) }}" class="btn btn-md btn-primary center">Become A Wholesale Buyer</a>
+                </div>
+                <div class="col-md">
+                  <p>Request to become trainer</p>
+                <a href="{{ route('trainer-role-request', Auth::id()) }}" class="btn btn-md btn-primary center">Become A Trainer</a>
+                </div>  
+               </div>
+              @endif
+            </div>
             </div>
     </div>
     

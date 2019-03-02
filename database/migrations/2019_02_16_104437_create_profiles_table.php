@@ -23,7 +23,9 @@ class CreateProfilesTable extends Migration
             $table->unsignedInteger('default_address_id')->nullable();
             $table->string('gender')->nullable();
             $table->string('user_name')->nullable();
-            $table->string('status')->default(1);
+            $table->boolean('status')->default(1);
+            $table->unsignedInteger('trainer_id')->nullable();
+            $table->boolean('verified_by_trainer')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

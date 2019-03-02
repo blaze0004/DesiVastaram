@@ -26,7 +26,7 @@ class ProductController extends Controller
     {
         //
         if (Auth::user()->role->name == "Admin") {
-         $products = Product::with('categories')->paginate(3); 
+             $products = Product::with('categories')->paginate(3); 
         } else if(Auth::user()->role->name == "Seller") {
              $products = Product::with('categories')->where(['user_id' => 2])->paginate(3);
        
@@ -65,9 +65,16 @@ class ProductController extends Controller
         $extension = strtolower($extension->getClientOriginalExtension());
 
         $request->validate([
-
-            'images'   => 'required',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'title'          => 'required|min:10',
+            'slug'           => 'required|min:10|unique:products',
+            'description'    => 'required|min:50',
+            'status'         => 'required',
+            'parent_id'      => 'required',
+            'price'          => 'required',
+            'discount_price' => 'lt:price',
+            'qty'            => 'required|min:1',
+            'thumbnail'      => 'required',
+            'images.*'       => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
         ]);
 

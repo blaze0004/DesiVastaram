@@ -187,6 +187,7 @@ class OrderController extends Controller
                         'order_id'   => $order->id,
                         'product_id' => $cartItem->product->id,
                         'qty'        => $cartItem->qty,
+                        'seller_id'  => $cartItem->product->user_id,
                         'discount'   => $cartItem->product->discount_price,
                         'unit_price' => $cartItem->product->price,
                     ]);
@@ -201,5 +202,13 @@ class OrderController extends Controller
 
 
         return redirect('/')->with('message', 'Order Successfully Placed');
+    }
+
+
+    public function productOrderList($id) {
+
+        $orderPlaced = OrderDetail::where('seller_id', $id)->get();
+
+        return view('product-order-list', compact('orderPlaced'));
     }
 }

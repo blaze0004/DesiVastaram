@@ -38,7 +38,7 @@
         
         </p>
         <!--  Add/edit form start  -->
-        <form action="@if(isset($product_categories)) {{ route('admin.products.update', $product->id) }} @else {{ route('admin.products.store') }} @endif" method="POST" enctype="multipart/form-data">
+        <form action="@if(isset($product_categories)) {{ route('productCRUD .products.update', $product->id) }} @else {{ route('productCRUD.products.store') }} @endif" method="POST" enctype="multipart/form-data">
           @csrf
           @if(isset($product_categories))
           @method('PUT')

@@ -53,7 +53,7 @@ class TrainerController extends Controller
         //
         $userEmail   = User::findOrFail($id)->only('email');
         $userProfile = User::findOrFail($id)->profile;
-        $profile = Profile::where('user_id', $id)->first();
+        $profile     = Profile::where('user_id', $id)->first();
         return view('admin.trainers.profile', compact('userEmail', 'userProfile', 'profile'));
     }
 
@@ -91,27 +91,40 @@ class TrainerController extends Controller
         //
     }
 
-    public function activateDeactivateAccount($id) {
+    public function activateDeactivateAccount($id)
+    {
 
-        $user = User::findOrFail($id);
+        $user    = User::findOrFail($id);
         $profile = $user->profile;
-        
+
         if ($profile->status == 0) {
-            # if deactivated 
+            # if deactivated
             $profile->status = 1;
             if ($profile->save()) {
                 # code...
-                   return back()->with('message', 'Account Activated');
+                return back()->with('message', 'Account Activated');
             }
-         
 
         } else {
             $profile->status = 0;
-            
+
             if ($profile->save()) {
                 # code...
-                   return back()->with('message', 'Account Deactivated');
+                return back()->with('message', 'Account Deactivated');
             }
         }
+    }
+
+    public function mytrainee($id)
+    {
+        $trainees = Profile::where('trainer_id', $id)->paginate(4);
+
+        return view('trainers.my-trainee-list', compact('trainees'));
+    }
+
+    public function addtrainee()
+    {
+        dd('hello');
+        return view('home');
     }
 }

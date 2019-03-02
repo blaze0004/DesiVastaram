@@ -14,7 +14,9 @@
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
         "nicolaslopezj/searchable": "1.*",
-        "stripe/stripe-php": "^6.30"
+        "predis/predis": "^1.1",
+        "stripe/stripe-php": "^6.30",
+        "wqqas1/laravel-video-chat": "^1.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

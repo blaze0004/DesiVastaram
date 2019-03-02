@@ -43,7 +43,7 @@
                         </li>
                         <li>
                             <a href="register.html">
-                                Regiter
+                                Register
                             </a>
                         </li>
                     </ul>
@@ -60,37 +60,37 @@
                 <ul class="list-unstyled">
                     <li>
                         <a href="category.html">
-                            T-shirts
+                            Kurta
                         </a>
                     </li>
                     <li>
                         <a href="category.html">
-                            Shirts
+                            Jodhpuri
                         </a>
                     </li>
                     <li>
                         <a href="category.html">
-                            Accessories
+                            Eri Silk
                         </a>
                     </li>
                 </ul>
                 <h5>
-                    Ladies
+                    Women
                 </h5>
                 <ul class="list-unstyled">
                     <li>
                         <a href="category.html">
-                            T-shirts
+                            Sarees
                         </a>
                     </li>
                     <li>
                         <a href="category.html">
-                            Skirts
+                            Salwar Suit
                         </a>
                     </li>
                     <li>
                         <a href="category.html">
-                            Pants
+                            Puans
                         </a>
                     </li>
                     <li>
@@ -107,19 +107,19 @@
                 </h4>
                 <p>
                     <strong>
-                        Obaju Ltd.
+                        DesiVastaram Ltd
                     </strong>
                     <br>
-                        13/25 New Avenue
+                        xxx Road
                         <br>
-                            New Heaven
+                            Meerut
                             <br>
-                                45Y 73J
+                                250103
                                 <br>
-                                    England
+                                    Uttar Pradesh
                                     <br>
                                         <strong>
-                                            Great Britain
+                                            India
                                         </strong>
                                     </br>
                                 </br>
@@ -198,18 +198,18 @@
         <div class="row">
             <div class="col-lg-6 mb-2 mb-lg-0">
                 <p class="text-center text-lg-left">
-                    ©2018 Your name goes here.
+                    ©2019 DesiVastaram Ltd
                 </p>
             </div>
-            <div class="col-lg-6">
+            <!--<div class="col-lg-6">
                 <p class="text-center text-lg-right">
                     Template design by
                     <a href="https://bootstrapious.com/e-commerce-templates">
                         Bootstrapious: E-commerce
                     </a>
-                    <!-- Not removing these links is part of the licence conditions of the template. Thanks for understanding :)-->
+                    Not removing these links is part of the licence conditions of the template. Thanks for understanding :)
                 </p>
-            </div>
+            </div>-->
         </div>
     </div>
 </div>
