@@ -9,7 +9,6 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
@@ -27,6 +26,11 @@ class ProfileController extends Controller
         //
         $userEmail   = User::findOrFail($id)->only('email');
         $userProfile = User::findOrFail($id)->profile;
+
+        if (Auth::id() == 4 && User::where('id', $id)->first()->role->name == "Seller") {
+            $trainee = User::where('id', $id)->first()->profile;
+            return view('profile.myaccount', compact('userEmail', 'userProfile', 'trainee'));
+        }
         return view('profile.myaccount', compact('userEmail', 'userProfile'));
     }
 
@@ -93,7 +97,6 @@ class ProfileController extends Controller
 
         // update Profile
 
-        
         if ($request->has('firstName')) {
             $profile->firstName = $request->firstName;
         }
@@ -102,7 +105,6 @@ class ProfileController extends Controller
             $profile->lastName = $request->lastName;
         }
 
-        
         if ($request->has('phone')) {
             $profile->phone = $request->phone;
         }
@@ -165,45 +167,47 @@ class ProfileController extends Controller
 
     }
 
-
-    public function addNewUser() {
+    public function addNewUser()
+    {
         return view('admin.addUser');
     }
 
-    public function storeNewUser(Request $request) {
+    public function storeNewUser(Request $request)
+    {
 
         $this->validate($request, [
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
-            'user_role' => ['required', 'integer', 'min:1', 'max:5']
+            'email'     => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password'  => ['required', 'string', 'min:6', 'confirmed'],
+            'user_role' => ['required', 'integer', 'min:1', 'max:5'],
 
         ]);
 
         $user = User::create([
-            'email' => $request['email'],
-            'role_id' => $request['user_role'],
-            'password' => bcrypt($request['password'])
+            'email'    => $request['email'],
+            'role_id'  => $request['user_role'],
+            'password' => bcrypt($request['password']),
         ]);
 
         Profile::create([
-            'user_id' => $user->id,
+            'user_id'   => $user->id,
             'firstName' => $request->firstName,
-            'lastName' => $request->lastName,
-            'gender' => $request->gender,
-            'phone' => $request->phone,
-            'user_name' => $request->user_name
+            'lastName'  => $request->lastName,
+            'gender'    => $request->gender,
+            'phone'     => $request->phone,
+            'user_name' => $request->user_name,
         ]);
 
         return back()->with('message', "User Successfully Created!");
     }
 
-
-    public function dashboard() {
+    public function dashboard()
+    {
 
         return view('profile.dashboard');
     }
 
-    public function sellerRoleRequest($id) {
+    public function sellerRoleRequest($id)
+    {
 
         if (Auth::user()->id == $id) {
 
@@ -213,42 +217,44 @@ class ProfileController extends Controller
         }
     }
 
-    public function sellerRoleRequestSend(Request $request, $id) {
+    public function sellerRoleRequestSend(Request $request, $id)
+    {
 
         if (Auth::user()->id == $id) {
 
             $this->validate($request, [
 
                 'description' => 'required|min:50',
-                'file' => 'required|mimes:pdf|max:10000'
+                'file'        => 'required|mimes:pdf|max:10000',
             ]);
 
-         $extension = $request->file('file');
-           $extension = strtolower($extension->getClientOriginalExtension());
+            $extension = $request->file('file');
+            $extension = strtolower($extension->getClientOriginalExtension());
 
-            $filePath = '/role_request/2/'.Auth::id().'/';
-            $fileName = $request->file.'.'.$extension;
+            $filePath = '/role_request/2/' . Auth::id() . '/';
+            $fileName = $request->file . '.' . $extension;
             $request->file->move(public_path($filePath, $fileName), $fileName);
 
             $roleRequest = RoleRequest::create([
-                'user_id' => Auth::id(),
+                'user_id'     => Auth::id(),
                 'description' => $request->description,
-                'for' => '2',
-                'file' => $filePath.$fileName,
+                'for'         => '2',
+                'file'        => $filePath . $fileName,
             ]);
 
             if ($roleRequest) {
                 return back()->with('message', 'Request Submitted Successfully! We Will Contact You');
-             } else {
+            } else {
                 return back()->with('error', 'Sorry Some Erro Occured! Please Try Again');
-             }
-            
+            }
+
         } else {
             return back()->with('error', 'You are not allowed');
         }
     }
 
-    public function wholesalebuyerRoleRequest($id) {
+    public function wholesalebuyerRoleRequest($id)
+    {
 
         if (Auth::id() == $id) {
             # code...
@@ -258,42 +264,44 @@ class ProfileController extends Controller
         }
     }
 
-    public function wholesalebuyerRoleRequestSend(Request $request, $id) {
-         if (Auth::user()->id == $id) {
+    public function wholesalebuyerRoleRequestSend(Request $request, $id)
+    {
+        if (Auth::user()->id == $id) {
 
             $this->validate($request, [
 
                 'description' => 'required|min:50',
-                'file' => 'required|mimes:pdf|max:10000'
+                'file'        => 'required|mimes:pdf|max:10000',
             ]);
 
-           $extension = $request->file('file');
-           $extension = strtolower($extension->getClientOriginalExtension());
+            $extension = $request->file('file');
+            $extension = strtolower($extension->getClientOriginalExtension());
 
-            $filePath = '/role_request/5/'.Auth::id().'/';
-            $fileName = $request->file.'.'.$extension;
+            $filePath = '/role_request/5/' . Auth::id() . '/';
+            $fileName = $request->file . '.' . $extension;
             $request->file->move(public_path($filePath, $fileName), $fileName);
 
             $roleRequest = RoleRequest::create([
-                'user_id' => Auth::id(),
+                'user_id'     => Auth::id(),
                 'description' => $request->description,
-                'for' => '5',
-                'file' => $filePath.$fileName,
+                'for'         => '5',
+                'file'        => $filePath . $fileName,
             ]);
 
             if ($roleRequest) {
                 return back()->with('message', 'Request Submitted Successfully! We Will Contact You');
-             } else {
+            } else {
                 return back()->with('error', 'Sorry Some Erro Occured! Please Try Again');
-             }
-            
+            }
+
         } else {
             return back()->with('error', 'You are not allowed');
         }
     }
 
-    public function trainerRoleRequest($id) {
-    
+    public function trainerRoleRequest($id)
+    {
+
         if (Auth::id() == $id) {
             return view('profile.trainer-request');
         } else {
@@ -301,37 +309,132 @@ class ProfileController extends Controller
         }
     }
 
-    public function trainerRoleRequestSend(Request $request, $id) {
-         if (Auth::user()->id == $id) {
+    public function trainerRoleRequestSend(Request $request, $id)
+    {
+        if (Auth::user()->id == $id) {
 
             $this->validate($request, [
 
                 'description' => 'required|min:50',
-                'file' => 'required|mimes:pdf|max:10000'
+                'file'        => 'required|mimes:pdf|max:10000',
             ]);
 
-         $extension = $request->file('file');
-           $extension = strtolower($extension->getClientOriginalExtension());
+            $extension = $request->file('file');
+            $extension = strtolower($extension->getClientOriginalExtension());
 
-            $filePath = '/role_request/4/'.Auth::id().'/';
-            $fileName = $request->file.'.'.$extension;
+            $filePath = '/role_request/4/' . Auth::id() . '/';
+            $fileName = $request->file . '.' . $extension;
             $request->file->move(public_path($filePath, $fileName), $fileName);
 
             $roleRequest = RoleRequest::create([
-                'user_id' => Auth::id(),
+                'user_id'     => Auth::id(),
                 'description' => $request->description,
-                'for' => '4',
-                'file' => $filePath.$fileName,
+                'for'         => '4',
+                'file'        => $filePath . $fileName,
             ]);
 
             if ($roleRequest) {
                 return back()->with('message', 'Request Submitted Successfully! We Will Contact You');
-             } else {
+            } else {
                 return back()->with('error', 'Sorry Some Erro Occured! Please Try Again');
-             }
-            
+            }
+
         } else {
             return back()->with('error', 'You are not allowed');
         }
     }
+
+    public function designerRoleRequest($id)
+    {
+
+        if (Auth::id() == $id) {
+            return view('profile.designer-request');
+        } else {
+            return back()->with('error', 'You are not allowed');
+        }
+    }
+
+    public function designerRoleRequestSend(Request $request, $id)
+    {
+        if (Auth::user()->id == $id) {
+
+            $this->validate($request, [
+
+                'description' => 'required|min:50',
+                'file'        => 'required|mimes:pdf|max:10000',
+            ]);
+
+            $extension = $request->file('file');
+            $extension = strtolower($extension->getClientOriginalExtension());
+
+            $filePath = '/role_request/6/' . Auth::id() . '/';
+            $fileName = $request->file . '.' . $extension;
+            $request->file->move(public_path($filePath, $fileName), $fileName);
+            $fileName    = str_replace('/tmp/', "", $fileName);
+            $roleRequest = RoleRequest::create([
+                'user_id'     => Auth::id(),
+                'description' => $request->description,
+                'for'         => '6',
+                'file'        => $filePath . $fileName,
+            ]);
+
+            if ($roleRequest) {
+                return back()->with('message', 'Request Submitted Successfully! We Will Contact You');
+            } else {
+                return back()->with('error', 'Sorry Some Erro Occured! Please Try Again');
+            }
+
+        } else {
+            return back()->with('error', 'You are not allowed');
+        }
+    }
+
+    public function showAllRoleRequests()
+    {
+
+        $role_requests = RoleRequest::paginate(3);
+        return view('admin.role-requests', compact('role_requests'));
+    }
+
+    public function showSpecificRoleRequest($id)
+    {
+        $role_request = RoleRequest::where('id', $id)->first();
+
+        return view('admin.role-request', compact('role_request'));
+    }
+
+    public function roleVerify(Request $request, $id)
+    {   
+
+        $roleDetails = RoleRequest::where('id', $id)->first();
+        if ($request->result == "false") {
+
+            return back()->with('message', 'Role Request canceled');
+        } else if ($request->result == "true") {
+                $role = RoleRequest::where('id', $id)->first();
+                if ($role->for == 2) {
+                    $role = 2;
+                } else if ($role->for == 4) {
+                    $role = 4;
+                } else if ($role->for == 5) {
+                    $role = 5;
+                } else if ($role->for == 6) {
+                    $role = 6;
+                }
+
+               
+
+                $request = User::where('id', $roleDetails->user->id)->first()->update([
+                    'role_id' => $role,
+                ]);
+                $roleDetails->delete();
+                return redirect('/dashboard')->with('message', "Request Accepted Successfully!");
+
+
+            
+            }
+        }
+
+    
+
 }

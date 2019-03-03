@@ -10,7 +10,7 @@ use App\User;
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
         <a href="#">
-
+    
           {{ User::find($user_id)->role->name}}
         </a>
       </li>
@@ -42,7 +42,8 @@ use App\User;
         <p>
         </p>
         <!--  Add/edit form start  -->
-        <form action="@if(isset($product_categories)) {{ route('productCRUD.products.update', $product->id) }} @else {{ route('productCRUD.storeProduct', $user_id) }} @endif" method="POST" enctype="multipart/form-data">
+        
+        <form action="@if(isset($product_categories)) {{ route('productCRUD.updateProduct', ['product_id' => $product->id, 'user_id' => $user_id]) }} @else {{ route('productCRUD.storeProduct', $user_id) }} @endif" method="POST" enctype="multipart/form-data">
           @csrf
           @if(isset($product_categories))
           @method('PUT')

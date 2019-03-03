@@ -169,5 +169,12 @@ class TrainerController extends Controller
         return view('profile.dashboard', compact('trainee'));
     }
 
+    public function trainerverify($id) {
+
+        User::where('id', $id)->first()->update([
+            'verified_by_trainer' => 1
+        ]);
+    }
+
 
 }

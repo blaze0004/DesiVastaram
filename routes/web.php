@@ -45,6 +45,11 @@ Route::group(['as' => 'admin.', 'middleware' => ['auth', 'admin'], 'prefix' => '
     Route::get('/trainers/sellers/{trainerId}', 'Trainer\TrainerController@showAllSellersOfTrainer')->name('trainers.showAllSellers');
     Route::post('/trainers/deactivate/{trainersId}', 'Trainer\TrainerController@activateDeactivateAccount')->name('trainers.deactivate');
 
+    // Accept Role Request 
+
+    Route::get('/show-all-role-requests', 'Profile\ProfileController@showAllRoleRequests')->name('showAllRoleRequests');
+    Route::get('/show-specific-role-request/{roleRequestId}', 'Profile\ProfileController@showSpecificRoleRequest')->name('showSpecificRoleRequest');
+    Route::post('/verify-role/{requestid}', 'Profile\ProfileController@roleVerify')->name('role_verify');
     // City, State, Country Add/Remove CRUD
 
    
@@ -109,6 +114,8 @@ Route::get('/myaccount/{userId}/wholesalebuyer-role-request', 'Profile\ProfileCo
 Route::post('/myaccount/{userId}/wholesalebuyer-role-request-send', 'Profile\ProfileController@wholesalebuyerRoleRequestSend')->name('wholesalebuyer-role-request-send');
 Route::get('/myaccount/{userId}/trainer-role-request', 'Profile\ProfileController@trainerRoleRequest')->name('trainer-role-request');
 Route::post('/myaccount/{userId}/trainer-role-request-send', 'Profile\ProfileController@trainerRoleRequestSend')->name('trainer-role-request-send');
+Route::get('/myaccount/{userId}/designer-role-request', 'Profile\ProfileController@designerRoleRequest')->name('designer-role-request');
+Route::post('/myaccount/{userId}/designer-role-request-send', 'Profile\ProfileController@designerRoleRequestSend')->name('designer-role-request-send');
 
 // User Profile Routes CRUD END
 
@@ -158,12 +165,12 @@ Route::post('/my-trainee/add-trainee', 'Trainer\TrainerController@storeNewTraine
 Route::get('/add-trainee/{trainerid}', 'Trainer\TrainerController@addtraineeform')->name('trainer.add-trainee-form');
 Route::get('/my-trainee/trainee-dashboard/{traineeId}', 'Trainer\TrainerController@showTraineeDashboard')->name('trainer.showTraineeDashboard');
 Route::get('/my-trainee/trainee-myaccount/{traineeId}', 'Trainer\TrainerController@showTraineeMyAccount')->name('trainer.showTraineeMyAccount');
-Route::get('/my-trainee/trainee-myaccount/{traineeId}', 'Trainer\TrainerController@showTraineeMyAccount')->name('trainer.showTraineeMyAccount');
+Route::post('trainee.verify/{trainerId}', 'Trainer\TrainerController@trainerverify')->name('trainer.verify');
 
 
 
 // Video Chat One To One Contact 
-/*Route::group(['as' => 'chat.', 'prefix' => 'chat'], function () {
+Route::group(['as' => 'chat.', 'prefix' => 'chat'], function () {
    Route::get('/', 'VideoChatController@index')->name('chat');
    Route::get('/message/{message}/to/{id}', function($message, $id) {
       //  dd($message);
@@ -202,7 +209,7 @@ Route::post('/trigger/{id}' , function (\Illuminate\Http\Request $request , $id)
 
 });
 
-*/
+
 
 Route::get('/chat', 'VideoChatController@index')->name('chats');
 Route::get('/chat/{id}', 'VideoChatController@chat')->name('chat');
@@ -225,3 +232,15 @@ Route::post('/trigger/{id}' , function (\Illuminate\Http\Request $request , $id)
 // For State wise Show 
 
 Route::get('/state/{stateName}', 'Product\ProductController@showProductByStates');
+
+
+// For designer
+
+
+Route::get('/designer', 'DesignerController@index')->name('designer.index');
+Route::get('/designer/create', 'DesignerController@create')->name('designer.create');
+Route::post('/designer/store', 'DesignerController@store')->name('designer.store');
+Route::get('/designer/edit/{id}', 'DesignerController@edit')->name("designer.edit");
+Route::get('/designer/show/{id}', 'DesignerController@show')->name('showRequirement');
+
+Route::get('/seller/show/requirements', 'DesignerController@showforseller')->name('showToSeller');

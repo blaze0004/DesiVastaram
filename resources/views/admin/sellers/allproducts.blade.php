@@ -33,9 +33,7 @@
             <div class="jumbotron">
                 <h1>All Products</h1><hr>
                 
-                <a class="btn btn-primary mb-2 float-right" href="{{ route('admin.products.create')}}">
-                    Add Products
-                </a>
+           
                 <table class="table table-stripped">
                     <thead>
                         <tr>
@@ -94,11 +92,13 @@
                             </td>
 
                             <td>
-                                <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-primary btn-md">Edit</a> | <a href="javascript:;" class="btn btn-sm btn-danger" onclick="confirmDelete();">Delete</a>
-                                <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST" id="delete-products" style="display: none">
+                                 <div aria-label="Basic example" class="btn-group" role="group">
+                                   <a href="{{ route('productCRUD.products.edit', $product->id) }}" class="btn btn-primary btn-md">Edit</a>  <a href="javascript:;" class="btn btn-sm btn-danger" onclick="confirmDelete();">Delete</a>
+                                <form action="{{ route('productCRUD.products.destroy', $product->id) }}" method="POST" id="delete-products" style="display: none">
                                     @method('DELETE')
                                     @csrf
                                 </form>
+                                </div>
                             </td>
                         </tr>
                         @endforeach

@@ -28,9 +28,9 @@
             <div class="jumbotron">
                 <h1>Update Address</h1>
                 <hr>
+
                 <form action="{{ route('updateAddress', ['id' => $address->id, 'user_id' => $trainee->user_id ])}}" method="POST">
-                    @csrf
-                    @method('put')
+                  @csrf
                 <div class="form-group">
                     <label for="firstName">First name</label>
                     <input type="text" name="firstName" class="form-control" value="{{@$address->firstName}}">

@@ -28,7 +28,12 @@ _________________________________________________________
         <div class="col-lg-6 text-center text-lg-right">
 
           <ul class="menu list-inline mb-0">
+              <li class="list-inline-item">
 
+              <div id="google_translate_element"></div>
+              </a>
+
+            </li>
             @guest
 
             <li class="list-inline-item">
@@ -133,7 +138,7 @@ _________________________________________________________
 
             <button type="button" data-dismiss="modal" aria-label="Close" class="close">
 
-              <span aria-hidden="true">×
+              <span aria-hidden="true">
 
               </span>
 
@@ -1470,7 +1475,47 @@ _________________________________________________________
                   
                   </div>
 
-                </li></ul></li></ul></div>
+                </li></ul></li></ul>
+                <div class="navbar-buttons d-flex justify-content-end">
+
+          <!-- /.nav-collapse-->
+
+          <div id="search-not-mobile" class="navbar-collapse collapse">
+
+          </div>
+
+          <a data-toggle="collapse" href="#search" class="btn navbar-btn btn-primary d-none d-lg-inline-block">
+
+            <span class="sr-only">Toggle search
+
+            </span>
+
+            <i class="fa fa-search">
+
+            </i>
+
+          </a>
+          @if(isset(Auth::user()->id))
+          <div id="basket-overview" class="navbar-collapse collapse d-none d-lg-block">
+
+            <a href="{{ route('showUserCart') }}" class="btn btn-primary navbar-btn">
+
+              <i class="fa fa-shopping-cart">
+
+              </i>
+
+              <span>{{ Auth::user()->cartItems->count() }} items in cart
+
+              </span>
+
+            </a>
+
+          </div>
+          @endif
+
+        </div>
+
+      </div>
 
     </div>
 

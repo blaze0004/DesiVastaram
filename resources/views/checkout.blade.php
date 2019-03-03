@@ -74,7 +74,7 @@
 
           @endforeach
           </br>
-          <a href="{{ route('addNewAddressForm') }}" class="btn btn-md btn-primary">Add New Address</a>
+          <a href="{{ route('addNewAddressForm', Auth::id() ) }}" class="btn btn-md btn-primary">Add New Address</a>
       </div>
       <div class="container tab-pane fade" id="payment_method">
         <br>

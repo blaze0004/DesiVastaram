@@ -3,6 +3,7 @@ use Illuminate\Support\Str;
 
 @endphp
 @if(isset($trainee))
+
 @extends('../layouts/app')
 
 @section('breadcrumb')
@@ -153,7 +154,7 @@ use Illuminate\Support\Str;
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a href="#">
-                    {{ $trainee->firstName}}
+                    {{ Auth::user()->profile->firstName}}
                 </a>
             </li>
             <li aria-current="page" class="breadcrumb-item active">
@@ -179,7 +180,7 @@ use Illuminate\Support\Str;
             <div class="jumbotron">
                 <h1>All Products</h1><hr>
                 
-                <a class="btn btn-primary mb-2 float-right" href="{{ route('addProductForm', Auth::id())}}">
+                <a class="btn btn-primary mb-2 float-right" href="{{ route('productCRUD.addProductForm', Auth::id())}}">
                     Add Products
                 </a>
                 <table class="table table-stripped">
@@ -247,7 +248,8 @@ use Illuminate\Support\Str;
 
                             <td>
                                  <div aria-label="Basic example" class="btn-group" role="group">
-                                   <a href="{{ route('productCRUD.products.edit', $product->id) }}" class="btn btn-primary btn-md">Edit</a>  <a href="javascript:;" class="btn btn-sm btn-danger" onclick="confirmDelete();">Delete</a>
+                                    
+                                   <a href="{{ route('productCRUD.editProduct', ['user_id' => $product->user_id, 'product_id' => $product->id, ]) }}" class="btn btn-primary btn-md">Edit</a>  <a href="javascript:;" class="btn btn-sm btn-danger" onclick="confirmDelete();">Delete</a>
                                 <form action="{{ route('productCRUD.products.destroy', $product->id) }}" method="POST" id="delete-products" style="display: none">
                                     @method('DELETE')
                                     @csrf

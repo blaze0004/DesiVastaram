@@ -25,7 +25,13 @@
                     </i>
                     My Account
                 </a>
-      
+                 @if(Auth::user()->role_id == '6')
+                <a class="nav-link" href="{{ route('designer.index', $trainee->user->id) }}">
+                    <i class="fa fa-user">
+                    </i>
+                    Add Requirements
+                </a>
+                @endif
 
                 <!-- For Video and Chat -->
                 <a class="nav-link" href="{{ route('chats') }}">
@@ -54,6 +60,7 @@
                     </i>
                     My Product Sell
                  </a>
+                
                 @endif
 
                 
@@ -97,6 +104,17 @@
                 <a class="nav-link" href="{{ route('admin.addUser') }}">
                     <i class="fa fa-user"></i>
                     Add Users
+                </a>
+                <a class="nav-link" href="{{ route('admin.showAllRoleRequests') }}">
+                    <i class="fa fa-user"></i>
+                    Role Requests
+                </a>
+                @endif
+                
+                @if(Auth::user()->role_id == '6')
+                   <a class="nav-link" href="{{ route('designer.index') }}">
+                    <i class="fa fa-user"></i>
+                    Upload Requirement
                 </a>
                 @endif
 
@@ -174,6 +192,11 @@
                     </i>
                     My Product Sell
                 </a>
+                 <a class="nav-link" href="{{ route('showToSeller') }}">
+                    <i class="fa fa-user">
+                    </i>
+                    Designer Requirements 
+                 </a>
                 @endif
 
                 @if(Auth::user()->role_id == '4')   

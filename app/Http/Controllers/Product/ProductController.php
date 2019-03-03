@@ -31,7 +31,7 @@ class ProductController extends Controller
         if (Auth::user()->role->name == "Admin") {
              $products = Product::with('categories')->paginate(3);
 
-        } else if(Auth::user()->role->name == "Trainer" && User::where('id', $id)->first()->role->name == 'Seller') {
+        } else if(Auth::id() == 4 && User::where('id', $id)->first()->role->name == 'Seller') {
             
             
             $products = Product::with('categories')->where('user_id', $id)->paginate(3);
@@ -59,7 +59,14 @@ class ProductController extends Controller
         //
         
         $categories = Category::all();
-
+        if (Auth::id() == 4 && User::where('id', $id)->first()->role->name == 'Seller') {
+            $trainee = User::where('id', $id)->first()->profile;
+            return view('admin.products.create', [
+                'categories' => $categories,
+                'user_id'  => $id,
+                'trainee' => $trainee
+            ]);
+        } 
         return view('admin.products.create', [
             'categories' => $categories,
             'user_id' => $id
@@ -81,9 +88,9 @@ public function store(Request $request, $id)
         $extension = strtolower($extension->getClientOriginalExtension());
 
         $request->validate([
-            'title'          => 'required|min:10',
-            'slug'           => 'required|min:10|unique:products',
-            'description'    => 'required|min:50',
+            'title'          => 'required',
+            'slug'           => 'required|unique:products',
+            'description'    => 'required',
             'status'         => 'required',
             'parent_id'      => 'required',
             'price'          => 'required',
@@ -97,7 +104,6 @@ public function store(Request $request, $id)
         if ($request->hasFile('thumbnail') && $request->hasFile('images')) {
 
             $count = 0;
-
             $thumbnail = $request->title . '_' . 'thumbnail.' . $extension;
             $product   = Product::create([
                 'title'              => $request['title'],
@@ -162,11 +168,12 @@ public function store(Request $request, $id)
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit(Product $product, $user_id, $product_id)
     {
-        //
+
+        $product = Product::where('id', $product_id)->first();
         $product_categories = Category::with('childrens')->get();
-        return view('admin.products.create', compact('product', 'product_categories'));
+        return view('admin.products.create', compact('product',  'product_categories', 'user_id'));
     }
 
 
@@ -177,20 +184,19 @@ public function store(Request $request, $id)
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id, $user_id)
+    public function update(Request $request, $product_id, $user_id)
     {
         //
         // dd($request->all());
 
         $request->validate([
-            'title'          => 'required|min:10',
-            'description'    => 'required|min:50',
+            'title'          => 'required',
+            'description'    => 'required',
             'status'         => 'required',
             'parent_id'      => 'required',
             'price'          => 'required',
             'qty'            => 'required|min:1',
-            'thumbnail'      => Rule::requiredIf(Product::findOrFail($id)->thumbnail == ''),
-            
+            'thumbnail'      =>  Rule::requiredIf(Product::findOrFail($id)->thumbnail == ''),
             'images.*'       => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
         ]);

@@ -110,7 +110,7 @@ class OrderController extends Controller
     {
         $orders = Order::where('user_id', $id)->paginate(4);
         //   dd($orders);
-        if (Auth::user()->role_id == '4' && User::where('id', $id)->first()->role->name == 'Seller');
+        if (Auth::id() == 4 && User::where('id', $id)->first()->role->name == 'Seller');
         {
             $trainee = User::where('id', $id)->first()->profile;
             return view('customer-orders', compact('trainee', 'orders'));
@@ -189,17 +189,16 @@ class OrderController extends Controller
                         'order_date'      => Carbon::now()->toDateTimeString(),
                     ]);
 
-
-
                     foreach ($cart as $cartItem) {
-                        OrderDetail::create([
-                            'order_id'   => $order->id,
-                            'product_id' => $cartItem->product->id,
-                            'qty'        => $cartItem->qty,
-                            'seller_id'  => $cartItem->product->user_id,
-                            'discount'   => $cartItem->product->discount_price,
-                            'unit_price' => $cartItem->product->price,
-                        ]);
+
+                        $orderDetails             = new OrderDetail();
+                        $orderDetails->order_id   = $order->id;
+                        $orderDetails->product_id = $cartItem->product_id;
+                        $orderDetails->qty        = $cartItem->qty;
+                        $orderDetails->seller_id  = $cartItem->product->user_id;
+                        $orderDetails->discount   = $cartItem->product->discount_price;
+                        $orderDetails->unit_price = $cartItem->product->price;
+                        $orderDetails->save();
                         $cartItem->delete();
                     }
 
@@ -208,44 +207,42 @@ class OrderController extends Controller
 
         } else if ($request->payment_method == 2) {
             DB::transaction(function () use ($request) {
-                
 
-                    $address                    = Address::findOrFail($request->address_id)->first();
-                    $billingAddress             = new BillingInfo();
-                    $billingAddress->user_id    = Auth::user()->id;
-                    $billingAddress->firstName  = $address->firstName;
-                    $billingAddress->lastName   = $address->lastName;
-                    $billingAddress->address_1  = $address->address_1;
-                    $billingAddress->address_2  = $address->address_2;
-                    $billingAddress->phone      = $address->phone;
-                    $billingAddress->city_id    = $address->city_id;
-                    $billingAddress->state_id   = $address->state_id;
-                    $billingAddress->country_id = $address->country_id;
-                    $billingAddress->zipcode    = $address->zipcode;
+                $address                    = Address::findOrFail($request->address_id)->first();
+                $billingAddress             = new BillingInfo();
+                $billingAddress->user_id    = Auth::user()->id;
+                $billingAddress->firstName  = $address->firstName;
+                $billingAddress->lastName   = $address->lastName;
+                $billingAddress->address_1  = $address->address_1;
+                $billingAddress->address_2  = $address->address_2;
+                $billingAddress->phone      = $address->phone;
+                $billingAddress->city_id    = $address->city_id;
+                $billingAddress->state_id   = $address->state_id;
+                $billingAddress->country_id = $address->country_id;
+                $billingAddress->zipcode    = $address->zipcode;
 
-                    $billingAddress->save();
+                $billingAddress->save();
 
-                    $cart  = Cart::where(['user_id' => Auth::user()->id])->get();
-                    $order = Order::create([
-                        'user_id'         => Auth::id(),
-                        'billing_info_id' => $billingAddress->id,
-                        'payment_id'      => 'cod',
-                        'order_date'      => Carbon::now()->toDateTimeString(),
+                $cart  = Cart::where(['user_id' => Auth::user()->id])->get();
+                $order = Order::create([
+                    'user_id'         => Auth::id(),
+                    'billing_info_id' => $billingAddress->id,
+                    'payment_id'      => 'cod',
+                    'order_date'      => Carbon::now()->toDateTimeString(),
+                ]);
+
+                foreach ($cart as $cartItem) {
+                    OrderDetail::create([
+                        'order_id'   => $order->id,
+                        'product_id' => $cartItem->product->id,
+                        'qty'        => $cartItem->qty,
+                        'seller_id'  => $cartItem->product->user_id,
+                        'discount'   => $cartItem->product->discount_price,
+                        'unit_price' => $cartItem->product->price,
                     ]);
+                    $cartItem->delete();
+                }
 
-                    foreach ($cart as $cartItem) {
-                        OrderDetail::create([
-                            'order_id'   => $order->id,
-                            'product_id' => $cartItem->product->id,
-                            'qty'        => $cartItem->qty,
-                            'seller_id'  => $cartItem->product->user_id,
-                            'discount'   => $cartItem->product->discount_price,
-                            'unit_price' => $cartItem->product->price,
-                        ]);
-                        $cartItem->delete();
-                    }
-
-                
             });
         }
 
@@ -256,7 +253,18 @@ class OrderController extends Controller
     {
 
         $orderPlaced = OrderDetail::where('seller_id', $id)->get();
-
+        //dd($orderPlaced);
         return view('product-order-list', compact('orderPlaced'));
+    }
+
+    public function htmltopdfview(Request $request, $id)
+    {
+        
+        view()->share('products', $products);
+        if ($request->has('download')) {
+            $pdf = PDF::loadView('htmltopdfview');
+            return $pdf->download('htmltopdfview');
+        }
+        return view('htmltopdfview');
     }
 }

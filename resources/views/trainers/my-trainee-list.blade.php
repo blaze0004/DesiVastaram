@@ -38,8 +38,11 @@
                         <th># {{ $trainee->id}}</th>
                         <td> {{ $trainee->firstName}}</td>
                         <td>₹{{ $trainee->phone }}</td>
-                        <td><span class="badge badge-info">{{ $trainee->verified_by_trainer }}</span></td>
-                        <td><a href="{{ route('trainer.showTraineeDashboard', $trainee->id) }}" class="btn btn-primary btn-sm">View</a></td>
+                        <td><span class="badge badge-info">@if($trainee->verified_by_trainer) {{'verified'}} @else {{'not verified'}} @endif</span></td>
+                        <td><a href="{{ route('trainer.showTraineeDashboard', $trainee->id) }}" class="btn btn-primary btn-sm">View</a><a href="javascript:;" class="btn btn-sm btn-danger" onclick="confirmDelete();">Delete</a>
+                                <form action="{{ route('trainee.verify.destroy', $trainee->id) }}" method="POST" id="delete-category" style="display: none">
+                                    @csrf
+                                </form></td>
                       </tr>
                       @endforeach
                        <tr>
@@ -55,3 +58,16 @@
               </div>
             </div>
 @endsection
+
+@section('scripts')
+    <script type="text/javascript">
+        let choice = "are you sure";
+        function confirmDelete() {
+            if (choice){
+                document.getElementById('delete-category').submit();    
+            }
+            
+        }
+    </script>
+@endsection
+

@@ -12,7 +12,10 @@ use Illuminate\Support\Facades\Auth;
 
 class AddressController extends Controller
 {
+    
     /**
+
+
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -44,6 +47,10 @@ class AddressController extends Controller
     {
 
         $countries = Country::all('name', 'id');
+        if (Auth::id() == 4 && User::where('id', $id)->first()->role->name == 'Seller'){
+            $trainee = User::where('id', $id)->first()->profile;
+            return view('address.addNewAddressForm', compact('countries', 'id', 'trainee'));
+        }
 
         return view('address.addNewAddressForm', compact('countries', 'id'));
     }
@@ -79,7 +86,7 @@ class AddressController extends Controller
         }
         if ($request->makedefaultaddressfordistrict == 'on') {
             $user = User::where('id', $id)->first()->profile->update([
-                'product_district_id' => $address->id,
+                'product_district_id' => $request->state,
             ]);
         }
 
@@ -94,7 +101,7 @@ class AddressController extends Controller
     public function show(Address $address)
     {
         //
-        $addresses = Address::paginate();
+        $addresses = Address::paginate(2);
 
         return view('address.my_addresses', compact('addresses'));
     }
@@ -104,15 +111,15 @@ class AddressController extends Controller
 
         if (Address::where('user_id', $id)) {
 
-            $addresses = Address::where('user_id', $id)->paginate(3);
+          $addresses = Address::where('user_id', $id)->paginate(3);
             
-            if (Auth::user()->role_id == '4' && User::where('id', $id)->first()->role->name == "Seller") {
+            if (Auth::id() == 4 && User::where('id', $id)->first()->role->name == "Seller") {
                 $trainee = User::where('id', $id)->first()->profile;
-                return view('address.my_addresses', compact('addresses', 'trainee', 'id'));
+                return view('address.my_addresses', compact('addresses', 'id', 'trainee'));
             }
         }
         
-        return view('address.my_addresses');
+        return view('address.my_addresses', compact('addresses', 'id'));
     }
 
     /**
@@ -129,7 +136,7 @@ class AddressController extends Controller
         $countries = Country::all();
         $states    = State::where('country_id', $address->country_id)->get();
         $cities    = City::where('state_id', $address->state_id)->get();
-        $trainee = User::where('id', $user_id)->first()->profile;
+        $trainee   = User::where('id', $user_id)->first()->profile;
         return view('address.editAddressForm', compact('address', 'countries', 'states', 'cities', 'trainee'));
     }
 
@@ -141,8 +148,7 @@ class AddressController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id, $user_id)
-    {
-        //
+    {      
         $address             = Address::where('id', $id)->first();
         $address->firstName  = $request->firstName;
         $address->lastName   = $request->lastName;
@@ -164,11 +170,11 @@ class AddressController extends Controller
 
         if ($request->makedefaultaddressfordistrict == 'on') {
             $user = User::where('id', $user_id)->first()->profile->update([
-                'product_district_id' => $address->id,
+                'product_district_id' => $request->state,
             ]);
         }
 
-        return redirect('address.my_addresses')->with('message', 'Address Updated Successfully!');
+        return back()->with('message', 'Address Updated Successfully!');
     }
 
     /**
